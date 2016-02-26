@@ -7,8 +7,10 @@
     android:id="@+id/toolbar"
     android:background="?attr/colorPrimaryDark"
     android:minHeight="?attr/actionBarSize"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
     <!-- TODO android:theme="@style/ThemeOverlay.AppCombat.Dark.ActionBar" -->
     <!-- TODO xmlns:app="http://schemas.android.com/apk/res-auto" -->
+
 
 </android.support.v7.widget.Toolbar>

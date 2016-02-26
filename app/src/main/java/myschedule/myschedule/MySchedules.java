@@ -24,5 +24,4 @@ public class MySchedules extends AppCompatActivity {
         Intent intent = new Intent(this, FullscreenScheduleView.class);
         startActivity(intent);
     }
-
 }

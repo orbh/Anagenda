@@ -16,10 +16,11 @@
             />
     ></group>
 
-    <item
-        android:id="@+id/settings_id"
-        android:title="Settings"
-        android:icon="@drawable/three"
-        />
-
+    <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/settings_id"
+                android:title="Settings"
+                android:icon="@drawable/three"
+                />
+    </group>
 </menu>
