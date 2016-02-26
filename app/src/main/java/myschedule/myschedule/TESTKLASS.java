@@ -1,11 +1,11 @@
 package myschedule.myschedule;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class TESTKLASS extends Activity {
+public class TESTKLASS extends AppCompatActivity {
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -15,5 +15,6 @@ public class TESTKLASS extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testklass_layout);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }

@@ -18,6 +18,7 @@ public class MySchedules extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
         toolbar =(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     public void ChangeActivity(View v){
