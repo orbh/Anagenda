@@ -21,8 +21,13 @@ public class MySchedules extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public void ChangeActivity(View v){
+    public void ChangeActivityToFullscreen(View v) {
         Intent intent = new Intent(this, FullscreenScheduleView.class);
+        startActivity(intent);
+    }
+
+    public void ChangeActivityToTestclass(View v) {
+        Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
     }
 }

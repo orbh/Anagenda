@@ -26,7 +26,13 @@
             android:id="@+id/content">
 
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Default Name"
+                android:id="@+id/twScheduleTitle"
+                android:textAlignment="center"
+                android:textSize="30sp" />
         </LinearLayout>
 
     </LinearLayout>
