@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Schedule</string>
+    <string name="default_schedule">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.FE100G-26076V16-"
+    </string>
 </resources>
