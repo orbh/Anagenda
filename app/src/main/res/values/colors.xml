@@ -9,4 +9,6 @@
     <color name="colorTextSecondary">#727272</color>
 
     <color name="colorDivider">#B6B6B6</color>
+
+    <color name="colorRowGray">#EEEEEE</color>
 </resources>

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class CustomScheduleAdapter extends ArrayAdapter<Element>{
 
+
     CustomScheduleAdapter(Context context, List<Element> elements) {
         super(context, R.layout.schedule_layout, elements);
     }
@@ -31,22 +32,27 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         RelativeLayout rowLayout = (RelativeLayout) customView.findViewById(R.id.row_layout);
         TextView description = (TextView) customView.findViewById(R.id.description_textview);
         TextView weekday = (TextView) customView.findViewById(R.id.weekday_textview);
-
         //ToDo Date doesn't get a date if there are simultaneous classes on the same day
         TextView date = (TextView) customView.findViewById(R.id.date_textview);
         TextView locale = (TextView) customView.findViewById(R.id.locale_textview);
+        TextView time = (TextView) customView.findViewById(R.id.time_textview);
+
+        if((position % 2) == 0) {
+            rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorRowGray));
+        }
 
         //Highlights posts with tenta or omtenta as locale
         String localeInfo = element.child(7).text();
         if(localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")){
             rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         }
+
         description.setText(element.child(9).text());
         weekday.setText(element.child(1).text());
         date.setText(element.child(2).text());
-
         //ToDo If locale is tentamen it it too long. Consider using a shortener or make the layout bigger
         locale.setText(element.child(7).text());
+        time.setText(element.child(3).text());
         return customView;
     }
 }

@@ -8,8 +8,9 @@
     >
 
     <TextView
-        android:layout_width="190dp"
-        android:layout_height="40dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
         android:id="@+id/description_textview"
         android:text="Description"
         android:textSize="16sp"
@@ -39,9 +40,23 @@
         />
 
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/description_textview"
+        android:layout_marginLeft="5dp"
+        android:text="Time"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="13sp"
+        android:id="@+id/time_textview"
+        />
+
+    <TextView
+        android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_toEndOf="@id/date_textview"
+        android:layout_below="@id/weekday_textview"
+        android:layout_toEndOf="@+id/time_textview"
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"
         android:text="Locale"
         android:textSize="13sp"
         android:textColor="@color/colorTextSecondary"
