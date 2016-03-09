@@ -17,26 +17,16 @@
         android:textColor="@color/colorTextPrimary"
         android:layout_marginLeft="5dp"
         />
-    
+
     <TextView
-        android:layout_width="40dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_toEndOf="@+id/description_textview"
         android:layout_marginLeft="10dp"
-        android:id="@+id/weekday_textview"
-        android:text="WD"
+        android:id="@+id/wd_and_date_textview"
+        android:text="WD and date"
         android:textSize="13sp"
         android:textColor="@color/colorTextSecondary"
-        />
-
-    <TextView
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_toEndOf="@+id/weekday_textview"
-        android:text="Date"
-        android:textSize="13sp"
-        android:textColor="@color/colorTextSecondary"
-        android:id="@+id/date_textview"
         />
 
     <TextView
@@ -53,7 +43,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_below="@id/weekday_textview"
+        android:layout_below="@id/wd_and_date_textview"
         android:layout_toEndOf="@+id/time_textview"
         android:layout_marginLeft="10dp"
         android:maxLines="1"

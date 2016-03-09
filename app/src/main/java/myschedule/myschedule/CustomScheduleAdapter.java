@@ -30,12 +30,12 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         Element element = getItem(position);
         RelativeLayout rowLayout = (RelativeLayout) customView.findViewById(R.id.row_layout);
         TextView description = (TextView) customView.findViewById(R.id.description_textview);
-        TextView weekday = (TextView) customView.findViewById(R.id.weekday_textview);
+        TextView wdAndDate = (TextView) customView.findViewById(R.id.wd_and_date_textview);
         //ToDo Date doesn't get a date if there are simultaneous classes on the same day
-        TextView date = (TextView) customView.findViewById(R.id.date_textview);
         TextView locale = (TextView) customView.findViewById(R.id.locale_textview);
         TextView time = (TextView) customView.findViewById(R.id.time_textview);
 
+        //Makes half of the rows grayish
         if((position % 2) == 0) {
             rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorRowGray));
         }
@@ -44,11 +44,17 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         String localeInfo = element.child(7).text();
         if(localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")){
             rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+            description.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
+            wdAndDate.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
+            locale.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
+            time.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
         }
 
+        //Merges weekday and date
+        String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
+
         description.setText(element.child(9).text());
-        weekday.setText(element.child(1).text());
-        date.setText(element.child(2).text());
+        wdAndDate.setText(mergedWdAndDate);
         //ToDo If locale is tentamen it it too long. Consider using a shortener or make the layout bigger
         locale.setText(element.child(7).text());
         time.setText(element.child(3).text());
