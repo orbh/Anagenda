@@ -1,11 +1,13 @@
 package myschedule.myschedule;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Element;
@@ -26,6 +28,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         View customView = inflater.inflate(R.layout.schedule_layout, parent, false);
 
         Element element = getItem(position);
+        RelativeLayout rowLayout = (RelativeLayout) customView.findViewById(R.id.row_layout);
         TextView description = (TextView) customView.findViewById(R.id.description_textview);
         TextView weekday = (TextView) customView.findViewById(R.id.weekday_textview);
 
@@ -33,6 +36,11 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         TextView date = (TextView) customView.findViewById(R.id.date_textview);
         TextView locale = (TextView) customView.findViewById(R.id.locale_textview);
 
+        //Highlights posts with tenta or omtenta as locale
+        String localeInfo = element.child(7).text();
+        if(localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")){
+            rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        }
         description.setText(element.child(9).text());
         weekday.setText(element.child(1).text());
         date.setText(element.child(2).text());
@@ -41,5 +49,4 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         locale.setText(element.child(7).text());
         return customView;
     }
-
 }
