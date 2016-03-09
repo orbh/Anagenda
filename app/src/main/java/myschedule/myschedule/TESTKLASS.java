@@ -24,7 +24,8 @@ public class TESTKLASS extends AppCompatActivity {
     ListView lwSchedule;
 
     CustomScheduleAdapter customScheduleAdapter;
-    //List<String> postList = new ArrayList<>();
+
+    //Contains all "rows" of posts
     List<Element> elementList = new ArrayList<>();
 
     @Override
@@ -34,10 +35,7 @@ public class TESTKLASS extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         lwSchedule = (ListView)findViewById(R.id.lwSchedule);
-        //scheduleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
-        //lwSchedule.setAdapter(scheduleAdapter);
         customScheduleAdapter = new CustomScheduleAdapter(this, elementList);
         lwSchedule.setAdapter(customScheduleAdapter);
 
@@ -52,11 +50,9 @@ public class TESTKLASS extends AppCompatActivity {
             //Fetches table with only schedule rows
             Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
 
-            //Fetches the description of the post and adds it to the postList
+            //Puts each row into a list
             for (Element element : posts) {
-
                 elementList.add(element);
-                //postList.add(element.child(9).text());
             }
 
             //Sets the name of toolbar
