@@ -53,8 +53,10 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         //Merges weekday and date
         String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
 
-        description.setText(element.child(9).text());
+        //ToDo Make the comma go away then weekday and date are missing
+
         wdAndDate.setText(mergedWdAndDate);
+        description.setText(element.child(9).text());
         //ToDo If locale is tentamen it it too long. Consider using a shortener or make the layout bigger
         locale.setText(element.child(7).text());
         time.setText(element.child(3).text());
