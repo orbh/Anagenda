@@ -26,13 +26,14 @@
             android:id="@+id/content">
 
 
-            <TextView
+            <ListView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Default Name"
-                android:id="@+id/twScheduleTitle"
-                android:textAlignment="center"
-                android:textSize="30sp" />
+                android:layout_height="match_parent"
+                android:id="@+id/lwSchedule"
+
+                 />
+
+
         </LinearLayout>
 
     </LinearLayout>
@@ -43,6 +44,7 @@
         android:id="@+id/navigation_view"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/navigation_header_layout"
         >
     </android.support.design.widget.NavigationView>
 

@@ -9,9 +9,10 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-//Should probably not be public abstract, but cant get it working otherwise
+//Asynctask that fetches the schedule
 class AsyncHelper extends AsyncTask<String, Void, Document> {
 
+    //Connects to specified url and returns a document
     protected Document doInBackground(String... urls) {
         try {
             return Jsoup.connect(urls[0]).get();
@@ -22,6 +23,7 @@ class AsyncHelper extends AsyncTask<String, Void, Document> {
         }
     }
 
+    //For tasks that have to happen after doInBackground
     protected void onPostExecute(Document document) {
     }
 }

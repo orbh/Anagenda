@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+
+    >
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/description_textview"
+        android:text="Description"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+
+        />
+    
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/description_textview"
+        android:id="@+id/weekday_textview"
+        android:text="Weekday"
+        android:textSize="13sp"
+        />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/weekday_textview"
+        android:text="Date"
+        android:textSize="13sp"
+        android:id="@+id/date_textview"
+        />
+
+
+</RelativeLayout>

@@ -23,8 +23,9 @@ public class TESTKLASS extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ListView lwSchedule;
 
-    ArrayAdapter scheduleAdapter;
-    List<String> postList = new ArrayList<>();
+    CustomScheduleAdapter customScheduleAdapter;
+    //List<String> postList = new ArrayList<>();
+    List<Element> elementList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,19 @@ public class TESTKLASS extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         lwSchedule = (ListView)findViewById(R.id.lwSchedule);
-        scheduleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
-        lwSchedule.setAdapter(scheduleAdapter);
+        //scheduleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
+        //lwSchedule.setAdapter(scheduleAdapter);
+        customScheduleAdapter = new CustomScheduleAdapter(this, elementList);
+        lwSchedule.setAdapter(customScheduleAdapter);
 
         LoadSchedule();
     }
 
     public void LoadSchedule() {
         try {
+
             Document document = new AsyncHelper().execute(getResources().getString(R.string.default_schedule)).get();
 
             //Fetches table with only schedule rows
@@ -49,14 +54,15 @@ public class TESTKLASS extends AppCompatActivity {
 
             //Fetches the description of the post and adds it to the postList
             for (Element element : posts) {
-                postList.add(element.child(9).text());
+
+                elementList.add(element);
+                //postList.add(element.child(9).text());
             }
 
             //Sets the name of toolbar
             Element title = document.select("td.big2 > table > tbody > tr > td").get(1);
             String input = title.text();
             String output = input.substring(input.indexOf(",") + 1);
-
             assert getSupportActionBar() != null;
             if(output.equals("")){
                 getSupportActionBar().setTitle("Schema");
