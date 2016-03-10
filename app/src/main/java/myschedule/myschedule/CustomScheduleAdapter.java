@@ -31,7 +31,6 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         RelativeLayout rowLayout = (RelativeLayout) customView.findViewById(R.id.row_layout);
         TextView description = (TextView) customView.findViewById(R.id.description_textview);
         TextView wdAndDate = (TextView) customView.findViewById(R.id.wd_and_date_textview);
-        //ToDo Date doesn't get a date if there are simultaneous classes on the same day
         TextView locale = (TextView) customView.findViewById(R.id.locale_textview);
         TextView time = (TextView) customView.findViewById(R.id.time_textview);
 
