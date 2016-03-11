@@ -7,50 +7,62 @@
     android:id="@+id/row_layout"
     >
 
+    <ImageView
+        android:id="@+id/row_color_imageview"
+        android:layout_width="10dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="5dp"
+        android:layout_centerVertical="true" />
+
     <TextView
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="2"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@id/row_color_imageview"
+        android:maxLines="1"
+        android:text="Time"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="15sp"
+        android:id="@+id/time_textview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_toEndOf="@+id/time_textview"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:id="@+id/wd_and_date_textview"
+        android:text="WD and date"
+        android:textSize="15sp"
+        android:textColor="@color/colorTextSecondary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
         android:id="@+id/description_textview"
+        android:layout_below="@id/time_textview"
+        android:layout_toEndOf="@id/row_color_imageview"
         android:text="Description"
-        android:textSize="16sp"
+        android:textSize="19sp"
         android:textColor="@color/colorTextPrimary"
         android:layout_marginLeft="5dp"
         />
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_toEndOf="@+id/description_textview"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/wd_and_date_textview"
-        android:text="WD and date"
-        android:textSize="13sp"
-        android:textColor="@color/colorTextSecondary"
-        />
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description_textview"
+        android:layout_toEndOf="@+id/row_color_imageview"
         android:layout_marginLeft="5dp"
-        android:text="Time"
-        android:textColor="@color/colorTextSecondary"
-        android:textSize="13sp"
-        android:id="@+id/time_textview"
-        />
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/wd_and_date_textview"
-        android:layout_toEndOf="@+id/time_textview"
-        android:layout_marginLeft="10dp"
         android:maxLines="1"
         android:text="Locale"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:textColor="@color/colorTextSecondary"
         android:id="@+id/locale_textview"
         />
+
 
 </RelativeLayout>
