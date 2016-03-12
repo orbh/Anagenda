@@ -1,11 +1,27 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">My Schedule</string>
-    <string name="default_schedule">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.FE100G-26076V16-"
+    
+    <!-- ActionBar -->
+    <string name="action_title_myschedules">My Schedules</string>
+    <string name="action_search">Search</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_favourite">Favourite</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Development helpers -->
+    <string name="default_schedule">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;in
+        tervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
+        ingar=true&amp;resurser=k.FE100G-26076V16-"
     </string>
 
-    <string name="navigation_drawer_my_schedules">My Schedules</string>
-    <string name="navigation_drawer_fullscreen_schedule_view">Fullscreen Schedule View</string>
-    <string name="navigation_drawer_testclass">Testclass</string>
-    <string name="navigation_drawer_settings">Settings</string>
+    <!-- Default strings -->
+
+        <!-- Saved schedules -->
+        <string name="saved_schedules_description">Description</string>
+        <string name="saved_schedules_next_event">Next event:</string>
+        <string name="saved_schedules_coursecode">Code</string>
+        <string name="saved_schedules_icon_description">Icon</string>
 
 </resources>

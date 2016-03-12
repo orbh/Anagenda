@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Colors -->
     <color name="colorPrimary">#8BC34A</color>
     <color name="colorPrimaryDark">#689F38</color>
     <color name="colorPrimaryLight">#DCEDC8</color>
     <color name="colorAccent">#FF5722</color>
 
+    <!-- Text -->
     <color name="colorTextPrimary">#212121</color>
     <color name="colorTextSecondary">#727272</color>
 
+    <!-- Dividers -->
     <color name="colorDivider">#B6B6B6</color>
 
+    <!-- Rows -->
     <color name="colorRowGray">#EEEEEE</color>
+
 </resources>

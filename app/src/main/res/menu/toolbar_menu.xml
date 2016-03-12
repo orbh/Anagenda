@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- SearchView -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_black_18dp"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="@string/action_search"/>
+
+    <!-- Refresh -->
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_repeat_black_18dp"
+        android:title="@string/action_refresh"
+        app:showAsAction="never"/>
+
+    <!-- Refresh -->
+    <item
+        android:id="@+id/action_favourite"
+        android:icon="@drawable/ic_favorite_border_black_18dp"
+        android:title="@string/action_favourite"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Settings -->
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        />
+
+</menu>
