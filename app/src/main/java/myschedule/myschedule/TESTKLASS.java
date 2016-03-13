@@ -67,6 +67,7 @@ public class TESTKLASS extends AppCompatActivity {
         return true;
     }
 
+    //Triggers code when toolbar-items are clicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -85,6 +86,8 @@ public class TESTKLASS extends AppCompatActivity {
         }
     }
 
+    //Fetches schedule from provided url
+    //ToDo Should probably be its own class or smth
     public Document FetchSchedule(String url) {
         try {
             return new AsyncKronoXHelper().execute(url).get();
