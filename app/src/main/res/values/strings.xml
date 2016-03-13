@@ -13,7 +13,12 @@
     <!-- Development helpers -->
     <string name="default_schedule">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;in
         tervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
-        ingar=true&amp;resurser=k.FE100G-26076V16-"
+        ingar=true&amp;resurser=k.FE100G-26076V16-
+    </string>
+    <string name="default_schedule2">
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;inter
+        vallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
+        ingar=true&amp;resurser=k.PS3100-36161V16-
     </string>
 
     <!-- Default strings -->

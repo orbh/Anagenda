@@ -1,15 +1,26 @@
 package myschedule.myschedule;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
+import org.apache.commons.io.FileUtils;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -43,8 +54,12 @@ public class TESTKLASS extends AppCompatActivity {
 
     public void LoadSchedule() {
         try {
+            //ToDo Should take URL from loaded schedule
+            //Document document = new AsyncKronoXHelper().execute(getResources().getString(R.string.default_schedule)).get();
+            Document document = new AsyncKronoXHelper().execute(getResources().getString(R.string.default_schedule2)).get();
 
-            Document document = new AsyncHelper().execute(getResources().getString(R.string.default_schedule)).get();
+            //TESTMETHOD
+            SaveSchedule(document);
 
             //Fetches table with only schedule rows
             Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
@@ -76,6 +91,40 @@ public class TESTKLASS extends AppCompatActivity {
             e.printStackTrace();
             Log.e("NullPointerExeption", "NullPointerExeption" + e);
         }
+    }
+
+
+    public void SaveSchedule(Document document){
+
+        //Writes to file-folder in app
+        try {
+            String input = document.select("td.big2 > table > tbody > tr > td").get(1).text();
+            String output = input.substring(0, input.indexOf(","));
+
+            //ToDo Might have to put file ending
+            FileOutputStream fos = openFileOutput(output, MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(document.outerHtml());
+            oos.close();
+            fos.close();
+
+            /*
+            BufferedWriter htmlWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
+            htmlWriter.write(document.outerHtml());
+            htmlWriter.flush();
+            htmlWriter.close();
+            */
+
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("FileNotFoundException", "FileNotFoundException"+e);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Log.e("IOException", "IOException"+e);
+        }
+
     }
 
 }
