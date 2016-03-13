@@ -5,7 +5,11 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Connection;
@@ -29,6 +33,7 @@ public class TESTKLASS extends AppCompatActivity {
 
     Toolbar toolbar;
     ListView lwSchedule;
+    Document loadedDocument;
 
     CustomScheduleAdapter customScheduleAdapter;
 
@@ -41,88 +46,109 @@ public class TESTKLASS extends AppCompatActivity {
         setContentView(R.layout.testklass_layout);
 
         //Toolbar
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Schedule with custom adapter
-        lwSchedule = (ListView)findViewById(R.id.lwSchedule);
+        lwSchedule = (ListView) findViewById(R.id.lwSchedule);
         customScheduleAdapter = new CustomScheduleAdapter(this, elementList);
         lwSchedule.setAdapter(customScheduleAdapter);
 
         LoadSchedule();
+        Toast.makeText(TESTKLASS.this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
-    public void LoadSchedule() {
-        try {
-            //ToDo Should take URL from loaded schedule
-            //Document document = new AsyncKronoXHelper().execute(getResources().getString(R.string.default_schedule)).get();
-            Document document = new AsyncKronoXHelper().execute(getResources().getString(R.string.default_schedule2)).get();
+    //Creates additional items in toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        menu.removeItem(R.id.action_refresh);
+        menu.removeItem(R.id.action_search);
+        return true;
+    }
 
-            //TESTMETHOD
-            SaveSchedule(document);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
-            //Fetches table with only schedule rows
-            Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
+            //ToDo Make it go to settings menu
+            case R.id.action_settings:
+                return true;
 
-            //Puts each row into a list
-            for (Element element : posts) {
-                elementList.add(element);
-            }
+            case R.id.action_favourite:
+                SaveSchedule();
+                return true;
 
-            //Sets the name of toolbar
-            Element title = document.select("td.big2 > table > tbody > tr > td").get(1);
-            String input = title.text();
-            String output = input.substring(input.indexOf(",") + 1);
-            assert getSupportActionBar() != null;
-            if(output.equals("")){
-                getSupportActionBar().setTitle("Schema");
-            }
-            else getSupportActionBar().setTitle(output);
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        catch (InterruptedException e) {
+    }
+
+    public Document FetchSchedule(String url) {
+        try {
+            return new AsyncKronoXHelper().execute(url).get();
+        } catch (InterruptedException e) {
             e.printStackTrace();
             Log.e("InterruptedException", "InterruptedException" + e);
-        }
-        catch (ExecutionException e) {
+        } catch (ExecutionException e) {
             e.printStackTrace();
             Log.e("ExecutionException", "ExecutionExeption" + e);
         }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            Log.e("NullPointerExeption", "NullPointerExeption" + e);
-        }
+        //ToDo Maybe null has to be something else
+        return null;
     }
 
+    public void LoadSchedule() {
+        //ToDo Should take URL from loaded schedule
+        String url = getResources().getString(R.string.default_schedule1);
+        loadedDocument = FetchSchedule(url);
 
-    public void SaveSchedule(Document document){
+        //ToDo A course is differs from a teacher-view, which differs from a locale-view which
+        //ToDo means that we have to customize the numbers that gets the selectors at least
+        //ToDo and maybe even the selects themselves
 
-        //Writes to file-folder in app
+        //Fetches table with only schedule rows
+        Elements posts = loadedDocument.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
+
+        //Puts each row into a list
+        for (Element element : posts) {
+            elementList.add(element);
+        }
+
+        //Sets the name of toolbar
+        Element title = loadedDocument.select("td.big2 > table > tbody > tr > td").get(1);
+        String input = title.text();
+        String output = input.substring(input.indexOf(",") + 1);
+        assert getSupportActionBar() != null;
+        if (output.equals("")) {
+            getSupportActionBar().setTitle("Schema");
+        } else getSupportActionBar().setTitle(output);
+    }
+
+    public void SaveSchedule() {
+
+        //Writes document to file
         try {
-            String input = document.select("td.big2 > table > tbody > tr > td").get(1).text();
+
+            String input = loadedDocument.select("td.big2 > table > tbody > tr > td").get(1).text();
             String output = input.substring(0, input.indexOf(","));
 
-            //ToDo Might have to put file ending
             FileOutputStream fos = openFileOutput(output, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(document.outerHtml());
+            oos.writeObject(loadedDocument.outerHtml());
             oos.close();
             fos.close();
 
-            /*
-            BufferedWriter htmlWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
-            htmlWriter.write(document.outerHtml());
-            htmlWriter.flush();
-            htmlWriter.close();
-            */
+            //Makes a toast if it succeeds
+            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_saved_schedule) + " " + output, Toast.LENGTH_SHORT).show();
 
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.e("FileNotFoundException", "FileNotFoundException"+e);
-        }
-        catch (IOException e) {
+            Log.e("FileNotFoundException", "FileNotFoundException" + e);
+        } catch (IOException e) {
             e.printStackTrace();
-            Log.e("IOException", "IOException"+e);
+            Log.e("IOException", "IOException" + e);
         }
 
     }

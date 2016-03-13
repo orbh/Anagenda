@@ -11,14 +11,23 @@
     <string name="action_settings">Settings</string>
 
     <!-- Development helpers -->
-    <string name="default_schedule">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;in
-        tervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
-        ingar=true&amp;resurser=k.FE100G-26076V16-
+    <string name="default_schedule1">http://schema.oru.se/setup/jsp/Schema.jsp?startDat
+        um=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;for
+        klaringar=true&amp;resurser=k.FE100G-26076V16-
     </string>
     <string name="default_schedule2">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;inter
         vallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
         ingar=true&amp;resurser=k.PS3100-36161V16-
+    </string>
+    <string name="default_schedule3">
+        http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forkla
+        ringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;start
+        Datum=idag&amp;resurser=s.jpn
+    </string>
+    <string name="default_schedule4">
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;inter
+        vallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.P245
     </string>
 
     <!-- Default strings -->
@@ -28,5 +37,8 @@
         <string name="saved_schedules_next_event">Next event:</string>
         <string name="saved_schedules_coursecode">Code</string>
         <string name="saved_schedules_icon_description">Icon</string>
+
+    <!-- Toasts -->
+    <string name="toast_saved_schedule">Saved</string>
 
 </resources>

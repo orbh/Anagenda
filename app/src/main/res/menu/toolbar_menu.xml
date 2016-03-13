@@ -22,7 +22,8 @@
         android:id="@+id/action_favourite"
         android:icon="@drawable/ic_favorite_border_black_18dp"
         android:title="@string/action_favourite"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        />
 
     <!-- Settings -->
     <item android:id="@+id/action_settings"

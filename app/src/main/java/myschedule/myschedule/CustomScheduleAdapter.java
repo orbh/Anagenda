@@ -15,7 +15,7 @@ import org.jsoup.nodes.Element;
 import java.util.List;
 import java.util.Random;
 
-public class CustomScheduleAdapter extends ArrayAdapter<Element>{
+public class CustomScheduleAdapter extends ArrayAdapter<Element> {
 
 
     CustomScheduleAdapter(Context context, List<Element> elements) {
@@ -38,7 +38,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
         ImageView color = (ImageView) customView.findViewById(R.id.row_color_imageview);
 
         //Makes half of the rows grayish and makes the color on the side
-        if((position % 2) == 0) {
+        if ((position % 2) == 0) {
             rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorRowGray));
         }
 
@@ -55,7 +55,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element>{
 
         //Highlights posts with tenta or omtenta as locale
         String localeInfo = element.child(7).text();
-        if(localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")){
+        if (localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")) {
             rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             description.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
             wdAndDate.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
