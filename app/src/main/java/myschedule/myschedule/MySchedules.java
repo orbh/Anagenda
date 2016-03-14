@@ -54,8 +54,6 @@ public class MySchedules extends AppCompatActivity {
         savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
         savedScheduleAdapter = new SavedScheduleAdapter(this, documentList);
         savedScheduleListView.setAdapter(savedScheduleAdapter);
-
-        Toast.makeText(MySchedules.this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     //Runs every time the activity gets visible
@@ -65,7 +63,6 @@ public class MySchedules extends AppCompatActivity {
         LoadSavedSchedules();
         //ToDo Sets it to refresh even if i dont have to
         savedScheduleAdapter.notifyDataSetChanged();
-        Toast.makeText(MySchedules.this, "onResume", Toast.LENGTH_SHORT).show();
     }
 
     //Creates additional items in toolbar
@@ -108,6 +105,8 @@ public class MySchedules extends AppCompatActivity {
         documentList.clear();
 
         //Fetches all files in the files directory
+
+        //ToDo Use fileList instead!
         File childFile[] = getFilesDir().listFiles();
 
         //Tries to make the files into documents again and push them into the documentList

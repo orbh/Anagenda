@@ -55,7 +55,6 @@ public class TESTKLASS extends AppCompatActivity {
         lwSchedule.setAdapter(customScheduleAdapter);
 
         LoadSchedule();
-        Toast.makeText(TESTKLASS.this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     //Creates additional items in toolbar
