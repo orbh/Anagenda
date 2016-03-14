@@ -1,7 +1,6 @@
 package myschedule.myschedule;
 
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,22 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MySchedules extends AppCompatActivity {
 
