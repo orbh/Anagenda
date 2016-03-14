@@ -52,6 +52,7 @@ public class MySchedules extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         LoadSavedSchedules();
+        CheckDocumentList();
         //ToDo Sets it to refresh even if i dont have to
         savedScheduleAdapter.notifyDataSetChanged();
     }
@@ -119,6 +120,18 @@ public class MySchedules extends AppCompatActivity {
         }
 
     }
+
+    public void CheckDocumentList() {
+
+        if (documentList.isEmpty()) {
+                    savedScheduleListView.setBackgroundResource(R.drawable.ic_snooze_red_500_18dp);
+        }
+
+        else {
+            savedScheduleListView.setBackgroundResource(0);
+           }
+    }
+
 
     public void RefreshSchedules(){
         //ToDo Should fetch new schedules from the ones saved
