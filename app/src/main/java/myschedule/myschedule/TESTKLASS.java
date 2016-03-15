@@ -21,11 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class TESTKLASS extends MasterActivity {
+public class TESTKLASS extends AppCompatActivity {
 
     Toolbar toolbar;
     ListView lwSchedule;
-    Document loadedDocument;
 
     CustomScheduleAdapter customScheduleAdapter;
 
@@ -45,8 +44,14 @@ public class TESTKLASS extends MasterActivity {
         lwSchedule = (ListView) findViewById(R.id.lwSchedule);
         customScheduleAdapter = new CustomScheduleAdapter(this, elementList);
         lwSchedule.setAdapter(customScheduleAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RefreshList();
         LoadSchedule();
+
     }
 
     //Creates additional items in toolbar
@@ -94,16 +99,11 @@ public class TESTKLASS extends MasterActivity {
     }
 
     public void LoadSchedule() {
-        //ToDo Should take URL from loaded schedule
-        String url = getResources().getString(R.string.default_schedule1);
-        loadedDocument = FetchSchedule(url);
-
-        //ToDo A course is differs from a teacher-view, which differs from a locale-view which
-        //ToDo means that we have to customize the numbers that gets the selectors at least
-        //ToDo and maybe even the selects themselves
 
         //Fetches table with only schedule rows
-        Elements posts = loadedDocument.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
+        Schedule schedule = ((Schedule)getApplicationContext());
+        Document document = schedule.getDocument();
+        Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
 
         //Puts each row into a list
         for (Element element : posts) {
@@ -111,7 +111,7 @@ public class TESTKLASS extends MasterActivity {
         }
 
         //Sets the name of toolbar
-        Element title = loadedDocument.select("td.big2 > table > tbody > tr > td").get(1);
+        Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
         String input = title.text();
         String output = input.substring(input.indexOf(",") + 1);
         assert getSupportActionBar() != null;
@@ -125,12 +125,14 @@ public class TESTKLASS extends MasterActivity {
         //Writes document to file
         try {
 
-            String input = loadedDocument.select("td.big2 > table > tbody > tr > td").get(1).text();
+            Schedule schedule = ((Schedule)getApplicationContext());
+            String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
             String output = input.substring(0, input.indexOf(","));
+            schedule.getDocument().setBaseUri(schedule.getUrl());
 
             FileOutputStream fos = openFileOutput(output, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(loadedDocument.outerHtml());
+            oos.writeObject(schedule.getDocument().toString());
             oos.close();
             fos.close();
 
@@ -145,6 +147,11 @@ public class TESTKLASS extends MasterActivity {
             Log.e("IOException", "IOException" + e);
         }
 
+    }
+
+    public void RefreshList(){
+        elementList.clear();
+        customScheduleAdapter.notifyDataSetChanged();
     }
 
 }

@@ -1,8 +1,10 @@
 package myschedule.myschedule;
 
+import android.app.Application;
+
 import org.jsoup.nodes.Document;
 
-public class Schedule {
+public class Schedule extends Application{
 
     public String url;
     public Document schedule;

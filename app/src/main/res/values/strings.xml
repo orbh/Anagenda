@@ -11,23 +11,20 @@
     <string name="action_settings">Settings</string>
 
     <!-- Development helpers -->
-    <string name="default_schedule1">http://schema.oru.se/setup/jsp/Schema.jsp?startDat
-        um=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;for
-        klaringar=true&amp;resurser=k.FE100G-26076V16-
+    <string name="default_schedule1">
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.FE100G-26076V16-
     </string>
     <string name="default_schedule2">
-        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;inter
-        vallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklar
-        ingar=true&amp;resurser=k.PS3100-36161V16-
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.PS3100-36161V16-
     </string>
     <string name="default_schedule3">
-        http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forkla
-        ringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;start
-        Datum=idag&amp;resurser=s.jpn
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.IK100G-26073V16-
     </string>
     <string name="default_schedule4">
-        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;inter
-        vallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.P245
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.P245
+    </string>
+    <string name="default_schedule5">
+        http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forklaringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;startDatum=idag&amp;resurser=s.jpn
     </string>
 
     <!-- Default strings -->

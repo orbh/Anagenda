@@ -1,13 +1,14 @@
 package myschedule.myschedule;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.jsoup.Jsoup;
@@ -17,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class MySchedules extends AppCompatActivity {
 
@@ -28,7 +31,7 @@ public class MySchedules extends AppCompatActivity {
 
     //Stuff to do with the list with saved schedules
     ListView savedScheduleListView;
-    List<Document> documentList = new ArrayList<>();
+    List<Schedule> scheduleList = new ArrayList<>();
 
     //Runs when you first start the app
     @Override
@@ -43,8 +46,14 @@ public class MySchedules extends AppCompatActivity {
 
         //ListView + adapter = true
         savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
-        savedScheduleAdapter = new SavedScheduleAdapter(this, documentList);
+        savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
         savedScheduleListView.setAdapter(savedScheduleAdapter);
+        savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LoadSelectedSchedule(view, position);
+            }
+        });
     }
 
     //Runs every time the activity gets visible
@@ -55,6 +64,23 @@ public class MySchedules extends AppCompatActivity {
         CheckDocumentList();
         //ToDo Sets it to refresh even if i dont have to
         savedScheduleAdapter.notifyDataSetChanged();
+
+        //OBS JUST FOR TEST PURPOSES
+        //Sets one of 3 default schedules for button, until we have a search function
+        List<String> defaultSchedules = new ArrayList<>();
+        defaultSchedules.add(getResources().getString(R.string.default_schedule1));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule2));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule3));
+        Random random = new Random();
+        //Using the 2 first since 3 isn't working atm
+        int number = random.nextInt(3);
+        String url = defaultSchedules.get(number);
+        System.out.println("Number:" + number);
+        System.out.println("URL: " + url);
+
+        Schedule schedule = ((Schedule) getApplicationContext());
+        schedule.setDocument(FetchSchedule(url));
+        schedule.setUrl(url);
     }
 
     //Creates additional items in toolbar
@@ -84,6 +110,16 @@ public class MySchedules extends AppCompatActivity {
         }
     }
 
+    public void LoadSelectedSchedule(View v, int position) {
+
+        Schedule schedule = ((Schedule) getApplicationContext());
+        schedule.setDocument(scheduleList.get(position).getDocument());
+        schedule.setUrl(scheduleList.get(position).getUrl());
+
+        Intent intent = new Intent(this, TESTKLASS.class);
+        startActivity(intent);
+    }
+
     public void ChangeActivityToTestclass(View v) {
         Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
@@ -94,7 +130,7 @@ public class MySchedules extends AppCompatActivity {
         //ToDo Connect to saved list of schedules
 
         //Clears the documentList
-        documentList.clear();
+        scheduleList.clear();
 
         //Fetches all files in the files directory
 
@@ -111,7 +147,11 @@ public class MySchedules extends AppCompatActivity {
 
             try {
                 Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
-                documentList.add(document);
+                Schedule schedule = new Schedule();
+                schedule.setUrl(document.baseUri());
+                schedule.setDocument(document);
+
+                scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("IOEXception", "IOException" + e);
@@ -123,18 +163,31 @@ public class MySchedules extends AppCompatActivity {
 
     public void CheckDocumentList() {
 
-        if (documentList.isEmpty()) {
-                    savedScheduleListView.setBackgroundResource(R.drawable.ic_snooze_red_500_18dp);
-        }
-
-        else {
+        if (scheduleList.isEmpty()) {
+            savedScheduleListView.setBackgroundResource(R.drawable.ic_snooze_red_500_18dp);
+        } else {
             savedScheduleListView.setBackgroundResource(0);
-           }
+        }
     }
 
-
-    public void RefreshSchedules(){
+    public void RefreshSchedules() {
         //ToDo Should fetch new schedules from the ones saved
+    }
+
+    //JUST FOR TEST PURPOSES
+    //Here until we get search function going
+    public Document FetchSchedule(String url) {
+        try {
+            return new AsyncKronoXHelper().execute(url).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.e("InterruptedException", "InterruptedException" + e);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.e("ExecutionException", "ExecutionExeption" + e);
+        }
+        //ToDo Maybe null has to be something else
+        return null;
     }
 
 }
