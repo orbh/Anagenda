@@ -75,11 +75,8 @@ public class MySchedules extends AppCompatActivity {
         //Using the 2 first since 3 isn't working atm
         int number = random.nextInt(3);
         String url = defaultSchedules.get(number);
-        System.out.println("Number:" + number);
-        System.out.println("URL: " + url);
 
         Schedule schedule = ((Schedule) getApplicationContext());
-        schedule.setDocument(FetchSchedule(url));
         schedule.setUrl(url);
     }
 
@@ -121,6 +118,8 @@ public class MySchedules extends AppCompatActivity {
     }
 
     public void ChangeActivityToTestclass(View v) {
+        Schedule schedule = ((Schedule) getApplicationContext());
+        schedule.setDocument(FetchSchedule(schedule.getUrl()));
         Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
     }
