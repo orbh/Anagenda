@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class TESTKLASS extends AppCompatActivity {
+public class TESTKLASS extends MasterActivity {
 
     Toolbar toolbar;
     ListView lwSchedule;
