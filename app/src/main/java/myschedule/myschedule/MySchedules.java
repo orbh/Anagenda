@@ -110,6 +110,7 @@ public class MySchedules extends AppCompatActivity {
     public void LoadSelectedSchedule(View v, int position) {
 
         Schedule schedule = ((Schedule) getApplicationContext());
+
         schedule.setDocument(scheduleList.get(position).getDocument());
         schedule.setUrl(scheduleList.get(position).getUrl());
 
@@ -117,9 +118,15 @@ public class MySchedules extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //ToDo This is probably just in place until seach is functioning
     public void ChangeActivityToTestclass(View v) {
         Schedule schedule = ((Schedule) getApplicationContext());
         schedule.setDocument(FetchSchedule(schedule.getUrl()));
+
+        //Sets type
+        ScheduleHelper helper = new ScheduleHelper();
+        schedule.setType(helper.getScheduleType(schedule));
+
         Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
     }
@@ -175,6 +182,7 @@ public class MySchedules extends AppCompatActivity {
 
     //JUST FOR TEST PURPOSES
     //Here until we get search function going
+    //Should only be in TESTKLASS
     public Document FetchSchedule(String url) {
         try {
             return new AsyncKronoXHelper().execute(url).get();

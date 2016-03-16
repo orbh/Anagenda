@@ -53,6 +53,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element> {
             color.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTextSecondary));
         }
 
+        /*
         //Highlights posts with tenta or omtenta as locale
         String localeInfo = element.child(7).text();
         if (localeInfo.contains("Tentamen") || localeInfo.contains("Omtentamen")) {
@@ -62,6 +63,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element> {
             locale.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
             time.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextPrimary));
         }
+        */
 
         //Merges weekday and date
         String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();

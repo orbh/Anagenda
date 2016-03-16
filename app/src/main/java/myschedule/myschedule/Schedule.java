@@ -8,6 +8,7 @@ public class Schedule extends Application{
 
     public String url;
     public Document schedule;
+    public int type;
 
     public String getUrl() {
         return url;
@@ -24,5 +25,9 @@ public class Schedule extends Application{
     public void setDocument(Document document) {
         schedule = document;
     }
+
+    public int getType() { return type; }
+
+    public void setType(int number) { type = number; }
 
 }

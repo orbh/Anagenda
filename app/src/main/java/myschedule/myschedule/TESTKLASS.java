@@ -51,7 +51,6 @@ public class TESTKLASS extends AppCompatActivity {
         super.onResume();
         RefreshList();
         LoadSchedule();
-
     }
 
     //Creates additional items in toolbar
@@ -100,9 +99,15 @@ public class TESTKLASS extends AppCompatActivity {
 
     public void LoadSchedule() {
 
-        //Fetches table with only schedule rows
         Schedule schedule = ((Schedule)getApplicationContext());
         Document document = schedule.getDocument();
+
+        //ToDo This might crash shit up
+        if (schedule.getType() == 0) {
+            return;
+        }
+
+        //Fetches table with only schedule rows
         Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
 
         //Puts each row into a list
@@ -110,14 +115,52 @@ public class TESTKLASS extends AppCompatActivity {
             elementList.add(element);
         }
 
-        //Sets the name of toolbar
-        Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-        String input = title.text();
-        String output = input.substring(input.indexOf(",") + 1);
-        assert getSupportActionBar() != null;
-        if (output.equals("")) {
-            getSupportActionBar().setTitle("Schema");
-        } else getSupportActionBar().setTitle(output);
+        String title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
+        Integer type = schedule.getType();
+        SetTitle(title, type);
+
+        /*
+
+        //Course
+        if(schedule.getType() == 1) {
+
+            //Sets the name of toolbar
+            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+            String input = title.text();
+            String output = input.substring(input.indexOf(",") + 1);
+            assert getSupportActionBar() != null;
+            if (output.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(output);
+
+        }
+
+        //Room
+        else if(schedule.getType() == 2) {
+
+            //Sets the name of toolbar
+            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+            String output = title.text();
+            assert getSupportActionBar() != null;
+            if (output.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(output);
+
+        }
+
+        //Signature
+        else {
+            //Sets the name of toolbar
+            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+            String output = title.text();
+            assert getSupportActionBar() != null;
+            if (output.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(output);
+        }
+
+        */
+
     }
 
     public void SaveSchedule() {
@@ -145,6 +188,43 @@ public class TESTKLASS extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("IOException", "IOException" + e);
+        }
+
+    }
+
+    public void SetTitle(String name, int type){
+
+        //Course
+        if(type == 1) {
+
+            //Sets the name of toolbar
+            String output = name.substring(name.indexOf(",") + 1);
+            assert getSupportActionBar() != null;
+            if (output.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(output);
+
+        }
+
+        //Room
+        else if(type == 2) {
+
+            //Sets the name of toolbar
+            assert getSupportActionBar() != null;
+            if (name.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(name);
+
+        }
+
+        //Signature
+        else {
+
+            //Sets the name of toolbar
+            assert getSupportActionBar() != null;
+            if (name.equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            } else getSupportActionBar().setTitle(name);
         }
 
     }
