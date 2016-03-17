@@ -23,9 +23,12 @@
     <string name="default_schedule4">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.P245
     </string>
+    <string name="default_schedule6" formatted="false">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=p.Dataingenj%C3%B6rsprogrammet+%C3%A5k+1
+    </string>
     <string name="default_schedule5">
         http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forklaringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;startDatum=idag&amp;resurser=s.jpn
     </string>
+
 
     <!-- Default strings -->
 
@@ -40,5 +43,11 @@
 
     <!-- Toasts -->
     <string name="toast_saved_schedule">Saved</string>
+
+    <!-- Content describers -->
+    <string name="saved_schedules_icon_course">Course-icon</string>
+    <string name="saved_schedules_icon_locale">Locale-icon</string>
+    <string name="saved_schedules_icon_programme">Programme-icon</string>
+    <string name="saved_schedules_icon_person">Person-icon</string>
 
 </resources>

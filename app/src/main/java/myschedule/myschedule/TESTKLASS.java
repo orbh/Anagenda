@@ -81,22 +81,6 @@ public class TESTKLASS extends AppCompatActivity {
         }
     }
 
-    //Fetches schedule from provided url
-    //ToDo Should probably be its own class or smth
-    public Document FetchSchedule(String url) {
-        try {
-            return new AsyncKronoXHelper().execute(url).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Log.e("InterruptedException", "InterruptedException" + e);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            Log.e("ExecutionException", "ExecutionExeption" + e);
-        }
-        //ToDo Maybe null has to be something else
-        return null;
-    }
-
     public void LoadSchedule() {
 
         Schedule schedule = ((Schedule)getApplicationContext());

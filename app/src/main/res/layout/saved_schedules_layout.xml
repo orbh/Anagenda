@@ -13,8 +13,6 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_today_black_36dp"
-        android:contentDescription="Icon"
         />
 
     <!-- Description -->

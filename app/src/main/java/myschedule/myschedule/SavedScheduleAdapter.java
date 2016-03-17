@@ -27,6 +27,7 @@ public class SavedScheduleAdapter extends ArrayAdapter<Schedule> {
         View customView = inflater.inflate(R.layout.saved_schedules_layout, parent, false);
 
         Schedule schedule = getItem(position);
+        //ToDo Set icon for different types
         ImageView icon = (ImageView) customView.findViewById(R.id.saved_schedules_icon);
         TextView coursename = (TextView) customView.findViewById(R.id.saved_schedules_coursename);
         TextView next_event = (TextView) customView.findViewById(R.id.saved_schedules_next_event);
@@ -36,8 +37,10 @@ public class SavedScheduleAdapter extends ArrayAdapter<Schedule> {
         Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
         String wholeTitle = title.text();
         String[] splitTitle = wholeTitle.split("\\s*,\\s*");
-        coursecode.setText(splitTitle[0]);
-        coursename.setText(splitTitle[1] + ", " + splitTitle[2]);
+
+        if (schedule.getType() == 0) {
+            return customView;
+        }
 
         //Next event
         Element nextEvent = schedule.getDocument().select("table.schemaTabell > tbody > tr.data-white, tr.data-grey").first();
@@ -46,7 +49,39 @@ public class SavedScheduleAdapter extends ArrayAdapter<Schedule> {
         //ToDo Should be in strings.xml
         next_event.setText(getContext().getString(R.string.saved_schedules_next_event) + " " + mergedWdAndDate + " " + time);
 
-        return customView;
+        //Course
+        if (schedule.getType() == 1) {
+            coursecode.setText(splitTitle[0]);
+            String output = splitTitle[1] + "," + splitTitle[2];
+            coursename.setText(output);
+            icon.setImageResource(R.drawable.ic_today_black_36dp);
+            return customView;
+        }
+
+        //Room
+        else if (schedule.getType() == 2) {
+            coursename.setText(splitTitle[0]);
+            coursecode.setText(splitTitle[1]);
+            icon.setImageResource(R.drawable.ic_home_black_36dp);
+            return customView;
+        }
+
+        //Programme
+        else if (schedule.getType() == 3) {
+            coursename.setText(splitTitle[0]);
+            coursecode.setVisibility(View.INVISIBLE);
+            icon.setImageResource(R.drawable.ic_date_range_black_36dp);
+            return customView;
+        }
+
+        //Signature
+        else {
+            coursename.setText(splitTitle[1]);
+            coursecode.setText(splitTitle[0]);
+            icon.setImageResource(R.drawable.ic_person_black_36dp);
+            return customView;
+        }
+
     }
 
 }

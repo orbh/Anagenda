@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 public class MySchedules extends AppCompatActivity {
 
@@ -78,9 +77,13 @@ public class MySchedules extends AppCompatActivity {
         defaultSchedules.add(getResources().getString(R.string.default_schedule1));
         defaultSchedules.add(getResources().getString(R.string.default_schedule2));
         defaultSchedules.add(getResources().getString(R.string.default_schedule3));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule4));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule5));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule6));
+
         Random random = new Random();
         //Using the 2 first since 3 isn't working atm
-        int number = random.nextInt(3);
+        int number = random.nextInt(6);
         String url = defaultSchedules.get(number);
 
         Schedule schedule = ((Schedule) getApplicationContext());
@@ -179,7 +182,6 @@ public class MySchedules extends AppCompatActivity {
     public void CheckDocumentList() {
         LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
-
 
             linear.setBackgroundResource(R.drawable.android);
            // savedScheduleListView.setBackgroundResource(R.drawable.android);
