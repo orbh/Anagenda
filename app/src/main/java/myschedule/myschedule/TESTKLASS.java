@@ -115,54 +115,12 @@ public class TESTKLASS extends AppCompatActivity {
             elementList.add(element);
         }
 
+        //Sets the toolbar title
         String title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
-        Integer type = schedule.getType();
-        SetTitle(title, type);
-
-        /*
-
-        //Course
-        if(schedule.getType() == 1) {
-
-            //Sets the name of toolbar
-            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-            String input = title.text();
-            String output = input.substring(input.indexOf(",") + 1);
-            assert getSupportActionBar() != null;
-            if (output.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(output);
-
-        }
-
-        //Room
-        else if(schedule.getType() == 2) {
-
-            //Sets the name of toolbar
-            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-            String output = title.text();
-            assert getSupportActionBar() != null;
-            if (output.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(output);
-
-        }
-
-        //Signature
-        else {
-            //Sets the name of toolbar
-            Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-            String output = title.text();
-            assert getSupportActionBar() != null;
-            if (output.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(output);
-        }
-
-        */
-
+        SetTitle(title, schedule.getType());
     }
 
+    //Attempts to save schedule
     public void SaveSchedule() {
 
         //Writes document to file
@@ -192,12 +150,12 @@ public class TESTKLASS extends AppCompatActivity {
 
     }
 
+    //Sets the toolbar title
     public void SetTitle(String name, int type){
 
         //Course
         if(type == 1) {
 
-            //Sets the name of toolbar
             String output = name.substring(name.indexOf(",") + 1);
             assert getSupportActionBar() != null;
             if (output.equals("")) {
@@ -206,21 +164,8 @@ public class TESTKLASS extends AppCompatActivity {
 
         }
 
-        //Room
-        else if(type == 2) {
-
-            //Sets the name of toolbar
-            assert getSupportActionBar() != null;
-            if (name.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(name);
-
-        }
-
-        //Signature
+        //Room, Signature and Programme
         else {
-
-            //Sets the name of toolbar
             assert getSupportActionBar() != null;
             if (name.equals("")) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));

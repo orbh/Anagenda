@@ -30,4 +30,10 @@ public class Schedule extends Application{
 
     public void setType(int number) { type = number; }
 
+    public void setSchedule(String link, Document doc, Integer number) {
+        url = link;
+        schedule = doc;
+        type = number;
+    }
+
 }
