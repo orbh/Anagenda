@@ -24,6 +24,9 @@ import java.util.concurrent.ExecutionException;
 
 public class MySchedules extends AppCompatActivity {
 
+    //ScheduleHelper
+    ScheduleHelper scheduleHelper;
+
     //Toolbar
     Toolbar toolbar;
 
@@ -39,6 +42,9 @@ public class MySchedules extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
+
+        //ScheduleHelper
+        scheduleHelper = new ScheduleHelper();
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -114,19 +120,20 @@ public class MySchedules extends AppCompatActivity {
 
         schedule.setDocument(scheduleList.get(position).getDocument());
         schedule.setUrl(scheduleList.get(position).getUrl());
+        schedule.setType(scheduleList.get(position).getType());
 
         Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
     }
 
-    //ToDo This is probably just in place until seach is functioning
+    //JUST UNTIL SEARCH IS IMPLEMENTED
+    //ToDo Delete afterwards
     public void ChangeActivityToTestclass(View v) {
         Schedule schedule = ((Schedule) getApplicationContext());
-        schedule.setDocument(FetchSchedule(schedule.getUrl()));
-
-        //Sets type
-        ScheduleHelper helper = new ScheduleHelper();
-        schedule.setType(helper.getScheduleType(schedule));
+        Schedule tempSchedule = scheduleHelper.FetchSchedule(schedule.getUrl());
+        schedule.setUrl(tempSchedule.getUrl());
+        schedule.setType(tempSchedule.getType());
+        schedule.setDocument(tempSchedule.getDocument());
 
         Intent intent = new Intent(this, TESTKLASS.class);
         startActivity(intent);
@@ -157,7 +164,7 @@ public class MySchedules extends AppCompatActivity {
                 Schedule schedule = new Schedule();
                 schedule.setUrl(document.baseUri());
                 schedule.setDocument(document);
-
+                schedule.setType(scheduleHelper.getScheduleType(schedule));
                 scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -168,6 +175,7 @@ public class MySchedules extends AppCompatActivity {
 
     }
 
+    //Enables empty state
     public void CheckDocumentList() {
         LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
@@ -183,23 +191,6 @@ public class MySchedules extends AppCompatActivity {
 
     public void RefreshSchedules() {
         //ToDo Should fetch new schedules from the ones saved
-    }
-
-    //JUST FOR TEST PURPOSES
-    //Here until we get search function going
-    //Should only be in TESTKLASS
-    public Document FetchSchedule(String url) {
-        try {
-            return new AsyncKronoXHelper().execute(url).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Log.e("InterruptedException", "InterruptedException" + e);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            Log.e("ExecutionException", "ExecutionExeption" + e);
-        }
-        //ToDo Maybe null has to be something else
-        return null;
     }
 
 }
