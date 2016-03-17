@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import org.jsoup.Jsoup;
@@ -168,11 +169,15 @@ public class MySchedules extends AppCompatActivity {
     }
 
     public void CheckDocumentList() {
-
+        LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
-            savedScheduleListView.setBackgroundResource(R.drawable.ic_snooze_red_500_18dp);
+
+
+            linear.setBackgroundResource(R.drawable.android);
+           // savedScheduleListView.setBackgroundResource(R.drawable.android);
         } else {
-            savedScheduleListView.setBackgroundResource(0);
+            linear.setBackgroundResource(0);
+          //  savedScheduleListView.setBackgroundResource(0);
         }
     }
 
