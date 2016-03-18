@@ -110,7 +110,7 @@ public class CustomScheduleAdapter extends ArrayAdapter<Element> {
             //Signature
             else if (schedule.getType() == 4) {
 
-                description.setText(element.child(9).text());
+                description.setText(element.child(8).text());
                 time.setText(element.child(3).text());
                 locale.setText(element.child(6).text());
                 course.setText(element.child(5).text());
