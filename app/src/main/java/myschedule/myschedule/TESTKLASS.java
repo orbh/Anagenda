@@ -2,6 +2,8 @@ package myschedule.myschedule;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,9 +26,13 @@ import java.util.concurrent.ExecutionException;
 public class TESTKLASS extends AppCompatActivity {
 
     Toolbar toolbar;
-    ListView lwSchedule;
+    //ListView lwSchedule;
 
-    CustomScheduleAdapter customScheduleAdapter;
+    RecyclerView mRecycleView;
+    RecyclerView.Adapter mRecycleAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
+
+    //CustomScheduleAdapter customScheduleAdapter;
 
     //Contains all "rows" of posts
     List<Element> elementList = new ArrayList<>();
@@ -40,10 +46,19 @@ public class TESTKLASS extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mRecycleView = (RecyclerView) findViewById(R.id.schedule_recycler_view);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecycleView.setLayoutManager(mLayoutManager);
+
+        mRecycleAdapter = new ScheduleAdapter(elementList);
+        mRecycleView.setAdapter(mRecycleAdapter);
+
+        /*
         //Schedule with custom adapter
         lwSchedule = (ListView) findViewById(R.id.lwSchedule);
         customScheduleAdapter = new CustomScheduleAdapter(this, elementList);
         lwSchedule.setAdapter(customScheduleAdapter);
+        */
     }
 
     @Override
@@ -160,7 +175,7 @@ public class TESTKLASS extends AppCompatActivity {
 
     public void RefreshList(){
         elementList.clear();
-        customScheduleAdapter.notifyDataSetChanged();
+        //customScheduleAdapter.notifyDataSetChanged();
     }
 
 }
