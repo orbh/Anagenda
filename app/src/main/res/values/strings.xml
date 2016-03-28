@@ -34,6 +34,7 @@
 
         <!-- Schedule-view -->
         <string name="schedule_title">Schedule</string>
+    <string name="schedule_group">Group: </string>
 
         <!-- Saved schedules -->
         <string name="saved_schedules_description">Description</string>
