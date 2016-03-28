@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prefs_update_list">
+        <item>12h</item>
+        <item>24h</item>
+        <item>48h</item>
+        <item>Never</item>
+    </string-array>
+</resources>

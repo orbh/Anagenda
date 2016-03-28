@@ -2,6 +2,24 @@
 
     <!-- General -->
     <string name="app_name">My Schedule</string>
+    <string name="company_website">http://unischemat.wordpress.com</string>
+
+    <!-- Preferences -->
+
+    <!-- General -->
+    <string name="pref_general_header">General</string>
+    <string name="pref_general_offline">Offline-mode</string>
+    <string name="pref_general_offline_off">OFF</string>
+    <string name="pref_general_offline_on">ON</string>
+
+    <!-- Update -->
+    <string name="pref_update_header">Update</string>
+    <string name="pref_update_interval_header">Automatic update</string>
+    <string name="pref_update_interval_dialog">Interval</string>
+
+    <!-- Misc -->
+    <string name="pref_misc_header">Miscellaneous</string>
+    <string name="pref_misc_website">Website</string>
     
     <!-- ActionBar -->
     <string name="action_title_myschedules">My Schedules</string>

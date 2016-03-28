@@ -22,6 +22,10 @@
         </activity>
         <activity android:name=".TESTKLASS">
         </activity>
+        <activity android:name=".PrefActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

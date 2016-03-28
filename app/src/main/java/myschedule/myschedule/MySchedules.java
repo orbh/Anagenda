@@ -105,6 +105,7 @@ public class MySchedules extends AppCompatActivity {
 
             //ToDo Make it go to settings menu
             case R.id.action_settings:
+                GoToPreferences();
                 return true;
 
             case R.id.action_refresh:
@@ -193,6 +194,12 @@ public class MySchedules extends AppCompatActivity {
 
     public void RefreshSchedules() {
         //ToDo Should fetch new schedules from the ones saved
+    }
+
+    public void GoToPreferences() {
+
+        Intent intent = new Intent(this, PrefActivity.class);
+        startActivity(intent);
     }
 
 }

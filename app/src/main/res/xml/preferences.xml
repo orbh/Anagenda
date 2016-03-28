@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_general_header">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="@string/pref_general_offline"
+            android:defaultValue="@string/pref_general_offline_off" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_update_header">
+
+        <ListPreference
+            android:key="update_list"
+            android:title="@string/pref_update_interval_header"
+            android:dialogTitle="@string/pref_update_interval_dialog"
+            android:entries="@array/prefs_update_list"
+            android:entryValues="@array/prefs_update_list_entries" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_misc_header">
+        <Preference android:title="@string/pref_misc_website">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/company_website" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
