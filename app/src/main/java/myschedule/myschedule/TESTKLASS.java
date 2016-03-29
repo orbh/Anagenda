@@ -77,6 +77,7 @@ public class TESTKLASS extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         menu.removeItem(R.id.action_refresh);
         menu.removeItem(R.id.action_search);
+        menu.removeItem(R.id.action_settings);
         return true;
     }
 
@@ -132,10 +133,16 @@ public class TESTKLASS extends AppCompatActivity {
             String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
             String output = input.substring(0, input.indexOf(","));
             schedule.getDocument().setBaseUri(schedule.getUrl());
-
             FileOutputStream fos = openFileOutput(output, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(schedule.getDocument().toString());
+
+            ScheduleFile scheduleFile = new ScheduleFile();
+            scheduleFile.setUrl(schedule.getUrl());
+            scheduleFile.setType(schedule.getType());
+            scheduleFile.setSchedule(schedule.getDocument().toString());
+
+            oos.writeObject(scheduleFile);
+            //oos.writeObject(schedule.getDocument().toString());
             oos.close();
             fos.close();
 

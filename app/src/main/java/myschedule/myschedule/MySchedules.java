@@ -16,10 +16,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class MySchedules extends AppCompatActivity {
 
@@ -164,15 +167,34 @@ public class MySchedules extends AppCompatActivity {
             String emptyUri = "";
 
             try {
-                Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
+
+                ScheduleFile scheduleFile;
+                FileInputStream fin = new FileInputStream(testFile);
+                ObjectInputStream ois = new ObjectInputStream(fin);
+                scheduleFile = (ScheduleFile) ois.readObject();
+                ois.close();
+
                 Schedule schedule = new Schedule();
+                schedule.setType(scheduleFile.getType());
+                schedule.setUrl(scheduleFile.getUrl());
+                schedule.setDocument(Jsoup.parse(testFile, "UTF-8", scheduleFile.getUrl()));
+
+                System.out.println(schedule.getUrl());
+                System.out.println(schedule.getType());
+                //Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
+
+                /*
                 schedule.setUrl(document.baseUri());
                 schedule.setDocument(document);
                 schedule.setType(scheduleHelper.getScheduleType(schedule));
+                */
                 scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("IOEXception", "IOException" + e);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
             }
 
         }
@@ -181,14 +203,14 @@ public class MySchedules extends AppCompatActivity {
 
     //Enables empty state
     public void CheckDocumentList() {
-        LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
+        LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
             linear.setBackgroundResource(R.drawable.android);
-           // savedScheduleListView.setBackgroundResource(R.drawable.android);
+            // savedScheduleListView.setBackgroundResource(R.drawable.android);
         } else {
             linear.setBackgroundResource(0);
-          //  savedScheduleListView.setBackgroundResource(0);
+            //  savedScheduleListView.setBackgroundResource(0);
         }
     }
 
@@ -200,6 +222,14 @@ public class MySchedules extends AppCompatActivity {
 
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
+    }
+
+    public void UpdateSchedule() {
+
+    }
+
+    public void UpdateAllSchedules() {
+        UpdateSchedule();
     }
 
 }
