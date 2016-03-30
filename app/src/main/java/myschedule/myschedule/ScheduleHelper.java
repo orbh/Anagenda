@@ -2,8 +2,6 @@ package myschedule.myschedule;
 
 import android.util.Log;
 
-import org.jsoup.nodes.Document;
-
 import java.util.concurrent.ExecutionException;
 
 public class ScheduleHelper {
