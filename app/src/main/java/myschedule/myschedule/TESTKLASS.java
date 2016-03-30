@@ -1,11 +1,6 @@
 package myschedule.myschedule;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class TESTKLASS extends AppCompatActivity {
 
