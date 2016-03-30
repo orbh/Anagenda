@@ -24,7 +24,6 @@ import java.util.List;
 public class TESTKLASS extends AppCompatActivity {
 
     Toolbar toolbar;
-    //ListView lwSchedule;
 
     RecyclerView mRecycleView;
     RecyclerView.Adapter mRecycleAdapter;
@@ -49,10 +48,6 @@ public class TESTKLASS extends AppCompatActivity {
         mRecycleAdapter = new ScheduleAdapter(elementList, this);
         mRecycleView.setAdapter(mRecycleAdapter);
 
-        /*
-        mRecycleView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
-                .build());
-                */
     }
 
     @Override
@@ -133,7 +128,6 @@ public class TESTKLASS extends AppCompatActivity {
             scheduleFile.setSchedule(schedule.getDocument().toString());
 
             oos.writeObject(scheduleFile);
-            //oos.writeObject(schedule.getDocument().toString());
             oos.close();
             fos.close();
 
