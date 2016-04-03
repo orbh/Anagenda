@@ -12,8 +12,6 @@ public class PrefActivity extends PreferenceActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefFragment()).commit();
-
-
     }
 
 }

@@ -1,7 +1,10 @@
 package myschedule.myschedule;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,6 +29,9 @@ import java.util.Scanner;
 
 public class MySchedules extends AppCompatActivity {
 
+    //Context
+    Context mContext;
+
     //ScheduleHelper
     ScheduleHelper scheduleHelper;
 
@@ -44,6 +50,13 @@ public class MySchedules extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
+
+        //Context
+        mContext = this;
+
+        //Sets default values for preferences
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mContext);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         //ScheduleHelper
         scheduleHelper = new ScheduleHelper();
@@ -179,15 +192,6 @@ public class MySchedules extends AppCompatActivity {
                 schedule.setUrl(scheduleFile.getUrl());
                 schedule.setDocument(Jsoup.parse(testFile, "UTF-8", scheduleFile.getUrl()));
 
-                System.out.println(schedule.getUrl());
-                System.out.println(schedule.getType());
-                //Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
-
-                /*
-                schedule.setUrl(document.baseUri());
-                schedule.setDocument(document);
-                schedule.setType(scheduleHelper.getScheduleType(schedule));
-                */
                 scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();

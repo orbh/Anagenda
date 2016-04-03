@@ -17,7 +17,8 @@
             android:title="@string/pref_update_interval_header"
             android:dialogTitle="@string/pref_update_interval_dialog"
             android:entries="@array/prefs_update_list"
-            android:entryValues="@array/prefs_update_list_entries" />
+            android:entryValues="@array/prefs_update_list_entries"
+            android:defaultValue="24"/>
 
     </PreferenceCategory>
 
@@ -28,6 +29,20 @@
                 android:data="@string/company_website" />
         </Preference>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_special_header">
+        <Preference android:title="@string/pref_special_jsoup">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/pref_special_jsoup_link"/>
+        </Preference>
+        <Preference android:title="@string/pref_special_prabeesh">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/pref_special_prabeesh_link"
+                />
+            </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

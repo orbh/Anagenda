@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 
 public class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -16,10 +17,9 @@ public class PrefFragment extends PreferenceFragment implements SharedPreference
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
-
-
         ListPreference preference = (ListPreference) findPreference("update_list");
         preference.setSummary(preference.getEntry());
+
     }
 
     @Override
@@ -37,6 +37,7 @@ public class PrefFragment extends PreferenceFragment implements SharedPreference
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Preference pref = findPreference(key);
 
+        //Sets the chosen interval as summary
         if (pref instanceof ListPreference) {
             ListPreference listPref = (ListPreference) pref;
             pref.setSummary(listPref.getEntry());
