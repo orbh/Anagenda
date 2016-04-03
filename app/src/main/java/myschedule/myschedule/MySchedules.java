@@ -20,8 +20,12 @@ import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -55,6 +59,7 @@ public class MySchedules extends AppCompatActivity {
         mContext = this;
 
         //Sets default values for preferences
+        //ToDo Seems like the 1st line doesn't have to be here
         SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mContext);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -125,7 +130,7 @@ public class MySchedules extends AppCompatActivity {
                 return true;
 
             case R.id.action_refresh:
-                RefreshSchedules();
+                UpdateAllSchedules();
                 return true;
 
             default:
@@ -218,22 +223,66 @@ public class MySchedules extends AppCompatActivity {
         }
     }
 
-    public void RefreshSchedules() {
-        //ToDo Should fetch new schedules from the ones saved
-    }
-
     public void GoToPreferences() {
-
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
     }
 
-    public void UpdateSchedule() {
+    //ToDo Make it async
+    public void UpdateSchedule(File file, String path) {
 
+        try {
+            ScheduleFile scheduleFile;
+            FileInputStream fin = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            scheduleFile = (ScheduleFile) ois.readObject();
+            ois.close();
+
+            ScheduleHelper scheduleHelper = new ScheduleHelper();
+            Schedule newSchedule = scheduleHelper.FetchSchedule(scheduleFile.getUrl());
+
+            //ToDo Implement method for checking for updates
+
+            File deletedFile = new File(path);
+            deletedFile.delete();
+
+            ScheduleFile saveSchedule = new ScheduleFile();
+            saveSchedule.setUrl(newSchedule.getUrl());
+            saveSchedule.setType(newSchedule.getType());
+            saveSchedule.setSchedule(newSchedule.getDocument().toString());
+
+            FileOutputStream fos = openFileOutput(file.getName(), MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(saveSchedule);
+            oos.close();
+            fos.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("FileNotFoundException", "FileNotFoundException" + e);
+        }
+        catch (StreamCorruptedException e) {
+            e.printStackTrace();
+            Log.e("StreamCorruptedE", "StreamCorruptedE" + e);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Log.e("IOException", "IOException" + e);
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
+        }
     }
 
     public void UpdateAllSchedules() {
-        UpdateSchedule();
+        File childFile[] = getFilesDir().listFiles();
+        for (File file: childFile) {
+            UpdateSchedule(file, file.getPath());
+        }
+        LoadSavedSchedules();
+        CheckDocumentList();
+        savedScheduleAdapter.notifyDataSetChanged();
     }
 
 }
