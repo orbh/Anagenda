@@ -3,6 +3,7 @@ package myschedule.myschedule;
 import android.app.Application;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.Serializable;
 
@@ -11,6 +12,8 @@ public class Schedule extends Application {
     public String url;
     public Document schedule;
     public int type;
+
+
 
     public String getUrl() {
         return url;

@@ -3,6 +3,9 @@ package myschedule.myschedule;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,15 +17,14 @@ import android.widget.ListView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class MySchedules extends AppCompatActivity {
 
@@ -33,17 +35,23 @@ public class MySchedules extends AppCompatActivity {
     Toolbar toolbar;
 
     //Adapter for saved schedules-list
-    SavedScheduleAdapter savedScheduleAdapter;
+    RecyclerView Rview;
+    RecyclerView.Adapter RAdapter;
+    RecyclerView.LayoutManager RLayoutManager;
 
     //Stuff to do with the list with saved schedules
     ListView savedScheduleListView;
     List<Schedule> scheduleList = new ArrayList<>();
+    List<Elements> elementList = new ArrayList<>();
 
     //Runs when you first start the app
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
+
+        scheduleList = new ArrayList<>();
+
 
         //ScheduleHelper
         scheduleHelper = new ScheduleHelper();
@@ -53,17 +61,26 @@ public class MySchedules extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
 
+        Rview = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
+        RLayoutManager = new LinearLayoutManager(this);
+        Rview.setLayoutManager(RLayoutManager);
+
+        RAdapter = new SavedScheduleAdapter(elementList,this);
+        Rview.setAdapter(RAdapter);
+
+
+
         //ListView + adapter = true
-        savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
-        savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
-        savedScheduleListView.setAdapter(savedScheduleAdapter);
-        savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LoadSelectedSchedule(view, position);
+        //savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
+      //  savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
+       // savedScheduleListView.setAdapter(savedScheduleAdapter);
+      //  savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       //     @Override
+      //      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+       //        LoadSelectedSchedule(view, position);
             }
-        });
-    }
+    //    });
+  //  }
 
     //Runs every time the activity gets visible
     @Override
@@ -72,7 +89,7 @@ public class MySchedules extends AppCompatActivity {
         LoadSavedSchedules();
         CheckDocumentList();
         //ToDo Sets it to refresh even if i dont have to
-        savedScheduleAdapter.notifyDataSetChanged();
+        RAdapter.notifyDataSetChanged();
 
         //OBS JUST FOR TEST PURPOSES
         //Sets one of 3 default schedules for button, until we have a search function
@@ -146,6 +163,7 @@ public class MySchedules extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     //Loads saved schedules from files
     public void LoadSavedSchedules() {
         //ToDo Connect to saved list of schedules
@@ -167,34 +185,17 @@ public class MySchedules extends AppCompatActivity {
             String emptyUri = "";
 
             try {
-
-                ScheduleFile scheduleFile;
-                FileInputStream fin = new FileInputStream(testFile);
-                ObjectInputStream ois = new ObjectInputStream(fin);
-                scheduleFile = (ScheduleFile) ois.readObject();
-                ois.close();
-
+                Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
                 Schedule schedule = new Schedule();
-                schedule.setType(scheduleFile.getType());
-                schedule.setUrl(scheduleFile.getUrl());
-                schedule.setDocument(Jsoup.parse(testFile, "UTF-8", scheduleFile.getUrl()));
-
-                System.out.println(schedule.getUrl());
-                System.out.println(schedule.getType());
-                //Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
-
-                /*
                 schedule.setUrl(document.baseUri());
                 schedule.setDocument(document);
                 schedule.setType(scheduleHelper.getScheduleType(schedule));
-                */
                 scheduleList.add(schedule);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("IOEXception", "IOException" + e);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
             }
 
         }
@@ -203,14 +204,14 @@ public class MySchedules extends AppCompatActivity {
 
     //Enables empty state
     public void CheckDocumentList() {
-        LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
+        LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
             linear.setBackgroundResource(R.drawable.android);
-            // savedScheduleListView.setBackgroundResource(R.drawable.android);
+           // savedScheduleListView.setBackgroundResource(R.drawable.android);
         } else {
             linear.setBackgroundResource(0);
-            //  savedScheduleListView.setBackgroundResource(0);
+          //  savedScheduleListView.setBackgroundResource(0);
         }
     }
 
@@ -222,14 +223,6 @@ public class MySchedules extends AppCompatActivity {
 
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
-    }
-
-    public void UpdateSchedule() {
-
-    }
-
-    public void UpdateAllSchedules() {
-        UpdateSchedule();
     }
 
 }

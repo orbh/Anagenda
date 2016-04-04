@@ -1,87 +1,121 @@
 package myschedule.myschedule;
 
 import android.content.Context;
+import android.media.Image;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.List;
 
 
-public class SavedScheduleAdapter extends ArrayAdapter<Schedule> {
-    SavedScheduleAdapter(Context context, List<Schedule> documents) {
-        super(context, R.layout.saved_schedules_layout, documents);
+public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdapter.ViewHolder> {
+
+    private List<Elements> sDataset;
+    private Schedule schedule;
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public CardView cardView;
+        public LinearLayout rowlayout;
+
+        public ImageView scheduleIcon;
+        public TextView titel;
+        public TextView text;
+        public TextView course;
+
+        public ViewHolder(View v) {
+            super(v);
+
+            cardView = (CardView) v.findViewById(R.id.schedule_card_view);
+            rowlayout = (LinearLayout) v.findViewById(R.id.saved_schedules_row_layout);
+            scheduleIcon = (ImageView) v.findViewById(R.id.saved_schedules_icon);
+            titel = (TextView) v.findViewById(R.id.saved_schedules_coursename);
+            text = (TextView) v.findViewById(R.id.saved_schedules_next_event);
+            course = (TextView) v.findViewById(R.id.saved_schedules_coursecode);
+
+        }
+    }
+
+    public SavedScheduleAdapter(List<Elements>Dataset, Context context){
+
+        sDataset = Dataset;
+        schedule = ((Schedule) context.getApplicationContext());
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public SavedScheduleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.saved_schedules_layout, parent, false);
 
-        //ToDo Look up ViewHolder to speed up the ListView
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View customView = inflater.inflate(R.layout.saved_schedules_layout, parent, false);
+        // set the view's size, margins, paddings and layout parameters
 
-        Schedule schedule = getItem(position);
-        //ToDo Set icon for different types
-        ImageView icon = (ImageView) customView.findViewById(R.id.saved_schedules_icon);
-        TextView coursename = (TextView) customView.findViewById(R.id.saved_schedules_coursename);
-        TextView next_event = (TextView) customView.findViewById(R.id.saved_schedules_next_event);
-        TextView coursecode = (TextView) customView.findViewById(R.id.saved_schedules_coursecode);
+        return new ViewHolder(v);
+    }
+
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         //Coursename and coursecode
-        Element title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-        String wholeTitle = title.text();
+        Element stitle = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+        String wholeTitle = stitle.text();
         String[] splitTitle = wholeTitle.split("\\s*,\\s*");
-
-        if (schedule.getType() == 0) {
-            return customView;
-        }
 
         //Next event
         Element nextEvent = schedule.getDocument().select("table.schemaTabell > tbody > tr.data-white, tr.data-grey").first();
         String mergedWdAndDate = nextEvent.child(1).text() + ", " + nextEvent.child(2).text();
         String time = nextEvent.child(3).text();
         //ToDo Should be in strings.xml
-        next_event.setText(getContext().getString(R.string.saved_schedules_next_event) + " " + mergedWdAndDate + " " + time);
+        //nextEvent.setText(getContext().getString(R.string.saved_schedules_next_event) + " " + mergedWdAndDate + " " + time);
+
+        holder.cardView.setUseCompatPadding(true);
+        holder.titel.setText("");
+        holder.course.setText("");
+        holder.text.setText("");
+
+
+        Elements element = sDataset.get(position);
 
         //Course
         if (schedule.getType() == 1) {
-            coursecode.setText(splitTitle[0]);
-            String output = splitTitle[1] + "," + splitTitle[2];
-            coursename.setText(output);
-            icon.setImageResource(R.drawable.ic_today_black_36dp);
-            return customView;
+            holder.titel.setText(wholeTitle);
+            holder.text.setText(mergedWdAndDate + time);
+            holder.course.setText(splitTitle[0]);
+            holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
         }
-
         //Room
         else if (schedule.getType() == 2) {
-            coursename.setText(splitTitle[0]);
-            coursecode.setText(splitTitle[1]);
-            icon.setImageResource(R.drawable.ic_home_black_36dp);
-            return customView;
-        }
 
-        //Programme
+            holder.titel.setText(wholeTitle);
+            holder.text.setText(mergedWdAndDate + time);
+            holder.course.setText(splitTitle[1]);
+            holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
+        }
+        //Person
         else if (schedule.getType() == 3) {
-            coursename.setText(splitTitle[0]);
-            coursecode.setVisibility(View.INVISIBLE);
-            icon.setImageResource(R.drawable.ic_date_range_black_36dp);
-            return customView;
+            holder.titel.setText(splitTitle[1]);
+            holder.text.setText(mergedWdAndDate + time);
+            holder.course.setText(splitTitle[0]);
+            holder.scheduleIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        }
         }
 
-        //Signature
-        else {
-            coursename.setText(splitTitle[1]);
-            coursecode.setText(splitTitle[0]);
-            icon.setImageResource(R.drawable.ic_person_black_36dp);
-            return customView;
-        }
-
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return sDataset.size();
+    }
     }
 
-}
+
