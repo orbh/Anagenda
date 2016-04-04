@@ -65,7 +65,7 @@ public class MySchedules extends AppCompatActivity {
         RLayoutManager = new LinearLayoutManager(this);
         Rview.setLayoutManager(RLayoutManager);
 
-        RAdapter = new SavedScheduleAdapter(elementList,this);
+        RAdapter = new SavedScheduleAdapter(scheduleList,this);
         Rview.setAdapter(RAdapter);
 
 
@@ -108,6 +108,10 @@ public class MySchedules extends AppCompatActivity {
 
         Schedule schedule = ((Schedule) getApplicationContext());
         schedule.setUrl(url);
+        for (Elements element:elementList)
+              {
+                  System.out.println(element.toString());
+        }
     }
 
     //Creates additional items in toolbar

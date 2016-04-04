@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdapter.ViewHolder> {
 
-    private List<Elements> sDataset;
+    private List<Schedule> sDataset;
     private Schedule schedule;
 
 
@@ -48,7 +48,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         }
     }
 
-    public SavedScheduleAdapter(List<Elements>Dataset, Context context){
+    public SavedScheduleAdapter(List<Schedule>Dataset, Context context){
 
         sDataset = Dataset;
         schedule = ((Schedule) context.getApplicationContext());
@@ -68,7 +68,8 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         //Coursename and coursecode
-        Element stitle = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+    //    Element stitle = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
+        Element stitle = sDataset.get(position).getDocument().select("td.big2 > table > tbody > tr > td").get(1);
         String wholeTitle = stitle.text();
         String[] splitTitle = wholeTitle.split("\\s*,\\s*");
 
@@ -85,7 +86,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         holder.text.setText("");
 
 
-        Elements element = sDataset.get(position);
+        Schedule schedule = sDataset.get(position);
 
         //Course
         if (schedule.getType() == 1) {
