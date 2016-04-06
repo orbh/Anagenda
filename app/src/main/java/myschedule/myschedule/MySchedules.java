@@ -1,5 +1,6 @@
 package myschedule.myschedule;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,13 @@ public class MySchedules extends AppCompatActivity {
     //ScheduleHelper
     ScheduleHelper scheduleHelper;
 
+    private static Context mContext;
+
+    public static Context getContext() {
+        //  return instance.getApplicationContext();
+        return mContext;
+    }
+
     //Toolbar
     Toolbar toolbar;
 
@@ -45,10 +53,12 @@ public class MySchedules extends AppCompatActivity {
     List<Elements> elementList = new ArrayList<>();
 
     //Runs when you first start the app
-    @Override
+         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
+
+        mContext = getApplicationContext();
 
         scheduleList = new ArrayList<>();
 
@@ -56,7 +66,7 @@ public class MySchedules extends AppCompatActivity {
         //ScheduleHelper
         scheduleHelper = new ScheduleHelper();
 
-        //Toolbar
+             //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
@@ -69,6 +79,7 @@ public class MySchedules extends AppCompatActivity {
         Rview.setAdapter(RAdapter);
 
 
+        }
 
         //ListView + adapter = true
         //savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
@@ -78,7 +89,7 @@ public class MySchedules extends AppCompatActivity {
        //     @Override
       //      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
        //        LoadSelectedSchedule(view, position);
-            }
+
     //    });
   //  }
 

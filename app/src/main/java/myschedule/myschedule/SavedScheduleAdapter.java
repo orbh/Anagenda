@@ -1,6 +1,7 @@
 package myschedule.myschedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Document;
@@ -23,27 +25,35 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
 
     private List<Schedule> sDataset;
     private Schedule schedule;
+    private TESTKLASS testklass;
+    private ScheduleFile scheduleFile;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cardView;
         public LinearLayout rowlayout;
+        public RelativeLayout relativeLayout;
+        public RecyclerView Rview;
 
         public ImageView scheduleIcon;
         public TextView titel;
         public TextView text;
         public TextView course;
 
+
         public ViewHolder(View v) {
             super(v);
 
+            Rview = (RecyclerView)v.findViewById(R.id.saved_schedules_recycler_view);
             cardView = (CardView) v.findViewById(R.id.schedule_card_view);
             rowlayout = (LinearLayout) v.findViewById(R.id.saved_schedules_row_layout);
+            relativeLayout = (RelativeLayout)v.findViewById(R.id.saved_schedules_relativelayout);
             scheduleIcon = (ImageView) v.findViewById(R.id.saved_schedules_icon);
             titel = (TextView) v.findViewById(R.id.saved_schedules_coursename);
             text = (TextView) v.findViewById(R.id.saved_schedules_next_event);
             course = (TextView) v.findViewById(R.id.saved_schedules_coursecode);
+
 
         }
     }
@@ -51,7 +61,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
     public SavedScheduleAdapter(List<Schedule>Dataset, Context context){
 
         sDataset = Dataset;
-        schedule = ((Schedule) context.getApplicationContext());
+
     }
 
     @Override
@@ -66,6 +76,31 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
     }
 
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+               @Override
+                public void onClick(View view) {
+
+                   schedule = (Schedule)schedule.getApplicationContext();
+                   
+
+                //   schedule.setDocument(sDataset.get(position).getDocument());
+                //   schedule.setUrl(sDataset.get(position).getUrl());
+                //   schedule.setType(sDataset.get(position).getType());
+
+                   ScheduleFile scheduleFile = new ScheduleFile();
+                   scheduleFile.setUrl(sDataset.get(position).getUrl());
+                   scheduleFile.setType(sDataset.get(position).getType());
+                   scheduleFile.setSchedule(sDataset.get(position).getDocument().toString());
+
+
+
+
+                   Intent intent = new Intent((Context) sDataset, TESTKLASS.class);
+                    schedule.startActivity(intent);
+                }
+            });
+
 
         //Coursename and coursecode
     //    Element stitle = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1);
@@ -74,7 +109,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         String[] splitTitle = wholeTitle.split("\\s*,\\s*");
 
         //Next event
-        Element nextEvent = schedule.getDocument().select("table.schemaTabell > tbody > tr.data-white, tr.data-grey").first();
+        Element nextEvent = sDataset.get(position).getDocument().select("table.schemaTabell > tbody > tr.data-white, tr.data-grey").first();
         String mergedWdAndDate = nextEvent.child(1).text() + ", " + nextEvent.child(2).text();
         String time = nextEvent.child(3).text();
         //ToDo Should be in strings.xml
@@ -103,8 +138,16 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             holder.course.setText(splitTitle[1]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
         }
+
+        else if(schedule.getType() == 3){
+            holder.titel.setText(wholeTitle);
+            holder.text.setText(mergedWdAndDate + time);
+            holder.course.setText(splitTitle[1]);
+            holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
+        }
+
         //Person
-        else if (schedule.getType() == 3) {
+        else if (schedule.getType() == 4) {
             holder.titel.setText(splitTitle[1]);
             holder.text.setText(mergedWdAndDate + time);
             holder.course.setText(splitTitle[0]);
