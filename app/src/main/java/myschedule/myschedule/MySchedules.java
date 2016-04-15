@@ -1,11 +1,13 @@
 package myschedule.myschedule;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +19,8 @@ import android.widget.ListView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,32 +43,38 @@ public class MySchedules extends AppCompatActivity {
     Toolbar toolbar;
 
     //Adapter for saved schedules-list
-    SavedScheduleAdapter savedScheduleAdapter;
+    RecyclerView Rview;
+    RecyclerView.Adapter RAdapter;
+    RecyclerView.LayoutManager RLayoutManager;
 
     //Stuff to do with the list with saved schedules
     ListView savedScheduleListView;
     List<Schedule> scheduleList = new ArrayList<>();
+    List<Elements> elementList = new ArrayList<>();
 
     //Runs when you first start the app
-    @Override
+         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
 
-        //Context
-        mContext = this;
-
-        //Sets default values for preferences
-        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mContext);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
         //ScheduleHelper
         scheduleHelper = new ScheduleHelper();
 
-        //Toolbar
+             //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
+
+        Rview = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
+        RLayoutManager = new LinearLayoutManager(this);
+        Rview.setLayoutManager(RLayoutManager);
+
+        RAdapter = new SavedScheduleAdapter(scheduleList,this);
+        Rview.setAdapter(RAdapter);
+
+
+        }
 
         //ListView + adapter = true
         savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
@@ -85,7 +95,7 @@ public class MySchedules extends AppCompatActivity {
         LoadSavedSchedules();
         CheckDocumentList();
         //ToDo Sets it to refresh even if i dont have to
-        savedScheduleAdapter.notifyDataSetChanged();
+        RAdapter.notifyDataSetChanged();
 
         //OBS JUST FOR TEST PURPOSES
         //Sets one of 3 default schedules for button, until we have a search function
@@ -104,6 +114,10 @@ public class MySchedules extends AppCompatActivity {
 
         Schedule schedule = ((Schedule) getApplicationContext());
         schedule.setUrl(url);
+        for (Elements element:elementList)
+              {
+                  System.out.println(element.toString());
+        }
     }
 
     //Creates additional items in toolbar
@@ -192,6 +206,15 @@ public class MySchedules extends AppCompatActivity {
                 schedule.setUrl(scheduleFile.getUrl());
                 schedule.setDocument(Jsoup.parse(testFile, "UTF-8", scheduleFile.getUrl()));
 
+                System.out.println(schedule.getUrl());
+                System.out.println(schedule.getType());
+                //Document document = Jsoup.parse(testFile, "UTF-8", emptyUri);
+
+                /*
+                schedule.setUrl(document.baseUri());
+                schedule.setDocument(document);
+                schedule.setType(scheduleHelper.getScheduleType(schedule));
+                */
                 scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -207,11 +230,11 @@ public class MySchedules extends AppCompatActivity {
 
     //Enables empty state
     public void CheckDocumentList() {
-        LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
+        LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
             linear.setBackgroundResource(R.drawable.android);
-            // savedScheduleListView.setBackgroundResource(R.drawable.android);
+           // savedScheduleListView.setBackgroundResource(R.drawable.android);
         } else {
             linear.setBackgroundResource(0);
             //  savedScheduleListView.setBackgroundResource(0);

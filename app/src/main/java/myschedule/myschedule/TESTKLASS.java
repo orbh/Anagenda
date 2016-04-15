@@ -32,6 +32,8 @@ public class TESTKLASS extends AppCompatActivity {
     //Contains all "rows" of posts
     List<Element> elementList = new ArrayList<>();
 
+    public TESTKLASS(){}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
