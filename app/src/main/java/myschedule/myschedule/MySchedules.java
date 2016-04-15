@@ -1,5 +1,19 @@
 package myschedule.myschedule;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
+import android.graphics.Rect;
+import android.os.Build;
+import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -239,5 +253,10 @@ public class MySchedules extends AppCompatActivity {
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
     }
+
+
+
+
+
 
 }

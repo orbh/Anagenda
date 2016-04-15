@@ -21,12 +21,14 @@ import org.jsoup.select.Elements;
 import java.util.List;
 
 
+
 public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdapter.ViewHolder> {
 
     private List<Schedule> sDataset;
     private Schedule schedule;
     private TESTKLASS testklass;
     private ScheduleFile scheduleFile;
+    private Context mcontext;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,13 +56,13 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             text = (TextView) v.findViewById(R.id.saved_schedules_next_event);
             course = (TextView) v.findViewById(R.id.saved_schedules_coursecode);
 
-
         }
     }
 
     public SavedScheduleAdapter(List<Schedule>Dataset, Context context){
 
         sDataset = Dataset;
+        mcontext = context;
 
     }
 
@@ -72,6 +74,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
 
         // set the view's size, margins, paddings and layout parameters
 
+        schedule = (Schedule)mcontext.getApplicationContext();
         return new ViewHolder(v);
     }
 
@@ -80,24 +83,23 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             {
                @Override
                 public void onClick(View view) {
+                   Schedule mschedule = new Schedule();
+                   mschedule.setDocument(sDataset.get(position).getDocument());
+                   mschedule.setUrl(sDataset.get(position).getUrl());
+                   mschedule.setType(sDataset.get(position).getType());
 
-                   schedule = (Schedule)schedule.getApplicationContext();
-                   
+                   schedule = mschedule;
 
-                //   schedule.setDocument(sDataset.get(position).getDocument());
-                //   schedule.setUrl(sDataset.get(position).getUrl());
-                //   schedule.setType(sDataset.get(position).getType());
-
-                   ScheduleFile scheduleFile = new ScheduleFile();
-                   scheduleFile.setUrl(sDataset.get(position).getUrl());
-                   scheduleFile.setType(sDataset.get(position).getType());
-                   scheduleFile.setSchedule(sDataset.get(position).getDocument().toString());
-
+                //   ScheduleFile scheduleFile = new ScheduleFile();
+                //   scheduleFile.setUrl(sDataset.get(position).getUrl());
+                //   scheduleFile.setType(sDataset.get(position).getType());
+                //   scheduleFile.setSchedule(sDataset.get(position).getDocument().toString());
 
 
 
-                   Intent intent = new Intent((Context) sDataset, TESTKLASS.class);
-                    schedule.startActivity(intent);
+
+                   Intent intent = new Intent (mcontext, TESTKLASS.class);
+                   mcontext.startActivity(intent);
                 }
             });
 
