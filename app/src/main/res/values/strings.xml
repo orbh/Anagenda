@@ -2,7 +2,7 @@
 
     <!-- General -->
     <string name="app_name">My Schedule</string>
-    <string name="company_website">http://unischemat.wordpress.com</string>
+    <string name="company_website" translatable="false">http://unischemat.wordpress.com</string>
 
     <!-- Preferences -->
 
@@ -23,10 +23,10 @@
 
         <!-- Special Mentions -->
         <string name="pref_special_header">Special Mentions</string>
-        <string name="pref_special_jsoup">Jonathan Headley</string>
-        <string name="pref_special_jsoup_link">http://jhy.io/</string>
-        <string name="pref_special_prabeesh">PRABEESH S K</string>
-        <string name="pref_special_prabeesh_link">https://www.youtube.com/user/TICOONTECHNOLOGIES</string>
+        <string name="pref_special_jsoup" translatable="false">Jonathan Headley</string>
+        <string name="pref_special_jsoup_link" translatable="false">http://jhy.io/</string>
+        <string name="pref_special_prabeesh" translatable="false">PRABEESH S K</string>
+        <string name="pref_special_prabeesh_link" translatable="false">https://www.youtube.com/user/TICOONTECHNOLOGIES</string>
     
     <!-- ActionBar -->
     <string name="action_title_myschedules">My Schedules</string>
@@ -36,21 +36,21 @@
     <string name="action_settings">Settings</string>
 
     <!-- Development helpers -->
-    <string name="default_schedule1">
+    <string name="default_schedule1" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.FE100G-26076V16-
     </string>
-    <string name="default_schedule2">
+    <string name="default_schedule2" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.PS3100-36161V16-
     </string>
-    <string name="default_schedule3">
+    <string name="default_schedule3" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.IK100G-26073V16-
     </string>
-    <string name="default_schedule4">
+    <string name="default_schedule4" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.P245
     </string>
-    <string name="default_schedule6" formatted="false">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=p.Dataingenj%C3%B6rsprogrammet+%C3%A5k+1
+    <string name="default_schedule6" formatted="false" translatable="false">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=p.Dataingenj%C3%B6rsprogrammet+%C3%A5k+1
     </string>
-    <string name="default_schedule5">
+    <string name="default_schedule5" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forklaringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;startDatum=idag&amp;resurser=s.jpn
     </string>
 
@@ -71,9 +71,9 @@
     <string name="toast_saved_schedule">Saved</string>
 
     <!-- Content describers -->
-    <string name="saved_schedules_icon_course">Course-icon</string>
-    <string name="saved_schedules_icon_locale">Locale-icon</string>
-    <string name="saved_schedules_icon_programme">Programme-icon</string>
-    <string name="saved_schedules_icon_person">Person-icon</string>
+    <string name="saved_schedules_icon_course" translatable="false">Course-icon</string>
+    <string name="saved_schedules_icon_locale" translatable="false">Locale-icon</string>
+    <string name="saved_schedules_icon_programme" translatable="false">Programme-icon</string>
+    <string name="saved_schedules_icon_person" translatable="false">Person-icon</string>
 
 </resources>
