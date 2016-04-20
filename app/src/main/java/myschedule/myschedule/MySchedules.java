@@ -210,7 +210,8 @@ public class MySchedules extends AppCompatActivity {
 
     }
 
-    //Enables empty state
+    //Enables empty state function
+    //ToDo Change the empty state picture
     public void CheckDocumentList() {
         LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
