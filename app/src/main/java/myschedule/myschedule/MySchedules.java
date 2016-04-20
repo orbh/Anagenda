@@ -1,5 +1,6 @@
 package myschedule.myschedule;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,10 +10,13 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -31,6 +35,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import android.view.MotionEvent;
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener.SwipeListener;
+
 public class MySchedules extends AppCompatActivity {
 
     //Context
@@ -42,8 +49,9 @@ public class MySchedules extends AppCompatActivity {
     //Toolbar
     Toolbar toolbar;
 
+
     //Adapter for saved schedules-list
-    RecyclerView Rview;
+    RecyclerView recyclerView;
     RecyclerView.Adapter RAdapter;
     RecyclerView.LayoutManager RLayoutManager;
 
@@ -51,6 +59,8 @@ public class MySchedules extends AppCompatActivity {
     ListView savedScheduleListView;
     List<Schedule> scheduleList = new ArrayList<>();
     List<Elements> elementList = new ArrayList<>();
+
+    private SavedScheduleAdapter adapter;
 
     //Runs when you first start the app
          @Override
@@ -66,27 +76,33 @@ public class MySchedules extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
 
-        Rview = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
+        recyclerView = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
         RLayoutManager = new LinearLayoutManager(this);
-        Rview.setLayoutManager(RLayoutManager);
+        recyclerView.setLayoutManager(RLayoutManager);
 
         RAdapter = new SavedScheduleAdapter(scheduleList,this);
-        Rview.setAdapter(RAdapter);
+        recyclerView.setAdapter(RAdapter);
+
+             initSwipe();
+         //    adapter.notifyDataSetChanged();
 
 
-        }
+    };
+
+
+
 
         //ListView + adapter = true
-        savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
-        savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
-        savedScheduleListView.setAdapter(savedScheduleAdapter);
-        savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LoadSelectedSchedule(view, position);
-            }
-        });
-    }
+     //   savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
+     //   savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
+     //   savedScheduleListView.setAdapter(savedScheduleAdapter);
+     //   savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     //       @Override
+    //        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    //            LoadSelectedSchedule(view, position);
+    //        }
+    //    });
+
 
     //Runs every time the activity gets visible
     @Override
@@ -257,6 +273,32 @@ public class MySchedules extends AppCompatActivity {
 
     public void UpdateAllSchedules() {
         UpdateSchedule();
+    }
+
+    private void initSwipe(){
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+
+                if (direction == ItemTouchHelper.LEFT){
+                    adapter.removeItem(position);
+                }
+                else if
+                    (direction == ItemTouchHelper.RIGHT) {
+                    return;
+                }
+            }
+
+};
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 }

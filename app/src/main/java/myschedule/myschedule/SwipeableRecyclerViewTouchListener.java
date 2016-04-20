@@ -12,7 +12,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
 
     // Fixed properties
     private RecyclerView mRecyclerView;
-    private SwipeListener mSwipeListener;
+    private static SwipeListener mSwipeListener;
     private int mViewWidth = 1; // 1 and not 0 to prevent dividing by zero
 
 
@@ -39,4 +39,5 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
     }
+
 }

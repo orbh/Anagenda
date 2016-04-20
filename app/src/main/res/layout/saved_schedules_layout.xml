@@ -13,7 +13,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/saved_schedules_relativelayout"
+        android:id="@+id/saved_schedules_upper_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <!-- Icon -->
@@ -63,6 +63,22 @@
         android:textColor="@color/colorTextSecondary"
         android:textSize="13sp"
         />
+
+
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saved_schedules_extended_row"
+        android:layout_weight="10"
+        >
+
+
+    </RelativeLayout>
+
+
 </LinearLayout>
+
+
 </android.support.v7.widget.CardView>
