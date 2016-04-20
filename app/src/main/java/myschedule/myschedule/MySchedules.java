@@ -28,8 +28,12 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +53,6 @@ public class MySchedules extends AppCompatActivity {
     //Toolbar
     Toolbar toolbar;
 
-
     //Adapter for saved schedules-list
     RecyclerView recyclerView;
     RecyclerView.Adapter RAdapter;
@@ -68,10 +71,18 @@ public class MySchedules extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedules);
 
+        //Context
+        mContext = this;
+
+        //Sets default values for preferences
+        //ToDo Seems like the 1st line doesn't have to be here
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mContext);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
         //ScheduleHelper
         scheduleHelper = new ScheduleHelper();
 
-             //Toolbar
+        //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
@@ -102,7 +113,6 @@ public class MySchedules extends AppCompatActivity {
     //            LoadSelectedSchedule(view, position);
     //        }
     //    });
-
 
     //Runs every time the activity gets visible
     @Override
@@ -155,7 +165,7 @@ public class MySchedules extends AppCompatActivity {
                 return true;
 
             case R.id.action_refresh:
-                RefreshSchedules();
+                UpdateAllSchedules();
                 return true;
 
             default:
@@ -244,7 +254,8 @@ public class MySchedules extends AppCompatActivity {
 
     }
 
-    //Enables empty state
+    //Enables empty state function
+    //ToDo Change the empty state picture
     public void CheckDocumentList() {
         LinearLayout linear = (LinearLayout)findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
@@ -257,18 +268,56 @@ public class MySchedules extends AppCompatActivity {
         }
     }
 
-    public void RefreshSchedules() {
-        //ToDo Should fetch new schedules from the ones saved
-    }
-
     public void GoToPreferences() {
-
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
     }
 
-    public void UpdateSchedule() {
+    //ToDo Make it async
+    public void UpdateSchedule(File file, String path) {
 
+        try {
+            ScheduleFile scheduleFile;
+            FileInputStream fin = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            scheduleFile = (ScheduleFile) ois.readObject();
+            ois.close();
+
+            ScheduleHelper scheduleHelper = new ScheduleHelper();
+            Schedule newSchedule = scheduleHelper.FetchSchedule(scheduleFile.getUrl());
+
+            //ToDo Implement method for checking for updates
+
+            File deletedFile = new File(path);
+            deletedFile.delete();
+
+            ScheduleFile saveSchedule = new ScheduleFile();
+            saveSchedule.setUrl(newSchedule.getUrl());
+            saveSchedule.setType(newSchedule.getType());
+            saveSchedule.setSchedule(newSchedule.getDocument().toString());
+
+            FileOutputStream fos = openFileOutput(file.getName(), MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(saveSchedule);
+            oos.close();
+            fos.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("FileNotFoundException", "FileNotFoundException" + e);
+        }
+        catch (StreamCorruptedException e) {
+            e.printStackTrace();
+            Log.e("StreamCorruptedE", "StreamCorruptedE" + e);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            Log.e("IOException", "IOException" + e);
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
+        }
     }
 
     public void UpdateAllSchedules() {
@@ -299,6 +348,13 @@ public class MySchedules extends AppCompatActivity {
 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        File childFile[] = getFilesDir().listFiles();
+        for (File file: childFile) {
+            UpdateSchedule(file, file.getPath());
+        }
+        LoadSavedSchedules();
+        CheckDocumentList();
+        savedScheduleAdapter.notifyDataSetChanged();
     }
 
 }
