@@ -165,7 +165,7 @@ public class MySchedules extends AppCompatActivity {
                 return true;
 
             case R.id.action_refresh:
-                UpdateAllSchedules();
+     //           UpdateAllSchedules();
                 return true;
 
             default:
@@ -320,9 +320,9 @@ public class MySchedules extends AppCompatActivity {
         }
     }
 
-    public void UpdateAllSchedules() {
-        UpdateSchedule();
-    }
+   // public void UpdateAllSchedules() {
+   //     UpdateSchedule();
+  //  }
 
     private void initSwipe(){
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -348,13 +348,13 @@ public class MySchedules extends AppCompatActivity {
 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
+
         File childFile[] = getFilesDir().listFiles();
         for (File file: childFile) {
             UpdateSchedule(file, file.getPath());
         }
-        LoadSavedSchedules();
-        CheckDocumentList();
-        savedScheduleAdapter.notifyDataSetChanged();
+
     }
 
 }
