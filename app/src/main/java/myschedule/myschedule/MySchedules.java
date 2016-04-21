@@ -301,6 +301,7 @@ public class MySchedules extends AppCompatActivity {
             oos.writeObject(saveSchedule);
             oos.close();
             fos.close();
+
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -318,11 +319,47 @@ public class MySchedules extends AppCompatActivity {
             e.printStackTrace();
             Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
         }
+
     }
 
    // public void UpdateAllSchedules() {
    //     UpdateSchedule();
   //  }
+
+    public void deleteSchedule(File fil, String path){
+
+        File childFile[] = getFilesDir().listFiles();
+
+        for (File file : childFile) {
+
+            File testFile = new File(fil.getPath());
+
+    try{
+        ScheduleFile scheduleFile;
+        FileInputStream fin = new FileInputStream(path);
+        ObjectInputStream ois = new ObjectInputStream(fin);
+        scheduleFile = (ScheduleFile) ois.readObject();
+        ois.close();
+
+        File deletedFile = new File(path);
+        deletedFile.delete();
+    }
+    catch (FileNotFoundException e) {
+        e.printStackTrace();
+        Log.e("FileNotFoundException", "FileNotFoundException" + e);
+    }
+    catch (StreamCorruptedException e) {
+        e.printStackTrace();
+        Log.e("StreamCorruptedE", "StreamCorruptedE" + e);
+    }
+    catch (IOException e) {
+        e.printStackTrace();
+        Log.e("IOException", "IOException" + e);
+    }
+    catch (ClassNotFoundException e) {
+        e.printStackTrace();
+        Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
+    }}}
 
     private void initSwipe(){
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -336,7 +373,7 @@ public class MySchedules extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
 
-                if (direction == ItemTouchHelper.LEFT){
+                if (direction == ItemTouchHelper.LEFT) {
                     adapter.removeItem(position);
                 }
                 else if
@@ -350,11 +387,7 @@ public class MySchedules extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-        File childFile[] = getFilesDir().listFiles();
-        for (File file: childFile) {
-            UpdateSchedule(file, file.getPath());
         }
 
     }
 
-}
