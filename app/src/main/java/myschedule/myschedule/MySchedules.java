@@ -286,4 +286,8 @@ public class MySchedules extends AppCompatActivity {
         savedScheduleAdapter.notifyDataSetChanged();
     }
 
+    public void deleteSchedule(){
+
+    }
+
 }
