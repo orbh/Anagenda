@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import android.view.MotionEvent;
-import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener.SwipeListener;
 
 public class MySchedules extends AppCompatActivity {
 
@@ -94,7 +92,7 @@ public class MySchedules extends AppCompatActivity {
         RAdapter = new SavedScheduleAdapter(scheduleList,this);
         recyclerView.setAdapter(RAdapter);
 
-             initSwipe();
+
          //    adapter.notifyDataSetChanged();
 
 
@@ -314,7 +312,7 @@ public class MySchedules extends AppCompatActivity {
         }
         LoadSavedSchedules();
         CheckDocumentList();
-        savedScheduleAdapter.notifyDataSetChanged();
+        RAdapter.notifyDataSetChanged();
     }
 
     public void deleteSchedule(){
