@@ -6,17 +6,25 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +39,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import android.view.MotionEvent;
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener.SwipeListener;
+
 public class MySchedules extends AppCompatActivity {
 
     //Context
@@ -43,11 +54,16 @@ public class MySchedules extends AppCompatActivity {
     Toolbar toolbar;
 
     //Adapter for saved schedules-list
-    SavedScheduleAdapter savedScheduleAdapter;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter RAdapter;
+    RecyclerView.LayoutManager RLayoutManager;
 
     //Stuff to do with the list with saved schedules
     ListView savedScheduleListView;
     List<Schedule> scheduleList = new ArrayList<>();
+    List<Elements> elementList = new ArrayList<>();
+
+    private SavedScheduleAdapter adapter;
 
     //Runs when you first start the app
     @Override
@@ -71,17 +87,32 @@ public class MySchedules extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
 
+        recyclerView = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
+        RLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(RLayoutManager);
+
+        RAdapter = new SavedScheduleAdapter(scheduleList,this);
+        recyclerView.setAdapter(RAdapter);
+
+             initSwipe();
+         //    adapter.notifyDataSetChanged();
+
+
+    };
+
+
+
+
         //ListView + adapter = true
-        savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
-        savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
-        savedScheduleListView.setAdapter(savedScheduleAdapter);
-        savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LoadSelectedSchedule(view, position);
-            }
-        });
-    }
+     //   savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
+     //   savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
+     //   savedScheduleListView.setAdapter(savedScheduleAdapter);
+     //   savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     //       @Override
+    //        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    //            LoadSelectedSchedule(view, position);
+    //        }
+    //    });
 
     //Runs every time the activity gets visible
     @Override
@@ -90,7 +121,7 @@ public class MySchedules extends AppCompatActivity {
         LoadSavedSchedules();
         CheckDocumentList();
         //ToDo Sets it to refresh even if i dont have to
-        savedScheduleAdapter.notifyDataSetChanged();
+        RAdapter.notifyDataSetChanged();
 
         //OBS JUST FOR TEST PURPOSES
         //Sets one of 3 default schedules for button, until we have a search function
