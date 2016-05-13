@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdapter.ViewHolder> {
 
     private List<Schedule> sDataset;
@@ -40,10 +39,10 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         public ViewHolder(View v) {
             super(v);
 
-            Rview = (RecyclerView)v.findViewById(R.id.saved_schedules_recycler_view);
+            Rview = (RecyclerView) v.findViewById(R.id.saved_schedules_recycler_view);
             cardView = (CardView) v.findViewById(R.id.schedule_card_view);
             rowlayout = (LinearLayout) v.findViewById(R.id.saved_schedules_row_layout);
-            relativeLayout = (RelativeLayout)v.findViewById(R.id.saved_schedules_upper_row);
+            relativeLayout = (RelativeLayout) v.findViewById(R.id.saved_schedules_upper_row);
             scheduleIcon = (ImageView) v.findViewById(R.id.saved_schedules_icon);
             titel = (TextView) v.findViewById(R.id.saved_schedules_coursename);
             text = (TextView) v.findViewById(R.id.saved_schedules_next_event);
@@ -53,7 +52,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         }
     }
 
-    public SavedScheduleAdapter(List<Schedule>Dataset, Context context){
+    public SavedScheduleAdapter(List<Schedule> Dataset, Context context) {
 
         sDataset = Dataset;
         mcontext = context;
@@ -69,23 +68,23 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
     }
-        // The onClick method loads your saved schedules when you click them
-        // and shows them in a new activity(TESTKLASS) with all theire containing items.
+
+    // The onClick method loads your saved schedules when you click them
+    // and shows them in a new activity(TESTKLASS) with all theire containing items.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
-               @Override
-                public void onClick(View view) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                   Schedule schedule = ((Schedule) mcontext.getApplicationContext());
-                   schedule.setDocument(sDataset.get(position).getDocument());
-                   schedule.setUrl(sDataset.get(position).getUrl());
-                   schedule.setType(sDataset.get(position).getType());
+                Schedule schedule = ((Schedule) mcontext.getApplicationContext());
+                schedule.setDocument(sDataset.get(position).getDocument());
+                schedule.setUrl(sDataset.get(position).getUrl());
+                schedule.setType(sDataset.get(position).getType());
 
-                   Intent intent = new Intent (mcontext, TESTKLASS.class);
-                   mcontext.startActivity(intent);
-                }
-            });
+                Intent intent = new Intent(mcontext, TESTKLASS.class);
+                mcontext.startActivity(intent);
+            }
+        });
 
 
         //Coursename and coursecode
@@ -123,7 +122,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
         }
         //Programme
-        else if(schedule.getType() == 3){
+        else if (schedule.getType() == 3) {
             holder.titel.setText(wholeTitle);
             holder.text.setText(mergedWdAndDate + time);
             holder.course.setText(splitTitle[0]);
@@ -136,7 +135,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_person_black_36dp);
         }
-        }
+    }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
@@ -150,6 +149,6 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         notifyItemRangeChanged(position, sDataset.size());
     }
 
-    }
+}
 
 

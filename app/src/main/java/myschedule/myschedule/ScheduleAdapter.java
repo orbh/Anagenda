@@ -3,6 +3,7 @@ package myschedule.myschedule;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,94 +89,100 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
     // Replace the contents of a view (invoked by the layout manager)
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.rowExtendedLayout.getVisibility() == View.GONE) {
-                    holder.rowExtendedLayout.setVisibility(View.VISIBLE);
-                    holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_up_grey_500_18dp);
-                } else {
-                    holder.rowExtendedLayout.setVisibility(View.GONE);
-                    holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_grey_500_18dp);
+
+        try {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.rowExtendedLayout.getVisibility() == View.GONE) {
+                        holder.rowExtendedLayout.setVisibility(View.VISIBLE);
+                        holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_up_grey_500_18dp);
+                    } else {
+                        holder.rowExtendedLayout.setVisibility(View.GONE);
+                        holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_grey_500_18dp);
+                    }
                 }
+            });
+
+            holder.cardView.setUseCompatPadding(true);
+
+            holder.description.setText("");
+            holder.wdAndDate.setText("");
+            holder.locale.setText("");
+            holder.time.setText("");
+            holder.group.setText("");
+
+            holder.rowExtendedLayout.setVisibility(View.GONE);
+            holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_grey_500_18dp);
+            holder.course.setText("");
+            holder.course.setVisibility(View.GONE);
+
+            Element element = mDataset.get(position);
+
+            //Merges weekday and date
+            //ToDo Make the comma go away then weekday and date are missing
+            String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
+            holder.wdAndDate.setText(mergedWdAndDate);
+
+
+            //Course
+            if (schedule.getType() == 1) {
+
+                holder.description.setText(element.child(9).text());
+                holder.locale.setText(element.child(7).text());
+                holder.time.setText(element.child(3).text());
+                if (element.child(5).text().equals("")) {
+                    holder.group.setVisibility(View.GONE);
+                } else {
+                    holder.group.setVisibility(View.VISIBLE);
+                    holder.group.setText(R.string.schedule_group);
+                }
+                holder.lastUpdated.setText("Last updated:" + " " + element.child(10).text());
+
             }
-        });
+            //Room
+            else if (schedule.getType() == 2) {
 
-        holder.cardView.setUseCompatPadding(true);
-
-        holder.description.setText("");
-        holder.wdAndDate.setText("");
-        holder.locale.setText("");
-        holder.time.setText("");
-        holder.group.setText("");
-
-        holder.rowExtendedLayout.setVisibility(View.GONE);
-        holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_grey_500_18dp);
-        holder.course.setText("");
-        holder.course.setVisibility(View.GONE);
-
-        Element element = mDataset.get(position);
-
-        //Merges weekday and date
-        //ToDo Make the comma go away then weekday and date are missing
-        String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
-        holder.wdAndDate.setText(mergedWdAndDate);
-
-
-        //Course
-        if (schedule.getType() == 1) {
-
-            holder.description.setText(element.child(9).text());
-            holder.locale.setText(element.child(7).text());
-            holder.time.setText(element.child(3).text());
-            if (element.child(5).text().equals("")) {
-                holder.group.setVisibility(View.GONE);
-            } else {
-                holder.group.setVisibility(View.VISIBLE);
-                holder.group.setText(R.string.schedule_group);
+                holder.description.setText(element.child(9).text());
+                holder.time.setText(element.child(3).text());
+                holder.locale.setText(element.child(7).text());
+                if (element.child(6).text().equals("")) {
+                    holder.group.setVisibility(View.GONE);
+                } else {
+                    holder.group.setVisibility(View.VISIBLE);
+                    holder.group.setText(R.string.schedule_group + element.child(6).text());
+                }
+                holder.course.setText(element.child(5).text());
+                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
             }
-            holder.lastUpdated.setText("Last updated:" + " " + element.child(10).text());
 
-        }
-        //Room
-        else if (schedule.getType() == 2) {
+            //Programme
+            //ToDo Maybe set color as bigger
+            else if (schedule.getType() == 3) {
 
-            holder.description.setText(element.child(9).text());
-            holder.time.setText(element.child(3).text());
-            holder.locale.setText(element.child(7).text());
-            if (element.child(6).text().equals("")) {
-                holder.group.setVisibility(View.GONE);
-            } else {
-                holder.group.setVisibility(View.VISIBLE);
-                holder.group.setText(R.string.schedule_group + element.child(6).text());
+                holder.description.setText(element.child(8).text());
+                holder.time.setText(element.child(3).text());
+                holder.locale.setText(element.child(6).text());
+                holder.course.setVisibility(View.VISIBLE);
+                holder.course.setText(element.child(4).text());
+                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
             }
-            holder.course.setText(element.child(5).text());
-            holder.lastUpdated.setText("Last updated:" + " " + element.child(10).text());
+
+            //Signature
+            else if (schedule.getType() == 4) {
+
+                holder.description.setText(element.child(8).text());
+                holder.time.setText(element.child(3).text());
+                holder.locale.setText(element.child(6).text());
+                holder.course.setText(element.child(5).text());
+                holder.course.setVisibility(View.VISIBLE);
+                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
+            }
         }
-
-        //Programme
-        //ToDo Maybe set color as bigger
-        else if (schedule.getType() == 3) {
-
-            holder.description.setText(element.child(8).text());
-            holder.time.setText(element.child(3).text());
-            holder.locale.setText(element.child(6).text());
-            holder.course.setVisibility(View.VISIBLE);
-            holder.course.setText(element.child(4).text());
-            holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
+        catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+            Log.e("IndexOutOfBoundEx", "IndexOutOfBoundEx" + e);
         }
-
-        //Signature
-        else if (schedule.getType() == 4) {
-
-            holder.description.setText(element.child(8).text());
-            holder.time.setText(element.child(3).text());
-            holder.locale.setText(element.child(6).text());
-            holder.course.setText(element.child(5).text());
-            holder.course.setVisibility(View.VISIBLE);
-            holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
-        }
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -57,11 +57,7 @@ public class MySchedules extends AppCompatActivity {
     RecyclerView.LayoutManager RLayoutManager;
 
     //Stuff to do with the list with saved schedules
-    ListView savedScheduleListView;
-    List<Schedule> scheduleList = new ArrayList<>();
-    List<Elements> elementList = new ArrayList<>();
-
-    private SavedScheduleAdapter adapter;
+    ArrayList<Schedule> scheduleList = new ArrayList<>();
 
     //Runs when you first start the app
     @Override
@@ -92,25 +88,7 @@ public class MySchedules extends AppCompatActivity {
         RAdapter = new SavedScheduleAdapter(scheduleList,this);
         recyclerView.setAdapter(RAdapter);
 
-
-         //    adapter.notifyDataSetChanged();
-
-
-    };
-
-
-
-
-        //ListView + adapter = true
-     //   savedScheduleListView = (ListView) findViewById(R.id.listview_saved_schedules);
-     //   savedScheduleAdapter = new SavedScheduleAdapter(this, scheduleList);
-     //   savedScheduleListView.setAdapter(savedScheduleAdapter);
-     //   savedScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-     //       @Override
-    //        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    //            LoadSelectedSchedule(view, position);
-    //        }
-    //    });
+    }
 
     //Runs every time the activity gets visible
     @Override
@@ -144,7 +122,9 @@ public class MySchedules extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        menu.removeItem(R.id.action_favourite);
+        menu.findItem(R.id.action_favourite).setVisible(false);
+        menu.findItem(R.id.action_delete).setVisible(false);
+
         return true;
     }
 
@@ -166,18 +146,6 @@ public class MySchedules extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    public void LoadSelectedSchedule(View v, int position) {
-
-        Schedule schedule = ((Schedule) getApplicationContext());
-
-        schedule.setDocument(scheduleList.get(position).getDocument());
-        schedule.setUrl(scheduleList.get(position).getUrl());
-        schedule.setType(scheduleList.get(position).getType());
-
-        Intent intent = new Intent(this, TESTKLASS.class);
-        startActivity(intent);
     }
 
     //JUST UNTIL SEARCH IS IMPLEMENTED
@@ -211,7 +179,6 @@ public class MySchedules extends AppCompatActivity {
             File testFile = new File(file.getPath());
 
             //ToDo Maybe we can be able to fetch the URL, if necessary
-            String emptyUri = "";
 
             try {
 
@@ -314,9 +281,4 @@ public class MySchedules extends AppCompatActivity {
         CheckDocumentList();
         RAdapter.notifyDataSetChanged();
     }
-
-    public void deleteSchedule(){
-
-    }
-
 }

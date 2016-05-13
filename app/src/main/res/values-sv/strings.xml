@@ -17,5 +17,6 @@
     <string name="saved_schedules_next_event">Nästa händelse:</string>
     <string name="schedule_group">Grupp:</string>
     <string name="schedule_title">Schema</string>
-    <string name="toast_saved_schedule">Sparad</string>
+    <string name="toast_saved_schedule">Schema sparat</string>
+    <string name="toast_delete_schedule">Schema raderat</string>
 </resources>

@@ -1,5 +1,8 @@
 package myschedule.myschedule;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,16 +17,22 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TESTKLASS extends AppCompatActivity {
+    boolean saved;
 
     Toolbar toolbar;
+    Context mcontext;
 
     RecyclerView mRecycleView;
     RecyclerView.Adapter mRecycleAdapter;
@@ -32,12 +41,15 @@ public class TESTKLASS extends AppCompatActivity {
     //Contains all "rows" of posts
     List<Element> elementList = new ArrayList<>();
 
-    public TESTKLASS(){}
+    public TESTKLASS() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testklass_layout);
+
+        mcontext = this;
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -49,7 +61,6 @@ public class TESTKLASS extends AppCompatActivity {
 
         mRecycleAdapter = new ScheduleAdapter(elementList, this);
         mRecycleView.setAdapter(mRecycleAdapter);
-
     }
 
     @Override
@@ -57,16 +68,48 @@ public class TESTKLASS extends AppCompatActivity {
         super.onResume();
         RefreshList();
         LoadSchedule();
+
     }
 
     //Creates additional items in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         menu.removeItem(R.id.action_refresh);
         menu.removeItem(R.id.action_search);
         menu.removeItem(R.id.action_settings);
+
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        Schedule schedule = ((Schedule) mcontext.getApplicationContext());
+        String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
+        String output = input.substring(0, input.indexOf(","));
+
+        File files[] = getFilesDir().listFiles();
+
+        for (File f : files) {
+            if (f.getName().equals(output)) {
+                saved = true;
+            }
+        }
+
+        if (saved) {
+
+            menu.findItem(R.id.action_favourite).setVisible(false);
+            menu.findItem(R.id.action_delete).setVisible(true);
+
+            return true;
+        } else {
+            menu.findItem(R.id.action_favourite).setVisible(true);
+            menu.findItem(R.id.action_delete).setVisible(false);
+
+            return true;
+        }
     }
 
     //Triggers code when toolbar-items are clicked
@@ -80,6 +123,12 @@ public class TESTKLASS extends AppCompatActivity {
 
             case R.id.action_favourite:
                 SaveSchedule();
+                invalidateOptionsMenu();
+                return true;
+
+            case R.id.action_delete:
+                callDeleteSchedule();
+                invalidateOptionsMenu();
                 return true;
 
             default:
@@ -90,7 +139,7 @@ public class TESTKLASS extends AppCompatActivity {
 
     public void LoadSchedule() {
 
-        Schedule schedule = ((Schedule)getApplicationContext());
+        Schedule schedule = ((Schedule) getApplicationContext());
         Document document = schedule.getDocument();
 
         //ToDo This might crash shit up
@@ -117,7 +166,7 @@ public class TESTKLASS extends AppCompatActivity {
         //Writes document to file
         try {
 
-            Schedule schedule = ((Schedule)getApplicationContext());
+            Schedule schedule = ((Schedule) getApplicationContext());
             String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
             String output = input.substring(0, input.indexOf(","));
             schedule.getDocument().setBaseUri(schedule.getUrl());
@@ -134,7 +183,7 @@ public class TESTKLASS extends AppCompatActivity {
             fos.close();
 
             //Makes a toast if it succeeds
-            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_saved_schedule) + " " + output, Toast.LENGTH_SHORT).show();
+            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_saved_schedule), Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -143,21 +192,19 @@ public class TESTKLASS extends AppCompatActivity {
             e.printStackTrace();
             Log.e("IOException", "IOException" + e);
         }
-
     }
 
     //Sets the toolbar title
-    public void SetTitle(String name, int type){
+    public void SetTitle(String name, int type) {
 
         //Course
-        if(type == 1) {
+        if (type == 1) {
 
             String output = name.substring(name.indexOf(",") + 1);
             assert getSupportActionBar() != null;
             if (output.equals("")) {
                 getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
             } else getSupportActionBar().setTitle(output);
-
         }
 
         //Room, Signature and Programme
@@ -167,11 +214,41 @@ public class TESTKLASS extends AppCompatActivity {
                 getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
             } else getSupportActionBar().setTitle(name);
         }
-
     }
 
-    public void RefreshList(){
+    public void RefreshList() {
         elementList.clear();
+    }
+
+    // Deletes the currently active schedule
+    public void callDeleteSchedule() {
+
+        try {
+            File files[] = getFilesDir().listFiles();
+
+            Schedule schedule = ((Schedule) mcontext.getApplicationContext());
+            String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
+            String output = input.substring(0, input.indexOf(","));
+
+            for (File f : files)
+                if (f.getName().equals(output)) {
+
+                    f.delete();
+
+                }
+            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_delete_schedule), Toast.LENGTH_SHORT).show();
+
+            saved = false;
+
+            mRecycleAdapter.notifyDataSetChanged();
+
+            Intent i = new Intent(this,MySchedules.class);
+            startActivity(i);
+
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Log.e("IndexOutOfBoundsEx", "IndexOutOfBoundsEx" + e);
+        }
     }
 
 }
