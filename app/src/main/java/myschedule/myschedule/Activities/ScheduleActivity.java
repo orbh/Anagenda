@@ -1,8 +1,7 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,17 +17,19 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TESTKLASS extends AppCompatActivity {
+import myschedule.myschedule.Adapters.ScheduleAdapter;
+import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.Objects.ScheduleFile;
+import myschedule.myschedule.R;
+
+public class ScheduleActivity extends AppCompatActivity {
     boolean saved;
 
     Toolbar toolbar;
@@ -41,7 +42,7 @@ public class TESTKLASS extends AppCompatActivity {
     //Contains all "rows" of posts
     List<Element> elementList = new ArrayList<>();
 
-    public TESTKLASS() {
+    public ScheduleActivity() {
     }
 
     @Override
@@ -183,7 +184,7 @@ public class TESTKLASS extends AppCompatActivity {
             fos.close();
 
             //Makes a toast if it succeeds
-            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_saved_schedule), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.toast_saved_schedule), Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -236,13 +237,13 @@ public class TESTKLASS extends AppCompatActivity {
                     f.delete();
 
                 }
-            Toast.makeText(TESTKLASS.this, getResources().getString(R.string.toast_delete_schedule), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.toast_delete_schedule), Toast.LENGTH_SHORT).show();
 
             saved = false;
 
             mRecycleAdapter.notifyDataSetChanged();
 
-            Intent i = new Intent(this,MySchedules.class);
+            Intent i = new Intent(this, HomeActivity.class);
             startActivity(i);
 
         } catch (IndexOutOfBoundsException e) {

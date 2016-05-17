@@ -1,4 +1,4 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,11 @@ import android.widget.TextView;
 
 import org.jsoup.nodes.Element;
 
-import java.util.Collections;
 import java.util.List;
+
+import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.R;
+import myschedule.myschedule.Activities.ScheduleActivity;
 
 
 public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdapter.ViewHolder> {
@@ -70,7 +73,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
     }
 
     // The onClick method loads your saved schedules when you click them
-    // and shows them in a new activity(TESTKLASS) with all theire containing items.
+    // and shows them in a new activity with all theire containing items.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +84,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
                 schedule.setUrl(sDataset.get(position).getUrl());
                 schedule.setType(sDataset.get(position).getType());
 
-                Intent intent = new Intent(mcontext, TESTKLASS.class);
+                Intent intent = new Intent(mcontext, ScheduleActivity.class);
                 mcontext.startActivity(intent);
             }
         });

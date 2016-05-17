@@ -1,4 +1,4 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Objects;
 
 import org.jsoup.nodes.Document;
 

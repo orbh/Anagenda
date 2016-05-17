@@ -1,8 +1,11 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Utilities;
 
 import android.util.Log;
 
 import java.util.concurrent.ExecutionException;
+
+import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.Utilities.AsyncKronoXHelper;
 
 public class ScheduleHelper {
 

@@ -1,4 +1,4 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -7,16 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.jsoup.nodes.Element;
-import org.w3c.dom.Text;
 
 import java.util.List;
+
+import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.R;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 

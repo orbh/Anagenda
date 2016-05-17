@@ -1,4 +1,4 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Utilities;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-class AsyncKronoXHelper extends AsyncTask<String, Void, Document> {
+public class AsyncKronoXHelper extends AsyncTask<String, Void, Document> {
 
     //Async task that fetches the schedule
     //Connects to specified url and returns a document

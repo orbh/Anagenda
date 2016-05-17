@@ -10,23 +10,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="Schedule">
+        android:name=".Objects.Schedule">
         >
 
-        <activity android:name=".MySchedules">
+        <activity android:name=".Activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TESTKLASS">
+        <activity android:name=".Activities.ScheduleActivity">
         </activity>
-        <activity android:name=".PrefActivity">
+        <activity android:name=".Activities.PrefActivity">
 
         </activity>
-
-
 
     </application>
 

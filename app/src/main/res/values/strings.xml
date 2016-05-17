@@ -1,7 +1,7 @@
 <resources>
 
     <!-- General -->
-    <string name="app_name">My Schedule</string>
+    <string name="app_name">Anagenda</string>
     <string name="company_website" translatable="false">http://unischemat.wordpress.com</string>
 
     <!-- Preferences -->

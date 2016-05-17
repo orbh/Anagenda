@@ -1,11 +1,8 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Objects;
 
 import android.app.Application;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.io.Serializable;
 
 public class Schedule extends Application {
 

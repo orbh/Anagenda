@@ -1,4 +1,4 @@
-package myschedule.myschedule;
+package myschedule.myschedule.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,25 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,10 +28,15 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
+
+import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.R;
+import myschedule.myschedule.Adapters.SavedScheduleAdapter;
+import myschedule.myschedule.Objects.ScheduleFile;
+import myschedule.myschedule.Utilities.ScheduleHelper;
 
 
-public class MySchedules extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     //Context
     Context mContext;
@@ -157,7 +153,7 @@ public class MySchedules extends AppCompatActivity {
         schedule.setType(tempSchedule.getType());
         schedule.setDocument(tempSchedule.getDocument());
 
-        Intent intent = new Intent(this, TESTKLASS.class);
+        Intent intent = new Intent(this, ScheduleActivity.class);
         startActivity(intent);
     }
 
