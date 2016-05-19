@@ -112,7 +112,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         //Course
         if (schedule.getType() == 1) {
             holder.titel.setText(wholeTitle);
-            holder.text.setText(mergedWdAndDate + time);
+            holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
         }
@@ -120,21 +120,21 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         else if (schedule.getType() == 2) {
 
             holder.titel.setText(wholeTitle);
-            holder.text.setText(mergedWdAndDate + time);
+            holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[1]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
         }
         //Programme
         else if (schedule.getType() == 3) {
             holder.titel.setText(wholeTitle);
-            holder.text.setText(mergedWdAndDate + time);
+            holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
         }
         //Person
         else if (schedule.getType() == 4) {
             holder.titel.setText(splitTitle[1]);
-            holder.text.setText(mergedWdAndDate + time);
+            holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_person_black_36dp);
         }

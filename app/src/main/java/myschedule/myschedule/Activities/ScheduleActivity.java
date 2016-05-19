@@ -30,6 +30,7 @@ import myschedule.myschedule.Objects.ScheduleFile;
 import myschedule.myschedule.R;
 
 public class ScheduleActivity extends AppCompatActivity {
+
     boolean saved;
 
     Toolbar toolbar;
@@ -48,7 +49,7 @@ public class ScheduleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.testklass_layout);
+        setContentView(R.layout.schedule_activity);
 
         mcontext = this;
 
@@ -69,7 +70,6 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onResume();
         RefreshList();
         LoadSchedule();
-
     }
 
     //Creates additional items in toolbar

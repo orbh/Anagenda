@@ -81,7 +81,7 @@
                 android:layout_toEndOf="@id/locale_textview"
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="20dp"
-                android:text="Group: "
+                android:text="@string/schedule_group"
                 android:textSize="15sp" />
 
             <ImageView

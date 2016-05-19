@@ -23,6 +23,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
     private List<Element> mDataset;
     private Schedule schedule;
+    private Context mContext;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -73,12 +75,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     public ScheduleAdapter(List<Element> myDataset, Context context) {
         mDataset = myDataset;
         schedule = ((Schedule) context.getApplicationContext());
+        mContext = context;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ScheduleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
+    public ScheduleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.schedule_layout, parent, false);
@@ -122,9 +124,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
             //Merges weekday and date
             //ToDo Make the comma go away then weekday and date are missing
-            String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
-            holder.wdAndDate.setText(mergedWdAndDate);
-
+            if(element.child(1).text().length() > 1 && element.child(2).text().length() > 1){
+                String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
+                holder.wdAndDate.setText(mergedWdAndDate);
+            }
+            else{
+                holder.wdAndDate.setText(R.string.schedule_likatecken);
+            }
 
             //Course
             if (schedule.getType() == 1) {
@@ -132,11 +138,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 holder.description.setText(element.child(9).text());
                 holder.locale.setText(element.child(7).text());
                 holder.time.setText(element.child(3).text());
-                if (element.child(5).text().equals("")) {
+                if (element.child(5).text().length() == 1) {
                     holder.group.setVisibility(View.GONE);
                 } else {
                     holder.group.setVisibility(View.VISIBLE);
-                    holder.group.setText(R.string.schedule_group);
+                    holder.group.setText(mContext.getResources().getString(R.string.schedule_group) + " " + element.child(5).text());
                 }
                 holder.lastUpdated.setText("Last updated:" + " " + element.child(10).text());
 
@@ -146,12 +152,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
                 holder.description.setText(element.child(9).text());
                 holder.time.setText(element.child(3).text());
-                holder.locale.setText(element.child(7).text());
                 if (element.child(6).text().equals("")) {
-                    holder.group.setVisibility(View.GONE);
+                    holder.locale.setVisibility(View.GONE);
                 } else {
-                    holder.group.setVisibility(View.VISIBLE);
-                    holder.group.setText(R.string.schedule_group + element.child(6).text());
+                    holder.locale.setVisibility(View.VISIBLE);
+                    holder.locale.setText(mContext.getResources().getString(R.string.schedule_signatur) + " " + element.child(6).text());
                 }
                 holder.course.setText(element.child(5).text());
                 holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());

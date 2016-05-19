@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_schedules);
+        setContentView(R.layout.home_activity);
 
         //Context
         mContext = this;
@@ -96,7 +96,6 @@ public class HomeActivity extends AppCompatActivity {
         RAdapter.notifyDataSetChanged();
 
         //OBS JUST FOR TEST PURPOSES
-        //Sets one of 3 default schedules for button, until we have a search function
         List<String> defaultSchedules = new ArrayList<>();
         defaultSchedules.add(getResources().getString(R.string.default_schedule1));
         defaultSchedules.add(getResources().getString(R.string.default_schedule2));
@@ -104,10 +103,11 @@ public class HomeActivity extends AppCompatActivity {
         defaultSchedules.add(getResources().getString(R.string.default_schedule4));
         defaultSchedules.add(getResources().getString(R.string.default_schedule5));
         defaultSchedules.add(getResources().getString(R.string.default_schedule6));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule7));
+        defaultSchedules.add(getResources().getString(R.string.default_schedule8));
 
         Random random = new Random();
-        //Using the 2 first since 3 isn't working atm
-        int number = random.nextInt(6);
+        int number = random.nextInt(8);
         String url = defaultSchedules.get(number);
 
         Schedule schedule = ((Schedule) getApplicationContext());
@@ -209,10 +209,8 @@ public class HomeActivity extends AppCompatActivity {
         if (scheduleList.isEmpty()) {
 
             linear.setBackgroundResource(R.drawable.android);
-            // savedScheduleListView.setBackgroundResource(R.drawable.android);
         } else {
             linear.setBackgroundResource(0);
-            //  savedScheduleListView.setBackgroundResource(0);
         }
     }
 

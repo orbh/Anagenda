@@ -38,10 +38,10 @@
 
     <!-- Development helpers -->
     <string name="default_schedule1" translatable="false">
-        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.FE100G-26076V16-
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=today&amp;intervallTyp=d&amp;intervallAntal=1&amp;sprak=EN&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=l.HSL3
     </string>
     <string name="default_schedule2" translatable="false">
-        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.PS3100-36161V16-
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=today&amp;intervallTyp=d&amp;intervallAntal=1&amp;sprak=EN&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=s.jad
     </string>
     <string name="default_schedule3" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.IK100G-26073V16-
@@ -54,13 +54,21 @@
     <string name="default_schedule5" translatable="false">
         http://schema.oru.se/setup/jsp/Schema.jsp?intervallTyp=m&amp;sprak=SV&amp;forklaringar=true&amp;sokMedAND=true&amp;intervallAntal=6&amp;startDatum=idag&amp;resurser=s.jpn
     </string>
+    <string name="default_schedule7" translatable="false">
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=today&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=EN&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.IK2012-26071V16-
+    </string>
+    <string name="default_schedule8" translatable="false">
+        http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=today&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=EN&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=k.IK100G-26073V16-
+    </string>
 
 
     <!-- Default strings -->
 
         <!-- Schedule-view -->
         <string name="schedule_title">Schedule</string>
-    <string name="schedule_group">Group: </string>
+        <string name="schedule_group">Group: </string>
+        <string name="schedule_signatur">Signature: </string>
+        <string name="schedule_likatecken">Date: - | | -</string>
 
         <!-- Saved schedules -->
         <string name="saved_schedules_description">Description</string>
