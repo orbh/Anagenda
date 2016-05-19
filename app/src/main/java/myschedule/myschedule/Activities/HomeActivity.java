@@ -138,11 +138,23 @@ public class HomeActivity extends AppCompatActivity {
                 UpdateAllSchedules();
                 return true;
 
+            case R.id.action_search:
+                goToSearch();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 
         }
     }
+
+
+    public void goToSearch(){
+
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
+    }
+
 
     //JUST UNTIL SEARCH IS IMPLEMENTED
     //ToDo Delete afterwards
