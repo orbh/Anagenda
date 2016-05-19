@@ -77,8 +77,6 @@
     <string name="saved_schedules_icon_locale" translatable="false">Locale-icon</string>
     <string name="saved_schedules_icon_programme" translatable="false">Programme-icon</string>
     <string name="saved_schedules_icon_person" translatable="false">Person-icon</string>
-    <string name="search_label" />
-    <string name="search_hint" />
-    <string name="spinner_title" />
+    <string name="spinner_title" translatable="false">Spinner-title</string>
 
 </resources>
