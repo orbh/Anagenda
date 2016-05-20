@@ -85,6 +85,11 @@
         <string name="saved_schedules_coursecode">Code</string>
         <string name="saved_schedules_icon_description">Icon</string>
 
+    <!-- Search Schedule -->
+    <string name="search_info">How to use the search function:
+    \n \n Choose the type of schedule you would like to look up from the drop down menu. The different types are: \n Course \n Programme \n Signature \n Locale \n \n Type in the exact name of the Course code, Programme name, Signature, or Locale, in the search field and hit the Search button. \n </string>
+    <string name="search_text">Search:</string>
+
     <!-- Toasts -->
     <string name="toast_saved_schedule">Saved</string>
     <string name ="toast_delete_schedule">Deleted</string>

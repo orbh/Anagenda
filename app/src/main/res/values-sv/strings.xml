@@ -19,4 +19,12 @@
     <string name="toast_saved_schedule">Schema sparat</string>
     <string name="toast_delete_schedule">Schema raderat</string>
     <string name="default_search_string_language">SV</string>
+    <string name="action_delete">Radera</string>
+    <string name="action_favourite">Favorit</string>
+    <string name="action_refresh">Uppdatera</string>
+    <string name="action_search">Sök</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="action_title_myschedules">Mina Scheman</string>
+    <string name="search_info">Hur du använder sökfunktionen:  \n \n Välj den typ av schema som du vill söka efter genom drop down-menyn. De olika typerna är: \n Kurs \n Program \n Signatur \n Lokal \n  \n Var noga med att skriva in den exakta Kurskoden, Programnamnet, Signaturen eller Lokal-ID, i sökfältet och tryck därefter på Sök. \n</string>
+    <string name="search_text">Sök:</string>
 </resources>

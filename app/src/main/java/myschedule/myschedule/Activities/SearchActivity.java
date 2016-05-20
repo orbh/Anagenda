@@ -14,13 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
-import myschedule.myschedule.Utilities.ScheduleHelper;
 
 public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -28,6 +25,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     Spinner spinner;
     TextView textView;
     TextView textViewInfo;
+    EditText editText;
 
     Integer searchType;
 
@@ -53,10 +51,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
 
-        //editText1 = (EditText) findViewById(R.id.search_Course);
-        //editText2 = (EditText) findViewById(R.id.search_Locale);
-        //editText3 = (EditText) findViewById(R.id.search_Programme);
-        //editText4 = (EditText) findViewById(R.id.search_Signature);
+        //Search field
+        editText = (EditText) findViewById(R.id.search_schedule);
 
 
         // Spinner Drop down elements

@@ -14,64 +14,33 @@
         android:id="@+id/searchinfo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="How to search:
-        Make sure you have the correct course ID before you execute your search."/>
+        android:text="@string/search_info"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/searchText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
-        android:text="Search:"
+        android:text="@string/search_text"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"/>
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:prompt="@string/spinner_title"/>
 
 
-    <!--<EditText
-        android:id="@+id/search_Course"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_hint"
-        android:inputType="text"
-        android:imeOptions="actionSearch" />
 
     <EditText
-        android:id="@+id/search_Programme"
+        android:id="@+id/search_schedule"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_hint"
         android:inputType="text"
         android:imeOptions="actionSearch" />
 
-    <EditText
-        android:id="@+id/search_Signature"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_hint"
-        android:inputType="text"
-        android:imeOptions="actionSearch" />
-
-    <EditText
-        android:id="@+id/search_Locale"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_hint"
-        android:inputType="text"
-        android:imeOptions="actionSearch" />
--->
-
-    </LinearLayout>
 </LinearLayout>
