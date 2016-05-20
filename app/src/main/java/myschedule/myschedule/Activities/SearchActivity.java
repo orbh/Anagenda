@@ -27,6 +27,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     Spinner spinner;
     TextView textView;
     TextView textViewInfo;
+    EditText editText;
 
     //EditText editText1;
     //EditText editText2;
@@ -50,12 +51,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
 
-        //editText1 = (EditText) findViewById(R.id.search_Course);
-        //editText2 = (EditText) findViewById(R.id.search_Locale);
-        //editText3 = (EditText) findViewById(R.id.search_Programme);
-        //editText4 = (EditText) findViewById(R.id.search_Signature);
-
-
+        //Search field
+        editText = (EditText) findViewById(R.id.search_schedule);
 
 
         // Spinner Drop down elements
