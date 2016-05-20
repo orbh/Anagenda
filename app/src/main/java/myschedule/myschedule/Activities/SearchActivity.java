@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,20 +14,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
+import myschedule.myschedule.Utilities.ScheduleHelper;
 
-/**
- * Created by Vivvisnurr on 2016-05-17.
- */
 public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Toolbar toolbar;
     Spinner spinner;
     TextView textView;
     TextView textViewInfo;
+
+    Integer searchType;
 
     //EditText editText1;
     //EditText editText2;
@@ -56,8 +59,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         //editText4 = (EditText) findViewById(R.id.search_Signature);
 
 
-
-
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Course");
@@ -74,6 +75,10 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
+
+        //TESTTESTTEST
+        searchType = 0;
     }
 
 
@@ -93,11 +98,55 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        searchType = position;
+        buildSearchString();
+        System.out.println("Position: " + position);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public String buildSearchString() {
+        try {
+            String code = "jpn";
+            String defaultSearchString = getResources().getString(R.string.default_search_string);
+            String defaultSearchString2 = getResources().getString(R.string.default_search_string2);
+            String searchLanguage = getResources().getString(R.string.default_search_string_language);
+            String type = "";
+
+            if (searchType == 0) {
+                type = getResources().getString(R.string.default_search_string_course);
+            } else if (searchType == 1) {
+                type = getResources().getString(R.string.default_search_string_programme);
+            } else if (searchType == 2) {
+                type = getResources().getString(R.string.default_search_string_signature);
+            } else {
+                type = getResources().getString(R.string.default_search_string_room);
+            }
+
+            String completeSearchString = defaultSearchString + searchLanguage + defaultSearchString2
+                    + type + code;
+
+            System.out.println(completeSearchString);
+
+            return completeSearchString;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.e("NullPointerException", "NullPointerException" + e);
+        }
+        return null;
+    }
+
+    public void getSearchedSchedule() {
+
+    }
+
+    public boolean checkForSchedule() {
+        return true;
+    }
+
+
 }

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- General -->
-    <string name="app_name">Anagenda</string>
+    <string name="app_name" translatable="false">Anagenda</string>
     <string name="company_website" translatable="false">http://unischemat.wordpress.com</string>
 
     <!-- Preferences -->
@@ -63,6 +63,15 @@
 
 
     <!-- Default strings -->
+    
+        <!-- Search String -->
+        <string name="default_search_string" translatable="false">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sokMedAND=true&amp;forklaringar=true&amp;sprak=</string>
+        <string name="default_search_string_language">EN&amp;</string>
+        <string name="default_search_string2" translatable="false">&amp;resurser=</string>
+        <string name="default_search_string_course" translatable="false">k.</string>
+        <string name="default_search_string_programme" translatable="false">p.</string>
+        <string name="default_search_string_room" translatable="false">l.</string>
+        <string name="default_search_string_signature" translatable="false">s.</string>
 
         <!-- Schedule-view -->
         <string name="schedule_title">Schedule</string>
