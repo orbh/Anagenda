@@ -3,6 +3,8 @@
     package="myschedule.myschedule">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -16,18 +18,26 @@
         <activity android:name=".Activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.ScheduleActivity">
         </activity>
         <activity android:name=".Activities.PrefActivity">
-
         </activity>
         <activity android:name=".Activities.SearchActivity">
 
         </activity>
+
+        <service android:name=".Utilities.UpdateService"
+            android:exported="false">
+        </service>
+
+        <receiver android:name=".Utilities.AlarmReciever">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
