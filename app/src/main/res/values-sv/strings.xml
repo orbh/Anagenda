@@ -19,4 +19,5 @@
     <string name="schedule_title">Schema</string>
     <string name="toast_saved_schedule">Schema sparat</string>
     <string name="toast_delete_schedule">Schema raderat</string>
+    <string name="search_string">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=EN&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=</string>
 </resources>

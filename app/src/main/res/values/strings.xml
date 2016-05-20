@@ -78,4 +78,7 @@
     <string name="saved_schedules_icon_programme" translatable="false">Programme-icon</string>
     <string name="saved_schedules_icon_person" translatable="false">Person-icon</string>
 
+    <!-- Default search string -->
+    <string name="search_string">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sprak=SV&amp;sokMedAND=true&amp;forklaringar=true&amp;resurser=</string>
+
 </resources>

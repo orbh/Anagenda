@@ -1,9 +1,12 @@
 package myschedule.myschedule.Activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 
@@ -26,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
@@ -33,13 +38,18 @@ import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
 import myschedule.myschedule.Adapters.SavedScheduleAdapter;
 import myschedule.myschedule.Objects.ScheduleFile;
+import myschedule.myschedule.Utilities.AlarmReciever;
 import myschedule.myschedule.Utilities.ScheduleHelper;
+import myschedule.myschedule.Utilities.UpdateService;
 
 
 public class HomeActivity extends AppCompatActivity {
 
     //Context
     Context mContext;
+
+    //Preferences
+    SharedPreferences sharedPreferences;
 
     //ScheduleHelper
     ScheduleHelper scheduleHelper;
@@ -66,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Sets default values for preferences
         //ToDo Seems like the 1st line doesn't have to be here
-        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         //ScheduleHelper
@@ -77,13 +87,12 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getResources().getString(R.string.action_title_myschedules));
 
-        recyclerView = (RecyclerView)findViewById(R.id.saved_schedules_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.saved_schedules_recycler_view);
         RLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(RLayoutManager);
 
-        RAdapter = new SavedScheduleAdapter(scheduleList,this);
+        RAdapter = new SavedScheduleAdapter(scheduleList, this);
         recyclerView.setAdapter(RAdapter);
-
     }
 
     //Runs every time the activity gets visible
@@ -112,6 +121,9 @@ public class HomeActivity extends AppCompatActivity {
 
         Schedule schedule = ((Schedule) getApplicationContext());
         schedule.setUrl(url);
+
+        //Automatic update
+        ScheduleAlarm();
     }
 
     //Creates additional items in toolbar
@@ -249,20 +261,16 @@ public class HomeActivity extends AppCompatActivity {
             oos.writeObject(saveSchedule);
             oos.close();
             fos.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e("FileNotFoundException", "FileNotFoundException" + e);
-        }
-        catch (StreamCorruptedException e) {
+        } catch (StreamCorruptedException e) {
             e.printStackTrace();
             Log.e("StreamCorruptedE", "StreamCorruptedE" + e);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             Log.e("IOException", "IOException" + e);
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
         }
@@ -270,11 +278,45 @@ public class HomeActivity extends AppCompatActivity {
 
     public void UpdateAllSchedules() {
         File childFile[] = getFilesDir().listFiles();
-        for (File file: childFile) {
+        for (File file : childFile) {
             UpdateSchedule(file, file.getPath());
         }
         LoadSavedSchedules();
         CheckDocumentList();
         RAdapter.notifyDataSetChanged();
+    }
+
+    public void ScheduleAlarm() {
+        String updateInterval = sharedPreferences.getString("update_list", "24");
+        System.out.println("Interval: " + updateInterval);
+
+        if(updateInterval.equals("0")) {
+            return;
+        }
+
+        Intent i = new Intent(this, UpdateService.class);
+        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        am.cancel(pi);
+
+        long alarmInterval = 0L;
+
+        switch (updateInterval) {
+            case "24":
+                alarmInterval = AlarmManager.INTERVAL_DAY;
+                break;
+            case "12":
+                alarmInterval = AlarmManager.INTERVAL_HALF_DAY;
+                break;
+            case "48":
+                alarmInterval = AlarmManager.INTERVAL_DAY * 2;
+                break;
+        }
+        System.out.println(alarmInterval);
+
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + alarmInterval,
+                alarmInterval, pi);
+        System.out.println("ScheduleAlarm() triggered!");
     }
 }
