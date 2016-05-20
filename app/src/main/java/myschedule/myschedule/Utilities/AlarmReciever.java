@@ -9,7 +9,6 @@ public class AlarmReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        System.out.println("AlarmReciever triggered!");
         Intent mIntent = new Intent(context, UpdateService.class);
         context.startService(mIntent);
     }

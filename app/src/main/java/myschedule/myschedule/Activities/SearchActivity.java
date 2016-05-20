@@ -1,24 +1,27 @@
 package myschedule.myschedule.Activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
+import myschedule.myschedule.Utilities.ScheduleHelper;
 
 public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -28,7 +31,11 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     TextView textViewInfo;
     EditText editText;
 
+    ScheduleHelper scheduleHelper;
+
     Integer searchType;
+
+    Schedule globalSchedule;
 
     //EditText editText1;
     //EditText editText2;
@@ -49,23 +56,43 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         textView = (TextView) findViewById(R.id.searchText);
         spinner = (Spinner) findViewById(R.id.spinner);
 
+        //Global schedule
+        globalSchedule = ((Schedule) getApplicationContext());
+
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
 
+        //Schedulehelper
+        scheduleHelper = new ScheduleHelper();
+
         //Search field
         editText = (EditText) findViewById(R.id.search_schedule);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    getSearchedSchedule();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
+        List<String> categories = new ArrayList<>();
         categories.add("Course");
+        categories.add("Locale");
         categories.add("Programme");
         categories.add("Signature");
-        categories.add("Locale");
 
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -103,7 +130,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -119,6 +145,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+
     public void GoToPreferences() {
         Intent intent = new Intent(this, PrefActivity.class);
         startActivity(intent);
@@ -126,20 +153,32 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     public String buildSearchString() {
         try {
-            String code = "jpn";
+
+            System.out.println(editText.getText().toString());
+
+            String code = editText.getText().toString();
+            code = code.replace("å", "%C3%A5");
+            code = code.replace("Å", "%C3%A5");
+            code = code.replace("ä", "%C3%A4");
+            code = code.replace("Ä", "%C3%A4");
+            code = code.replace("ö", "%C3%B6");
+            code = code.replace("Ö", "%C3%B6");
+
+            System.out.println(code);
+
             String defaultSearchString = getResources().getString(R.string.default_search_string);
             String defaultSearchString2 = getResources().getString(R.string.default_search_string2);
             String searchLanguage = getResources().getString(R.string.default_search_string_language);
-            String type = "";
+            String type;
 
             if (searchType == 0) {
                 type = getResources().getString(R.string.default_search_string_course);
             } else if (searchType == 1) {
-                type = getResources().getString(R.string.default_search_string_programme);
-            } else if (searchType == 2) {
-                type = getResources().getString(R.string.default_search_string_signature);
-            } else {
                 type = getResources().getString(R.string.default_search_string_room);
+            } else if (searchType == 2) {
+                type = getResources().getString(R.string.default_search_string_programme);
+            } else {
+                type = getResources().getString(R.string.default_search_string_signature);
             }
 
             String completeSearchString = defaultSearchString + searchLanguage + defaultSearchString2
@@ -148,8 +187,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             System.out.println(completeSearchString);
 
             return completeSearchString;
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
             Log.e("NullPointerException", "NullPointerException" + e);
         }
@@ -157,12 +195,27 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void getSearchedSchedule() {
-
+        Schedule mSchedule = scheduleHelper.FetchSchedule(buildSearchString());
+        if (checkCorrectSchedule(mSchedule)) {
+            globalSchedule.setUrl(mSchedule.getUrl());
+            globalSchedule.setType(searchType + 1);
+            globalSchedule.setDocument(mSchedule.getDocument());
+            Intent intent = new Intent(this, ScheduleActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(SearchActivity.this, getResources().getString(R.string.search_string_incorrect), Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public boolean checkForSchedule() {
-        return true;
+    public boolean checkCorrectSchedule(Schedule schedule) {
+        try {
+            //ToDo Make less worthless validation
+            schedule.getDocument().select("td.big2 > table > tbody > tr > td").first().text();
+            return true;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.e("NullPointerException", "NullPointerException" + e);
+            return false;
+        }
     }
-
-
 }

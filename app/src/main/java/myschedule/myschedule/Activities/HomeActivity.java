@@ -15,9 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 
@@ -30,15 +28,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Random;
 
 import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
 import myschedule.myschedule.Adapters.SavedScheduleAdapter;
 import myschedule.myschedule.Objects.ScheduleFile;
-import myschedule.myschedule.Utilities.AlarmReciever;
 import myschedule.myschedule.Utilities.ScheduleHelper;
 import myschedule.myschedule.Utilities.UpdateService;
 
@@ -104,24 +98,6 @@ public class HomeActivity extends AppCompatActivity {
         //ToDo Sets it to refresh even if i dont have to
         RAdapter.notifyDataSetChanged();
 
-        //OBS JUST FOR TEST PURPOSES
-        List<String> defaultSchedules = new ArrayList<>();
-        defaultSchedules.add(getResources().getString(R.string.default_schedule1));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule2));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule3));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule4));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule5));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule6));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule7));
-        defaultSchedules.add(getResources().getString(R.string.default_schedule8));
-
-        Random random = new Random();
-        int number = random.nextInt(8);
-        String url = defaultSchedules.get(number);
-
-        Schedule schedule = ((Schedule) getApplicationContext());
-        schedule.setUrl(url);
-
         //Automatic update
         ScheduleAlarm();
     }
@@ -155,7 +131,6 @@ public class HomeActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -163,20 +138,6 @@ public class HomeActivity extends AppCompatActivity {
     public void goToSearch(){
 
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-        startActivity(intent);
-    }
-
-
-    //JUST UNTIL SEARCH IS IMPLEMENTED
-    //ToDo Delete afterwards
-    public void ChangeActivityToTestclass(View v) {
-        Schedule schedule = ((Schedule) getApplicationContext());
-        Schedule tempSchedule = scheduleHelper.FetchSchedule(schedule.getUrl());
-        schedule.setUrl(tempSchedule.getUrl());
-        schedule.setType(tempSchedule.getType());
-        schedule.setDocument(tempSchedule.getDocument());
-
-        Intent intent = new Intent(this, ScheduleActivity.class);
         startActivity(intent);
     }
 
@@ -188,7 +149,6 @@ public class HomeActivity extends AppCompatActivity {
         scheduleList.clear();
 
         //Fetches all files in the files directory
-
         //ToDo Use fileList instead!
         File childFile[] = getFilesDir().listFiles();
 
@@ -297,7 +257,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public void ScheduleAlarm() {
         String updateInterval = sharedPreferences.getString("update_list", "24");
-        System.out.println("Interval: " + updateInterval);
 
         if(updateInterval.equals("0")) {
             return;
@@ -321,11 +280,9 @@ public class HomeActivity extends AppCompatActivity {
                 alarmInterval = AlarmManager.INTERVAL_DAY * 2;
                 break;
         }
-        System.out.println(alarmInterval);
 
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + alarmInterval,
                 alarmInterval, pi);
-        System.out.println("ScheduleAlarm() triggered!");
     }
 }
