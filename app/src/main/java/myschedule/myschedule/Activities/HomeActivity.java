@@ -129,7 +129,6 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            //ToDo Make it go to settings menu
             case R.id.action_settings:
                 GoToPreferences();
                 return true;
