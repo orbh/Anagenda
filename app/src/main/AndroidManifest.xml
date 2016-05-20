@@ -26,7 +26,6 @@
         <activity android:name=".Activities.PrefActivity">
         </activity>
         <activity android:name=".Activities.SearchActivity">
-
         </activity>
 
         <service android:name=".Utilities.UpdateService"

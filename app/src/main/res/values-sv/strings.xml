@@ -3,7 +3,7 @@
     <string name="pref_general_offline">Offline-läge</string>
     <string name="pref_general_offline_off">AV</string>
     <string name="pref_general_offline_on">PÅ</string>
-    <string name="pref_misc_header" translatable="false">Diverse</string>
+    <string name="pref_misc_header">Diverse</string>
     <string name="pref_general_header">Allmänt</string>
     <string name="pref_misc_website">Webbsida</string>
     <string name="pref_special_header">Omnämnanden</string>
