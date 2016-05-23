@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_general_header">
-
-        <CheckBoxPreference
-            android:key="checkbox_preference"
-            android:title="@string/pref_general_offline"
-            android:defaultValue="@string/pref_general_offline_off" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/pref_update_header">
 
         <ListPreference
