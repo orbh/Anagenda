@@ -40,7 +40,7 @@
         android:layout_below="@id/searchinfo"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:text="@string/ddl_course"
+        android:text="@string/search_course"
         android:textSize="18sp"
         android:textColor="@color/colorTextPrimary"
         android:id="@+id/search_course" />
@@ -61,7 +61,7 @@
         android:layout_below="@id/search_course1"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="@string/ddl_locale"
+        android:text="@string/search_locale"
         android:textSize="18sp"
         android:textColor="@color/colorTextPrimary"
         android:id="@+id/search_locale" />
@@ -82,7 +82,7 @@
         android:layout_below="@id/search_locale1"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="@string/ddl_programme"
+        android:text="@string/search_programme"
         android:textSize="18sp"
         android:textColor="@color/colorTextPrimary"
         android:id="@+id/search_programme" />
@@ -103,7 +103,7 @@
         android:layout_below="@id/search_programme1"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="@string/ddl_signature"
+        android:text="@string/search_signature"
         android:textSize="18sp"
         android:textColor="@color/colorTextPrimary"
         android:id="@+id/search_signature" />

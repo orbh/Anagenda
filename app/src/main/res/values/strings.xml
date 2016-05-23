@@ -67,10 +67,16 @@
     <string name="search_locale_example">e.g: P245</string>
     <string name="search_programme_example">e.g: dataingenjörsprogrammet åk 1</string>
     <string name="search_signature_example">e.g:: jpn</string>
-    <string name="ddl_course">Course:</string>
-    <string name="ddl_locale">Locale:</string>
-    <string name="ddl_programme">Programme:</string>
-    <string name="ddl_signature">Signature:</string>
+
+    <string name="search_course">Course:</string>
+    <string name="search_locale">Locale:</string>
+    <string name="search_programme">Programme:</string>
+    <string name="search_signature">Signature:</string>
+
+    <string name="ddl_course">Course</string>
+    <string name="ddl_locale">Locale</string>
+    <string name="ddl_programme">Programme</string>
+    <string name="ddl_signature">Signature</string>
 
     
     <!-- Toasts -->
