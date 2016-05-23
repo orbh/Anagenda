@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 
@@ -58,6 +59,9 @@ public class HomeActivity extends AppCompatActivity {
 
     //Stuff to do with the list with saved schedules
     ArrayList<Schedule> scheduleList = new ArrayList<>();
+
+    //Emptystate
+    TextView textView;
 
     //Runs when you first start the app
     @Override
@@ -191,7 +195,9 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
-            linear.setBackgroundResource(R.drawable.emptystate2);
+            textView = (TextView) findViewById(R.id.emptystate);
+            linear.setBackgroundResource(R.drawable.emptystate3);
+
         } else {
             linear.setBackgroundResource(0);
         }

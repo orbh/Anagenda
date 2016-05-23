@@ -46,5 +46,7 @@
     <string name="search_signature_example">Ex: jpn</string>
 
     <string name="schedule_likatecken">Datum: - | | -</string>
+    <string name="ddl_signature">Signatur</string>
+    <string name="emptystate_text">Du har inga sparade scheman!</string>
 
 </resources>

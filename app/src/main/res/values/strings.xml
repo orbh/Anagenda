@@ -37,6 +37,9 @@
     <string name="action_delete">Delete</string>
 
     <!-- Default strings -->
+
+        <!-- Home empty state -->
+        <string name="emptystate_text">You have no saved schedules!</string>
     
         <!-- Search String -->
         <string name="default_search_string" translatable="false">http://schema.oru.se/setup/jsp/Schema.jsp?startDatum=idag&amp;intervallTyp=m&amp;intervallAntal=6&amp;sokMedAND=true&amp;forklaringar=true&amp;sprak=</string>
