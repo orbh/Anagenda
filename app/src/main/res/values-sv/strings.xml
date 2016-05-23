@@ -29,9 +29,11 @@
     <string name="search_text">Sök:</string>
     <string name="search_string_incorrect">Inget schema hittades</string>
     <string name="schedule_signatur">Signatur:</string>
-    <string name="ddl_course">Kurs:</string>
-    <string name="ddl_locale">Lokal:</string>
-    <string name="ddl_programme">Program:</string>
+    <string name="ddl_course">Kurs</string>
+    <string name="ddl_locale">Lokal</string>
+    <string name="ddl_programme">Program</string>
     <string name="schedule_likatecken">Datum: - | | -</string>
+    <string name="ddl_signature">Signatur</string>
+    <string name="emptystate_text">Du har inga sparade scheman!</string>
 
 </resources>
