@@ -107,11 +107,12 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         holder.text.setText("");
 
 
+
         Schedule schedule = sDataset.get(position);
 
         //Course
         if (schedule.getType() == 1) {
-            holder.titel.setText(wholeTitle);
+            holder.titel.setText(splitTitle[1]);
             holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
@@ -119,14 +120,14 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         //Room
         else if (schedule.getType() == 2) {
 
-            holder.titel.setText(wholeTitle);
+            holder.titel.setText(splitTitle[0]);
             holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[1]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
         }
         //Programme
         else if (schedule.getType() == 3) {
-            holder.titel.setText(wholeTitle);
+            holder.titel.setText(splitTitle[0]);
             holder.text.setText(mergedWdAndDate + " " + time);
             holder.course.setText(splitTitle[0]);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
