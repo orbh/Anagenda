@@ -37,11 +37,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     Schedule globalSchedule;
 
-    //EditText editText1;
-    //EditText editText2;
-    //EditText editText3;
-    //EditText editText4;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +50,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         textView = (TextView) findViewById(R.id.searchText);
         spinner = (Spinner) findViewById(R.id.spinner);
+
+
 
         //Global schedule
         globalSchedule = ((Schedule) getApplicationContext());
@@ -85,10 +82,10 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<>();
-        categories.add("Course");
-        categories.add("Locale");
-        categories.add("Programme");
-        categories.add("Signature");
+        categories.add(getResources().getString(R.string.ddl_course));
+        categories.add(getResources().getString(R.string.ddl_locale));
+        categories.add(getResources().getString(R.string.ddl_programme));
+        categories.add(getResources().getString(R.string.ddl_signature));
 
 
         // Creating adapter for spinner

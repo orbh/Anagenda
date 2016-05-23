@@ -191,7 +191,7 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
-            linear.setBackgroundResource(R.drawable.android);
+            linear.setBackgroundResource(R.drawable.emptystate);
         } else {
             linear.setBackgroundResource(0);
         }
