@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -195,11 +196,12 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
 
-            textView = (TextView) findViewById(R.id.emptystate);
             linear.setBackgroundResource(R.drawable.emptystate3);
 
         } else {
             linear.setBackgroundResource(0);
+            textView = (TextView) findViewById(R.id.emptystate);
+            textView.setVisibility(View.GONE);
         }
     }
 
