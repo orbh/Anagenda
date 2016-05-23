@@ -129,7 +129,6 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         else if (schedule.getType() == 3) {
             holder.titel.setText(splitTitle[0]);
             holder.text.setText(mergedWdAndDate + " " + time);
-            holder.course.setVisibility(View.INVISIBLE);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
         }
         //Person
