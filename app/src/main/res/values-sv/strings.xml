@@ -33,7 +33,6 @@
     <string name="ddl_locale">Lokal:</string>
     <string name="ddl_programme">Program:</string>
     <string name="ddl_signature">Signatur</string>
-    <string name="schedule_signatur">Signatur: </string>
     <string name="schedule_likatecken">Datum: - | | -</string>
 
 </resources>
