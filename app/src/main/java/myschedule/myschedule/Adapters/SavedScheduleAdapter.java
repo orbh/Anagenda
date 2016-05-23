@@ -129,7 +129,7 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
         else if (schedule.getType() == 3) {
             holder.titel.setText(splitTitle[0]);
             holder.text.setText(mergedWdAndDate + " " + time);
-            holder.course.setText(splitTitle[0]);
+            holder.course.setVisibility(View.INVISIBLE);
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
         }
         //Person
@@ -145,12 +145,6 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
     @Override
     public int getItemCount() {
         return sDataset.size();
-    }
-
-    public void removeItem(int position) {
-        sDataset.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, sDataset.size());
     }
 
 }
