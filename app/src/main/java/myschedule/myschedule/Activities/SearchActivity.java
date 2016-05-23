@@ -105,11 +105,12 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     //Creates additional items in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        menu.removeItem(R.id.action_refresh);
-        menu.removeItem(R.id.action_search);
+        //menu.removeItem(R.id.action_refresh);
+        //menu.removeItem(R.id.action_search);
 
+        menu.findItem(R.id.action_refresh).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_favourite).setVisible(false);
         menu.findItem(R.id.action_delete).setVisible(false);
 
