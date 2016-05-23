@@ -48,7 +48,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         textViewInfo = (TextView) findViewById(R.id.searchinfo);
 
-        textView = (TextView) findViewById(R.id.searchText);
         spinner = (Spinner) findViewById(R.id.spinner);
 
 

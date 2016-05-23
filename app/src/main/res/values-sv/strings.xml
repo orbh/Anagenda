@@ -25,13 +25,20 @@
     <string name="action_search">Sök</string>
     <string name="action_settings">Inställningar</string>
     <string name="action_title_myschedules">Mina Scheman</string>
-    <string name="search_info">Hur du använder sökfunktionen:  \n \n Välj den typ av schema som du vill söka efter genom drop down-menyn. De olika typerna är: \n Kurs \n Program \n Signatur \n Lokal \n  \n Var noga med att skriva in den exakta Kurskoden, Programnamnet, Signaturen eller Lokal-ID, i sökfältet och tryck därefter på Sök. \n</string>
-    <string name="search_text">Sök:</string>
+
+    <string name="search_title">INSTRUKTIONER</string>
+    <string name="search_info">Välj den typ av schema som du vill söka efter genom drop down-menyn och skriv in korrekt kod. Stora eller små bokstäver spelar ingen roll.</string>
     <string name="search_string_incorrect">Inget schema hittades</string>
     <string name="schedule_signatur">Signatur:</string>
     <string name="ddl_course">Kurs:</string>
     <string name="ddl_locale">Lokal:</string>
     <string name="ddl_programme">Program:</string>
+    <string name="ddl_signature">Signatur:</string>
+    <string name="search_course_example">Ex: FE100G-26076V16-</string>
+    <string name="search_locale_example">Ex: P245</string>
+    <string name="search_programme_example">Ex: dataingenjörsprogrammet åk 1</string>
+    <string name="search_signature_example">Ex: jpn</string>
+
     <string name="schedule_likatecken">Datum: - | | -</string>
 
 </resources>
