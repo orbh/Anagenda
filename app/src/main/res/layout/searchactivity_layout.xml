@@ -1,46 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
+        android:id="@+id/search_toolbar"
         layout="@layout/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </include>
 
     <TextView
+        android:id="@+id/search_title"
+        android:layout_below="@id/search_toolbar"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_title"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
         android:id="@+id/searchinfo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/search_info"/>
-
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="17sp"
+        android:textColor="@color/colorTextSecondary"
+        android:text="@string/search_info"
+        android:layout_below="@id/search_title" />
 
     <TextView
-        android:id="@+id/searchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/search_text"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_below="@id/searchinfo"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/search_course"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:id="@+id/search_course" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_course"
+        android:layout_marginStart="15dp"
+        android:id="@+id/search_course1"
+        android:text="@string/search_course_example"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextSecondary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_course1"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/search_locale"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:id="@+id/search_locale" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_locale"
+        android:layout_marginStart="15dp"
+        android:id="@+id/search_locale1"
+        android:text="@string/search_locale_example"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextSecondary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_locale1"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/search_programme"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:id="@+id/search_programme" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_programme"
+        android:layout_marginStart="15dp"
+        android:id="@+id/search_programme1"
+        android:text="@string/search_programme_example"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextSecondary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_programme1"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/search_signature"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:id="@+id/search_signature" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_signature"
+        android:layout_marginStart="15dp"
+        android:id="@+id/search_signature1"
+        android:text="@string/search_signature_example"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextSecondary" />
+
+    <RelativeLayout
+        android:id="@+id/search_break"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_signature1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:minWidth="330dp"
+        android:minHeight="1dp"
+        android:background="@color/colorDivider"></RelativeLayout>
+
+    <EditText
+        android:id="@+id/search_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:layout_below="@id/search_break"
+        android:minWidth="210dp" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:prompt="@string/spinner_title"/>
+        android:layout_marginStart="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/search_schedule"
+        android:layout_below="@id/search_break"
+        android:prompt="@string/spinner_title" />
 
-
-
-    <EditText
-        android:id="@+id/search_schedule"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:imeOptions="actionSearch" />
-
-</LinearLayout>
+</RelativeLayout>

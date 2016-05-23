@@ -17,4 +17,7 @@
     <!-- Rows -->
     <color name="colorRowGray">#EEEEEE</color>
 
+    <!-- Background color -->
+    <color name="emptystateBGcolor">#dddddd</color>
+
 </resources>
