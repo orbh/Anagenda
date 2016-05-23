@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/time_textview"
                 android:layout_marginStart="5dp"
+                android:paddingRight="10dp"
                 android:layout_toEndOf="@id/row_color_imageview"
                 android:maxLines="1"
                 android:text="Description"
