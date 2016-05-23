@@ -81,7 +81,6 @@
     <string name="ddl_programme">Programme</string>
     <string name="ddl_signature">Signature</string>
 
-    
     <!-- Toasts -->
     <string name="toast_saved_schedule">Saved</string>
     <string name ="toast_delete_schedule">Deleted</string>
