@@ -150,7 +150,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             //Room
             else if (schedule.getType() == 2) {
 
-                holder.description.setText(element.child(9).text());
+                holder.description.setText(element.child(5).text());
                 holder.time.setText(element.child(3).text());
                 if (element.child(6).text().equals("")) {
                     holder.locale.setVisibility(View.GONE);
