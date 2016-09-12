@@ -3,6 +3,8 @@ package myschedule.myschedule.Utilities;
 import android.content.Context;
 import android.util.Log;
 
+import org.jsoup.nodes.Document;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,7 +39,6 @@ public class ScheduleHelper {
         }
         return null;
     }
-
 
     //Fetches the kind of schedule
     public Integer getScheduleType(Schedule schedule) {

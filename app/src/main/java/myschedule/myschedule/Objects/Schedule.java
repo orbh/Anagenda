@@ -10,8 +10,6 @@ public class Schedule extends Application {
     public Document schedule;
     public int type;
 
-
-
     public String getUrl() {
         return url;
     }
