@@ -3,12 +3,18 @@ package myschedule.myschedule.Objects;
 import org.jsoup.nodes.Document;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ScheduleFile implements Serializable {
 
     public String url;
     public String schedule;
     public int type;
+    public List<SchedulePost> schedulePosts;
+
+    public List<SchedulePost> getSchedulePosts() {
+        return schedulePosts;
+    }
 
     public String getUrl() {
         return url;

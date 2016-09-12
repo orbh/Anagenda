@@ -4,13 +4,23 @@ import android.app.Application;
 
 import org.jsoup.nodes.Document;
 
+import java.util.List;
+
 public class Schedule extends Application {
 
     public String url;
     public Document schedule;
     public int type;
 
+    public List<SchedulePost> postList;
 
+    public List<SchedulePost> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<SchedulePost> list) {
+        postList = list;
+    }
 
     public String getUrl() {
         return url;

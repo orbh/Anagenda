@@ -148,6 +148,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         startActivity(intent);
     }
 
+    //ToDo Make this into a separate string class perhaps?
     public String buildSearchString() {
         try {
 
