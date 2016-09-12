@@ -139,7 +139,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
     public void goToSearch(){
 
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
@@ -238,6 +237,7 @@ public class HomeActivity extends AppCompatActivity {
             oos.writeObject(saveSchedule);
             oos.close();
             fos.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e("FileNotFoundException", "FileNotFoundException" + e);
