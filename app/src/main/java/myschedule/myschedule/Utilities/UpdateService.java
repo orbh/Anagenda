@@ -4,6 +4,10 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.List;
+
+import myschedule.myschedule.Objects.Schedule;
+
 public class UpdateService extends IntentService {
 
     public UpdateService() {
@@ -17,9 +21,12 @@ public class UpdateService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Context c = getBaseContext();
+        //TO BE ACTIVATED WHEN UPDATE IS FINISHED
+        /*
+        Context context = getBaseContext();
         ScheduleHelper scheduleHelper = new ScheduleHelper();
-        scheduleHelper.getSavedSchedules(c);
+        List<Schedule> scheduleList = scheduleHelper.LoadAllSchedules(context);
         scheduleHelper.updateAllSchedules(scheduleHelper.getSavedSchedules(c), c);
+        */
     }
 }

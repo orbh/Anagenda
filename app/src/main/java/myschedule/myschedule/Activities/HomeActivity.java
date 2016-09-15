@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import myschedule.myschedule.Objects.Schedule;
 import myschedule.myschedule.R;
 import myschedule.myschedule.Adapters.SavedScheduleAdapter;
-import myschedule.myschedule.Objects.ScheduleFile;
 import myschedule.myschedule.Utilities.ScheduleHelper;
 import myschedule.myschedule.Utilities.UpdateService;
 
@@ -100,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         LoadSavedSchedules();
         CheckDocumentList();
-        //ToDo Sets it to refresh even if i dont have to
+        //ToDo Sets it to refresh even if it dont have to
         RAdapter.notifyDataSetChanged();
 
         //Automatic update
@@ -165,18 +164,14 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
 
-                ScheduleFile scheduleFile;
-                FileInputStream fin = new FileInputStream(testFile);
-                ObjectInputStream ois = new ObjectInputStream(fin);
-                scheduleFile = (ScheduleFile) ois.readObject();
-                ois.close();
+                Schedule newSchedule;
+                FileInputStream fileInputStream = new FileInputStream(testFile);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                newSchedule = (Schedule) objectInputStream.readObject();
+                objectInputStream.close();
 
-                Schedule schedule = new Schedule();
-                schedule.setType(scheduleFile.getType());
-                schedule.setUrl(scheduleFile.getUrl());
-                schedule.setDocument(Jsoup.parse(testFile, "UTF-8", scheduleFile.getUrl()));
+                scheduleList.add(newSchedule);
 
-                scheduleList.add(schedule);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e("IOEXception", "IOException" + e);
@@ -209,51 +204,14 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //ToDo Make it async
+    //IMPLEMENT LATER
     public void UpdateSchedule(File file, String path) {
 
-        try {
-            ScheduleFile scheduleFile;
-            FileInputStream fin = new FileInputStream(path);
-            ObjectInputStream ois = new ObjectInputStream(fin);
-            scheduleFile = (ScheduleFile) ois.readObject();
-            ois.close();
-
-            ScheduleHelper scheduleHelper = new ScheduleHelper();
-            Schedule newSchedule = scheduleHelper.FetchSchedule(scheduleFile.getUrl());
-
-            //ToDo Implement method for checking for updates
-
-            File deletedFile = new File(path);
-            deletedFile.delete();
-
-            ScheduleFile saveSchedule = new ScheduleFile();
-            saveSchedule.setUrl(newSchedule.getUrl());
-            saveSchedule.setType(newSchedule.getType());
-            saveSchedule.setSchedule(newSchedule.getDocument().toString());
-
-            FileOutputStream fos = openFileOutput(file.getName(), MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(saveSchedule);
-            oos.close();
-            fos.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.e("FileNotFoundException", "FileNotFoundException" + e);
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-            Log.e("StreamCorruptedE", "StreamCorruptedE" + e);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("IOException", "IOException" + e);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
-        }
     }
 
+    //IMPLEMENT LATER
     public void UpdateAllSchedules() {
+        /*
         File childFile[] = getFilesDir().listFiles();
         for (File file : childFile) {
             UpdateSchedule(file, file.getPath());
@@ -261,6 +219,7 @@ public class HomeActivity extends AppCompatActivity {
         LoadSavedSchedules();
         CheckDocumentList();
         RAdapter.notifyDataSetChanged();
+        */
     }
 
     public void ScheduleAlarm() {

@@ -17,6 +17,7 @@ import org.jsoup.nodes.Element;
 import java.util.List;
 
 import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.Objects.SchedulePost;
 import myschedule.myschedule.R;
 import myschedule.myschedule.Activities.ScheduleActivity;
 
@@ -51,15 +52,12 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             text = (TextView) v.findViewById(R.id.saved_schedules_next_event);
             course = (TextView) v.findViewById(R.id.saved_schedules_coursecode);
 
-
         }
     }
 
     public SavedScheduleAdapter(List<Schedule> Dataset, Context context) {
-
         sDataset = Dataset;
         mcontext = context;
-
     }
 
     @Override
@@ -80,62 +78,51 @@ public class SavedScheduleAdapter extends RecyclerView.Adapter<SavedScheduleAdap
             public void onClick(View view) {
 
                 Schedule schedule = ((Schedule) mcontext.getApplicationContext());
-                schedule.setDocument(sDataset.get(position).getDocument());
-                schedule.setUrl(sDataset.get(position).getUrl());
-                schedule.setType(sDataset.get(position).getType());
+                schedule.setPostList(sDataset.get(holder.getAdapterPosition()).getPostList());
+                schedule.setUrl(sDataset.get(holder.getAdapterPosition()).getUrl());
+                schedule.setType(sDataset.get(holder.getAdapterPosition()).getType());
+                schedule.setCode(sDataset.get(holder.getAdapterPosition()).getCode());
+                schedule.setName(sDataset.get(holder.getAdapterPosition()).getName());
 
                 Intent intent = new Intent(mcontext, ScheduleActivity.class);
                 mcontext.startActivity(intent);
             }
         });
 
-
-        //Coursename and coursecode
-        Element stitle = sDataset.get(position).getDocument().select("td.big2 > table > tbody > tr > td").get(1);
-        String wholeTitle = stitle.text();
-        String[] splitTitle = wholeTitle.split("\\s*,\\s*");
-
-        //Next event
-        Element nextEvent = sDataset.get(position).getDocument().select("table.schemaTabell > tbody > tr.data-white, tr.data-grey").first();
-        String mergedWdAndDate = nextEvent.child(1).text() + ", " + nextEvent.child(2).text();
-        String time = nextEvent.child(3).text();
-        //ToDo Should be in strings.xml
-
         holder.cardView.setUseCompatPadding(true);
         holder.titel.setText("");
         holder.course.setText("");
         holder.text.setText("");
 
-
-
-        Schedule schedule = sDataset.get(position);
+        Schedule schedule = sDataset.get(holder.getAdapterPosition());
+        SchedulePost nextPost = schedule.getPostList().get(0);
+        String nextEventText = mcontext.getResources().getString(R.string.saved_schedules_next_event);
 
         //Course
         if (schedule.getType() == 1) {
-            holder.titel.setText(splitTitle[1]);
-            holder.text.setText(mergedWdAndDate + " " + time);
-            holder.course.setText(splitTitle[0]);
+            holder.titel.setText(schedule.getName());
+            holder.course.setText(schedule.getCode());
             holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
+            holder.text.setText((nextEventText + " " + nextPost.getWdAndDate()) + " " + nextPost.getTime());
         }
         //Room
         else if (schedule.getType() == 2) {
-
-            holder.titel.setText(splitTitle[0]);
-            holder.text.setText(mergedWdAndDate + " " + time);
-            holder.course.setText(splitTitle[1]);
+            holder.titel.setText(schedule.getName());
+            holder.text.setText((nextEventText + " " + nextPost.getWdAndDate()) + " " + nextPost.getTime());
+            //holder.course.setText(schedule.getCode());
             holder.scheduleIcon.setImageResource(R.drawable.ic_home_black_36dp);
         }
         //Programme
         else if (schedule.getType() == 3) {
-            holder.titel.setText(splitTitle[0]);
-            holder.text.setText(mergedWdAndDate + " " + time);
-            holder.scheduleIcon.setImageResource(R.drawable.ic_today_black_36dp);
+            holder.titel.setText(schedule.getName());
+            holder.text.setText((nextEventText +  " " + nextPost.getWdAndDate()) + " " + nextPost.getTime());
+            holder.scheduleIcon.setImageResource(R.drawable.ic_date_range_black_36dp);
         }
-        //Person
+        //Signature
         else if (schedule.getType() == 4) {
-            holder.titel.setText(splitTitle[1]);
-            holder.text.setText(mergedWdAndDate + " " + time);
-            holder.course.setText(splitTitle[0]);
+            holder.titel.setText(schedule.getName());
+            holder.text.setText(nextEventText +  " " + nextPost.getWdAndDate() + " " + nextPost.getTime());
+            //holder.course.setText(nextPost.getCourse());
             holder.scheduleIcon.setImageResource(R.drawable.ic_person_black_36dp);
         }
     }

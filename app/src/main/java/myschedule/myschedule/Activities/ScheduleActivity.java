@@ -26,8 +26,9 @@ import java.util.List;
 
 import myschedule.myschedule.Adapters.ScheduleAdapter;
 import myschedule.myschedule.Objects.Schedule;
-import myschedule.myschedule.Objects.ScheduleFile;
+import myschedule.myschedule.Objects.SchedulePost;
 import myschedule.myschedule.R;
+import myschedule.myschedule.Utilities.ScheduleHelper;
 
 public class ScheduleActivity extends AppCompatActivity {
 
@@ -36,15 +37,14 @@ public class ScheduleActivity extends AppCompatActivity {
     Toolbar toolbar;
     Context mcontext;
 
+    ScheduleHelper scheduleHelper;
+
     RecyclerView mRecycleView;
     RecyclerView.Adapter mRecycleAdapter;
     RecyclerView.LayoutManager mLayoutManager;
 
-    //Contains all "rows" of posts
-    List<Element> elementList = new ArrayList<>();
-
-    public ScheduleActivity() {
-    }
+    Schedule activeSchedule;
+    ArrayList<SchedulePost> postList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.schedule_activity);
 
         mcontext = this;
+
+        scheduleHelper = new ScheduleHelper();
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,7 +63,7 @@ public class ScheduleActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecycleView.setLayoutManager(mLayoutManager);
 
-        mRecycleAdapter = new ScheduleAdapter(elementList, this);
+        mRecycleAdapter = new ScheduleAdapter(postList, this);
         mRecycleView.setAdapter(mRecycleAdapter);
     }
 
@@ -70,6 +72,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onResume();
         RefreshList();
         LoadSchedule();
+        mRecycleAdapter.notifyDataSetChanged();
     }
 
     //Creates additional items in toolbar
@@ -88,27 +91,18 @@ public class ScheduleActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         Schedule schedule = ((Schedule) mcontext.getApplicationContext());
-        String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
-        String output = input.substring(0, input.indexOf(","));
+        saved = CheckExisting(schedule.getCode(), schedule.getName());
 
-        File files[] = getFilesDir().listFiles();
-
-        for (File f : files) {
-            if (f.getName().equals(output)) {
-                saved = true;
-            }
-        }
-
-        if (saved) {
-
+        if (saved)
+        {
             menu.findItem(R.id.action_favourite).setVisible(false);
             menu.findItem(R.id.action_delete).setVisible(true);
-
             return true;
-        } else {
+        }
+        else
+        {
             menu.findItem(R.id.action_favourite).setVisible(true);
             menu.findItem(R.id.action_delete).setVisible(false);
-
             return true;
         }
     }
@@ -138,118 +132,81 @@ public class ScheduleActivity extends AppCompatActivity {
         }
     }
 
+    //Loads schedule from global object and sets up the dataset for recyclerview
     public void LoadSchedule() {
 
-        Schedule schedule = ((Schedule) getApplicationContext());
-        Document document = schedule.getDocument();
-
-        //ToDo This might crash shit up
-        if (schedule.getType() == 0) {
-            return;
+        activeSchedule = ((Schedule) getApplicationContext());
+        for (SchedulePost schedulePost: activeSchedule.getPostList()) {
+            postList.add(schedulePost);
         }
 
-        //Fetches table with only schedule rows
-        Elements posts = document.select("table.schemaTabell > tbody > tr.data-white, tr.data-grey");
+        //postList = activeSchedule.getPostList();
 
-        //Puts each row into a list
-        for (Element element : posts) {
-            elementList.add(element);
+        //Sets toolbar title
+        assert getSupportActionBar() != null;
+        if (activeSchedule.getName().equals("")) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
         }
-
-        //Sets the toolbar title
-        String title = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
-        SetTitle(title, schedule.getType());
+        else
+        {
+            getSupportActionBar().setTitle(activeSchedule.getName());
+        }
+        mRecycleAdapter.notifyDataSetChanged();
     }
 
     //Attempts to save schedule
     public void SaveSchedule() {
 
         //Writes document to file
-        try {
+        Schedule activeSchedule = ((Schedule) getApplicationContext());
+        scheduleHelper.SaveSchedule(activeSchedule, getApplicationContext());
 
-            Schedule schedule = ((Schedule) getApplicationContext());
-            String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
-            String output = input.substring(0, input.indexOf(","));
-            schedule.getDocument().setBaseUri(schedule.getUrl());
-            FileOutputStream fos = openFileOutput(output, MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            ScheduleFile scheduleFile = new ScheduleFile();
-            scheduleFile.setUrl(schedule.getUrl());
-            scheduleFile.setType(schedule.getType());
-            scheduleFile.setSchedule(schedule.getDocument().toString());
-
-            oos.writeObject(scheduleFile);
-            oos.close();
-            fos.close();
-
-            //Makes a toast if it succeeds
-            Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.toast_saved_schedule), Toast.LENGTH_SHORT).show();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.e("FileNotFoundException", "FileNotFoundException" + e);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("IOException", "IOException" + e);
-        }
-    }
-
-    //Sets the toolbar title
-    public void SetTitle(String name, int type) {
-
-        //Course
-        if (type == 1) {
-
-            String output = name.substring(name.indexOf(",") + 1);
-            assert getSupportActionBar() != null;
-            if (output.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(output);
-        }
-
-        //Room, Signature and Programme
-        else {
-            assert getSupportActionBar() != null;
-            if (name.equals("")) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
-            } else getSupportActionBar().setTitle(name);
-        }
+        //Makes a toast if it succeeds
+        Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.toast_saved_schedule), Toast.LENGTH_SHORT).show();
     }
 
     public void RefreshList() {
-        elementList.clear();
+        try {
+            postList.clear();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.e("NullPointerException", "NullPointerException" +e);
+        }
     }
 
     // Deletes the currently active schedule
     public void callDeleteSchedule() {
 
-        try {
-            File files[] = getFilesDir().listFiles();
+        Schedule scheduleToDelete = ((Schedule) mcontext.getApplicationContext());
+        scheduleHelper.DeleteSchedule(scheduleToDelete, mcontext);
 
-            Schedule schedule = ((Schedule) mcontext.getApplicationContext());
-            String input = schedule.getDocument().select("td.big2 > table > tbody > tr > td").get(1).text();
-            String output = input.substring(0, input.indexOf(","));
+        saved = false;
+        Toast.makeText(ScheduleActivity.this,
+                getResources().getString(R.string.toast_delete_schedule),
+                Toast.LENGTH_SHORT).show();
 
-            for (File f : files)
-                if (f.getName().equals(output)) {
+        mRecycleAdapter.notifyDataSetChanged();
 
-                    f.delete();
+        //Sends user back to homeactivity and clears the ScheduleActivity
+        //from the activity list
+        Intent i = new Intent(this, HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
 
-                }
-            Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.toast_delete_schedule), Toast.LENGTH_SHORT).show();
+    }
 
-            saved = false;
+    //Checks if schedule is already saved
+    public boolean CheckExisting(String code, String name) {
 
-            mRecycleAdapter.notifyDataSetChanged();
+        File files[] = getFilesDir().listFiles();
 
-            Intent i = new Intent(this, HomeActivity.class);
-            startActivity(i);
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            Log.e("IndexOutOfBoundsEx", "IndexOutOfBoundsEx" + e);
+        for (File f : files) {
+            if (f.getName().equals(code) || f.getName().equals(name)) {
+                return true;
+            }
         }
+        return false;
     }
 
 }

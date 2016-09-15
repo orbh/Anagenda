@@ -14,17 +14,18 @@ import android.widget.TextView;
 
 import org.jsoup.nodes.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import myschedule.myschedule.Objects.Schedule;
+import myschedule.myschedule.Objects.SchedulePost;
 import myschedule.myschedule.R;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
-    private List<Element> mDataset;
+    private List<SchedulePost> mDataset;
     private Schedule schedule;
     private Context mContext;
-
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -33,17 +34,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         // each data item is just a string in this case
 
         public CardView cardView;
-
         public LinearLayout rowLayout;
-
         public RelativeLayout rowUpperLayout;
         public TextView description;
         public TextView time;
         public TextView wdAndDate;
         public TextView locale;
         public ImageView arrow;
-
-
         public RelativeLayout rowExtendedLayout;
         public TextView course;
         public TextView group;
@@ -53,17 +50,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             super(v);
 
             cardView = (CardView) v.findViewById(R.id.schedule_card_view);
-
             rowLayout = (LinearLayout) v.findViewById(R.id.schedule_row);
-
             rowUpperLayout = (RelativeLayout) v.findViewById(R.id.schedule_upper_row_layout);
             description = (TextView) v.findViewById(R.id.description_textview);
             time = (TextView) v.findViewById(R.id.time_textview);
             wdAndDate = (TextView) v.findViewById(R.id.wd_and_date_textview);
             locale = (TextView) v.findViewById(R.id.locale_textview);
             arrow = (ImageView) v.findViewById(R.id.row_button_extend);
-
-
             rowExtendedLayout = (RelativeLayout) v.findViewById(R.id.schedule_lower_row_layout);
             course = (TextView) v.findViewById(R.id.course_textview);
             group = (TextView) v.findViewById(R.id.schedule_group);
@@ -72,7 +65,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ScheduleAdapter(List<Element> myDataset, Context context) {
+    public ScheduleAdapter(List<SchedulePost> myDataset, Context context) {
         mDataset = myDataset;
         schedule = ((Schedule) context.getApplicationContext());
         mContext = context;
@@ -120,69 +113,62 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             holder.course.setText("");
             holder.course.setVisibility(View.GONE);
 
-            Element element = mDataset.get(position);
-
-            //Merges weekday and date
-            //ToDo Make the comma go away then weekday and date are missing
-            if(element.child(1).text().length() > 1 && element.child(2).text().length() > 1){
-                String mergedWdAndDate = element.child(1).text() + ", " + element.child(2).text();
-                holder.wdAndDate.setText(mergedWdAndDate);
-            }
-            else{
-                holder.wdAndDate.setText(R.string.schedule_likatecken);
-            }
+            SchedulePost schedulePost = mDataset.get(holder.getAdapterPosition());
 
             //Course
             if (schedule.getType() == 1) {
 
-                holder.description.setText(element.child(9).text());
-                holder.locale.setText(element.child(7).text());
-                holder.time.setText(element.child(3).text());
-                if (element.child(5).text().length() == 1) {
+                holder.description.setText(schedulePost.getDescription());
+                holder.locale.setText(schedulePost.getLocale());
+                holder.time.setText(schedulePost.getTime());
+                if (schedulePost.getGroup().length() == 1) {
                     holder.group.setVisibility(View.GONE);
                 } else {
                     holder.group.setVisibility(View.VISIBLE);
-                    holder.group.setText(mContext.getResources().getString(R.string.schedule_group) + " " + element.child(5).text());
+                    holder.group.setText(mContext.getResources().getString(R.string.schedule_group) + " " + schedulePost.getGroup());
                 }
-                holder.lastUpdated.setText("Last updated:" + " " + element.child(10).text());
-
+                holder.lastUpdated.setText(mContext.getResources()
+                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
             }
             //Room
             else if (schedule.getType() == 2) {
 
-                holder.description.setText(element.child(5).text());
-                holder.time.setText(element.child(3).text());
-                if (element.child(6).text().equals("")) {
+                holder.description.setText(schedulePost.getDescription());
+                holder.time.setText(schedulePost.getTime());
+                if (schedulePost.getSignature().equals("")) {
                     holder.locale.setVisibility(View.GONE);
                 } else {
                     holder.locale.setVisibility(View.VISIBLE);
-                    holder.locale.setText(mContext.getResources().getString(R.string.schedule_signatur) + " " + element.child(6).text());
+                    holder.locale.setText(mContext.getResources().getString(R.string.schedule_signatur) + " " + schedulePost.getSignature());
                 }
-                holder.course.setText(element.child(5).text());
-                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
+                holder.course.setText(schedulePost.getCourse());
+                holder.lastUpdated.setText(mContext.getResources()
+                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
             }
 
             //Programme
             //ToDo Maybe set color as bigger
             else if (schedule.getType() == 3) {
 
-                holder.description.setText(element.child(8).text());
-                holder.time.setText(element.child(3).text());
-                holder.locale.setText(element.child(6).text());
+                holder.description.setText(schedulePost.getDescription());
+                holder.time.setText(schedulePost.getTime());
+                holder.locale.setText(schedulePost.getLocale());
                 holder.course.setVisibility(View.VISIBLE);
-                holder.course.setText(element.child(4).text());
-                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
+                holder.course.setText(schedulePost.getCourse());
+                holder.lastUpdated.setText(mContext.getResources()
+                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
             }
 
             //Signature
             else if (schedule.getType() == 4) {
 
-                holder.description.setText(element.child(8).text());
-                holder.time.setText(element.child(3).text());
-                holder.locale.setText(element.child(6).text());
-                holder.course.setText(element.child(5).text());
+                holder.description.setText(schedulePost.getDescription());
+                holder.time.setText(schedulePost.getTime());
+                holder.locale.setText(schedulePost.getLocale());
                 holder.course.setVisibility(View.VISIBLE);
-                holder.lastUpdated.setText("Last updated:" + " " + element.child(9).text());
+                holder.course.setText(schedulePost.getCourse());
+                holder.lastUpdated.setText(mContext.getResources()
+                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
             }
         }
         catch (IndexOutOfBoundsException e){

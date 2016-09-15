@@ -1,17 +1,37 @@
 package myschedule.myschedule.Objects;
 
-public class SchedulePost {
+import java.io.Serializable;
+
+public class SchedulePost implements Serializable {
 
     public String description;
     public String time;
     public String weekday;
     public String date;
     public String locale;
-
+    public int type;
     public String course;
     public String group;
     public String lastUpdated;
     public String signature;
+    public boolean changed;
+    public String ChangeDate;
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+
+    public String getChangeDate() {
+        return ChangeDate;
+    }
+
+    public void setChangeDate(String changeDate) {
+        ChangeDate = changeDate;
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -31,6 +51,10 @@ public class SchedulePost {
 
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public void setCourse(String course) {
@@ -67,6 +91,10 @@ public class SchedulePost {
 
     public String getLocale() {
         return locale;
+    }
+
+    public int getType() {
+        return type;
     }
 
     public String getCourse() {
