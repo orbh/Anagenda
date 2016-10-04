@@ -85,6 +85,7 @@
     <!-- Toasts -->
     <string name="toast_saved_schedule">Saved</string>
     <string name ="toast_delete_schedule">Deleted</string>
+    <string name="toast_updated_schedules">Schedules updated</string>
 
     <!-- Content describers -->
     <string name="saved_schedules_icon_course" translatable="false">Course-icon</string>
