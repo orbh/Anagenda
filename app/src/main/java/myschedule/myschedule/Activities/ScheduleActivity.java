@@ -21,7 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import myschedule.myschedule.Adapters.ScheduleAdapter;
@@ -35,7 +37,7 @@ public class ScheduleActivity extends AppCompatActivity {
     boolean saved;
 
     Toolbar toolbar;
-    Context mcontext;
+    Context context;
 
     ScheduleHelper scheduleHelper;
 
@@ -51,7 +53,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
 
-        mcontext = this;
+        context = this;
 
         scheduleHelper = new ScheduleHelper();
 
@@ -90,7 +92,7 @@ public class ScheduleActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        Schedule schedule = ((Schedule) mcontext.getApplicationContext());
+        Schedule schedule = ((Schedule) context.getApplicationContext());
         saved = CheckExisting(schedule.getCode(), schedule.getName());
 
         if (saved)
@@ -133,26 +135,27 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     //Loads schedule from global object and sets up the dataset for recyclerview
-    public void LoadSchedule() {
+    public void LoadSchedule()
+    {
+            activeSchedule = ((Schedule) getApplicationContext());
 
-        activeSchedule = ((Schedule) getApplicationContext());
-        for (SchedulePost schedulePost: activeSchedule.getPostList()) {
-            postList.add(schedulePost);
-        }
+            activeSchedule.setPostList(scheduleHelper
+                    .TrimPostList(activeSchedule.getPostList(), context));
+            for (SchedulePost schedulePost: activeSchedule.getPostList()) {
+                postList.add(schedulePost);
+            }
 
-        //postList = activeSchedule.getPostList();
-
-        //Sets toolbar title
-        assert getSupportActionBar() != null;
-        if (activeSchedule.getName().equals("")) {
-            getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            //Sets toolbar title
+            assert getSupportActionBar() != null;
+            if (activeSchedule.getName().equals("")) {
+                getSupportActionBar().setTitle(getResources().getString(R.string.schedule_title));
+            }
+            else
+            {
+                getSupportActionBar().setTitle(activeSchedule.getName());
+            }
+            mRecycleAdapter.notifyDataSetChanged();
         }
-        else
-        {
-            getSupportActionBar().setTitle(activeSchedule.getName());
-        }
-        mRecycleAdapter.notifyDataSetChanged();
-    }
 
     //Attempts to save schedule
     public void SaveSchedule() {
@@ -178,8 +181,8 @@ public class ScheduleActivity extends AppCompatActivity {
     // Deletes the currently active schedule
     public void callDeleteSchedule() {
 
-        Schedule scheduleToDelete = ((Schedule) mcontext.getApplicationContext());
-        scheduleHelper.DeleteSchedule(scheduleToDelete, mcontext);
+        Schedule scheduleToDelete = ((Schedule) context.getApplicationContext());
+        scheduleHelper.DeleteSchedule(scheduleToDelete.getName() + ".SCHEDULE", getApplicationContext());
 
         saved = false;
         Toast.makeText(ScheduleActivity.this,
@@ -199,10 +202,9 @@ public class ScheduleActivity extends AppCompatActivity {
     //Checks if schedule is already saved
     public boolean CheckExisting(String code, String name) {
 
-        File files[] = getFilesDir().listFiles();
-
-        for (File f : files) {
-            if (f.getName().equals(code) || f.getName().equals(name)) {
+        for (File file :scheduleHelper.LoadFileArray(getApplicationContext()))
+        {
+            if (file.getName().equals(code + ".SCHEDULE") || file.getName().equals(name + ".SCHEDULE")) {
                 return true;
             }
         }

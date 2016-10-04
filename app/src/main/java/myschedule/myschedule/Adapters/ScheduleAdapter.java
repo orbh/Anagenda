@@ -121,6 +121,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 holder.description.setText(schedulePost.getDescription());
                 holder.locale.setText(schedulePost.getLocale());
                 holder.time.setText(schedulePost.getTime());
+                holder.wdAndDate.setText(schedulePost.getWdAndDate());
                 if (schedulePost.getGroup().length() == 1) {
                     holder.group.setVisibility(View.GONE);
                 } else {
@@ -128,13 +129,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                     holder.group.setText(mContext.getResources().getString(R.string.schedule_group) + " " + schedulePost.getGroup());
                 }
                 holder.lastUpdated.setText(mContext.getResources()
-                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
+                        .getString(R.string.schedule_lastupdated) + " " + schedulePost.getLastUpdated());
             }
             //Room
             else if (schedule.getType() == 2) {
 
                 holder.description.setText(schedulePost.getDescription());
                 holder.time.setText(schedulePost.getTime());
+                holder.wdAndDate.setText(schedulePost.getWdAndDate());
                 if (schedulePost.getSignature().equals("")) {
                     holder.locale.setVisibility(View.GONE);
                 } else {
@@ -143,7 +145,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 }
                 holder.course.setText(schedulePost.getCourse());
                 holder.lastUpdated.setText(mContext.getResources()
-                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
+                        .getString(R.string.schedule_lastupdated) + " " + schedulePost.getLastUpdated());
             }
 
             //Programme
@@ -153,10 +155,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 holder.description.setText(schedulePost.getDescription());
                 holder.time.setText(schedulePost.getTime());
                 holder.locale.setText(schedulePost.getLocale());
+                holder.wdAndDate.setText(schedulePost.getWdAndDate());
                 holder.course.setVisibility(View.VISIBLE);
                 holder.course.setText(schedulePost.getCourse());
                 holder.lastUpdated.setText(mContext.getResources()
-                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
+                        .getString(R.string.schedule_lastupdated) + " " + schedulePost.getLastUpdated());
             }
 
             //Signature
@@ -164,11 +167,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
                 holder.description.setText(schedulePost.getDescription());
                 holder.time.setText(schedulePost.getTime());
+                holder.wdAndDate.setText(schedulePost.getWdAndDate());
                 holder.locale.setText(schedulePost.getLocale());
                 holder.course.setVisibility(View.VISIBLE);
                 holder.course.setText(schedulePost.getCourse());
                 holder.lastUpdated.setText(mContext.getResources()
-                        .getString(R.string.schedule_lastupdated) + schedulePost.getLastUpdated());
+                        .getString(R.string.schedule_lastupdated) + " " + schedulePost.getLastUpdated());
             }
         }
         catch (IndexOutOfBoundsException e){

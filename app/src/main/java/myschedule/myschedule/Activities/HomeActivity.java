@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 
@@ -138,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void goToSearch(){
+    public void goToSearch() {
 
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(intent);
@@ -146,42 +147,12 @@ public class HomeActivity extends AppCompatActivity {
 
     //Loads saved schedules from files
     public void LoadSavedSchedules() {
-        //ToDo Connect to saved list of schedules
 
         //Clears the documentList
         scheduleList.clear();
-
-        //Fetches all files in the files directory
-        //ToDo Use fileList instead!
-        File childFile[] = getFilesDir().listFiles();
-
-        //Tries to make the files into documents again and push them into the documentList
-        for (File file : childFile) {
-
-            File testFile = new File(file.getPath());
-
-            //ToDo Maybe we can be able to fetch the URL, if necessary
-
-            try {
-
-                Schedule newSchedule;
-                FileInputStream fileInputStream = new FileInputStream(testFile);
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                newSchedule = (Schedule) objectInputStream.readObject();
-                objectInputStream.close();
-
-                scheduleList.add(newSchedule);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("IOEXception", "IOException" + e);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                Log.e("ClassNotFoundException", "ClassNotFoundException" + e);
-            }
-
+        for (Schedule schedule : scheduleHelper.LoadAllSchedules(getApplicationContext())) {
+            scheduleList.add(schedule);
         }
-
     }
 
     //Enables empty state function
@@ -189,9 +160,7 @@ public class HomeActivity extends AppCompatActivity {
     public void CheckDocumentList() {
         LinearLayout linear = (LinearLayout) findViewById(R.id.layout_content1);
         if (scheduleList.isEmpty()) {
-
             linear.setBackgroundResource(R.drawable.emptystate3);
-
         } else {
             linear.setBackgroundResource(0);
             textView = (TextView) findViewById(R.id.emptystate);
@@ -204,28 +173,20 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //IMPLEMENT LATER
-    public void UpdateSchedule(File file, String path) {
-
-    }
-
-    //IMPLEMENT LATER
     public void UpdateAllSchedules() {
-        /*
-        File childFile[] = getFilesDir().listFiles();
-        for (File file : childFile) {
-            UpdateSchedule(file, file.getPath());
-        }
+        scheduleHelper.UpdateAllSchedules(getApplicationContext());
         LoadSavedSchedules();
         CheckDocumentList();
         RAdapter.notifyDataSetChanged();
-        */
+
+        Toast.makeText(HomeActivity.this, getResources()
+                .getString(R.string.toast_updated_schedules), Toast.LENGTH_SHORT).show();
     }
 
     public void ScheduleAlarm() {
         String updateInterval = sharedPreferences.getString("update_list", "24");
 
-        if(updateInterval.equals("0")) {
+        if (updateInterval.equals("0")) {
             return;
         }
 

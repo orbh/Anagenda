@@ -164,6 +164,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void GetSearchedSchedule() {
+
         Schedule mSchedule = scheduleHelper.FetchSchedule(buildSearchString());
 
         if (mSchedule == null) {
@@ -179,6 +180,9 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             globalSchedule.setPostList(mSchedule.getPostList());
             globalSchedule.setCode(mSchedule.getCode());
             globalSchedule.setName(mSchedule.getName());
+            globalSchedule.setLastUpdated(mSchedule.getLastUpdated());
+            globalSchedule.setListIndex(mSchedule.getListIndex());
+            globalSchedule.setStartDate(mSchedule.getStartDate());
             Intent intent = new Intent(this, ScheduleActivity.class);
             startActivity(intent);
 
